@@ -1,40 +1,35 @@
-import type { BuildQueryResult, DBQueryConfig, ExtractTablesWithRelations } from "drizzle-orm";
-import type * as schema from "./schema";
+import type { BuildQueryResult, DBQueryConfig, ExtractTablesWithRelations } from 'drizzle-orm'
+import type * as schema from './schema'
 
-type TSchema = ExtractTablesWithRelations<typeof schema>;
+type TSchema = ExtractTablesWithRelations<typeof schema>
 
-export type QueryConfig<TableName extends keyof TSchema> = DBQueryConfig<
-	"one" | "many",
-	boolean,
-	TSchema,
-	TSchema[TableName]
->;
+export type QueryConfig<TableName extends keyof TSchema> = DBQueryConfig<'one' | 'many', boolean, TSchema, TSchema[TableName]>
 export type InferQueryModel<
-	TableName extends keyof TSchema,
-	// biome-ignore lint:
-	QBConfig extends QueryConfig<TableName> = {},
-> = BuildQueryResult<TSchema, TSchema[TableName], QBConfig>;
+  TableName extends keyof TSchema,
+  // biome-ignore lint:
+  QBConfig extends QueryConfig<TableName> = {}
+> = BuildQueryResult<TSchema, TSchema[TableName], QBConfig>
 export type SelectSessionRelation = InferQueryModel<
-	"session",
-	{
-		with: {
-			user: true;
-		};
-	}
->;
+  'session',
+  {
+    with: {
+      user: true
+    }
+  }
+>
 export type SelectUserRelation = InferQueryModel<
-	"user",
-	{
-		with: {
-			session: true;
-		};
-	}
->;
+  'user',
+  {
+    with: {
+      session: true
+    }
+  }
+>
 export type SelectImageRelation = InferQueryModel<
-	"image",
-	{
-		with: {
-			session: true;
-		};
-	}
->;
+  'image',
+  {
+    with: {
+      session: true
+    }
+  }
+>
