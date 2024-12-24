@@ -11,7 +11,6 @@
         projectRootFile = "flake.nix";
 
         programs = {
-          shellcheck.enable = true;
           taplo.enable = true;
 
           nixfmt = {
