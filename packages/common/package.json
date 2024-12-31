@@ -1,12 +1,15 @@
 {
-  "name": "@stardust/common",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+	"name": "@stardust/common",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@stardust/db": "workspace:*",
+		"better-auth": "^1.1.7"
+	}
 }
