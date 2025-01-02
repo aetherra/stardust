@@ -5,7 +5,10 @@ export const user = pgTable("user", {
 	name: text("name").notNull(),
 	email_address: text("email_address").notNull().unique(),
 	emailVerified: boolean("emailVerified").notNull(),
-	administrator: boolean("administrator").default(false).notNull(),
+	role: text("role").default("user").notNull(),
+	banned: boolean("banned").default(false).notNull(),
+	banReason: text("banReason"),
+	banExpires: numeric("banExpires"),
 	test: text("test").notNull(),
 	image: text("image"),
 	createdAt: timestamp("createdAt").notNull(),
@@ -23,6 +26,7 @@ export const authSession = pgTable("auth_session", {
 	userId: text("userId")
 		.notNull()
 		.references(() => user.id),
+	impersonatedBy: text("impersonatedBy"),
 });
 
 export const account = pgTable("account", {

@@ -10,5 +10,6 @@ declare const globalThis: {
 const drizzleSingleton = () => drizzle(client, { schema });
 
 const db = globalThis.db ?? drizzleSingleton();
-export { db, client };
+export { db as default, client };
+export * from "./schema";
 if (process.env.NODE_ENV !== "production") globalThis.db = db;

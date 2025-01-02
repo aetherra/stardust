@@ -67,7 +67,20 @@ export interface AuthConfig {
 			/**
 			 * the provider name
 			 **/
-			[key: string]: {
+			[key in
+				| "github"
+				| "apple"
+				| "discord"
+				| "facebook"
+				| "microsoft"
+				| "google"
+				| "spotify"
+				| "twitch"
+				| "twitter"
+				| "dropbox"
+				| "linkedin"
+				| "gitlab"
+				| "reddit"]: {
 				/**
 				 * The client ID for the OAuth provider.
 				 **/

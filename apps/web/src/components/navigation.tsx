@@ -25,9 +25,8 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import type { Session } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-import type { SelectUser } from "@stardust/db/schema";
+import type { SessionSchema } from "@stardust/common/auth";
 import {
 	Book,
 	ComputerIcon,
@@ -51,10 +50,10 @@ import { GitHubIcon } from "./icons";
 export default function Navigation({
 	session,
 }: {
-	dbUser: SelectUser;
-	session: Session | null;
+	session: SessionSchema | null;
 }) {
 	const { name, email, image } = session?.user || {};
+	const isAdmin = session?.user.role === "admin";
 	const [open, setDialogOpen] = useState(false);
 	const { themes, setTheme, theme: currentTheme } = useTheme();
 	const pathname = usePathname();
@@ -120,7 +119,7 @@ export default function Navigation({
 						</NavigationMenuItem>
 						{navigationItems.map((item) => (
 							<Fragment key={item.href}>
-								{!item.adminOnly || (item.adminOnly && dbUser.isAdmin) ? (
+								{!item.adminOnly || (item.adminOnly && isAdmin) ? (
 									<NavigationMenuItem key={item.href}>
 										<Link href={item.href} legacyBehavior passHref>
 											<NavigationMenuLink
@@ -237,7 +236,7 @@ export default function Navigation({
 						<DropdownMenuLabel className="flex flex-col">
 							<span className="flex flex-row items-center justify-between gap-1">
 								<p className="text-lg">{name || email?.split("@")[0]}</p>
-								{dbUser.isAdmin ? (
+								{isAdmin ? (
 									<span className="flex items-center justify-center rounded-lg bg-primary px-2 py-[1px] text-xs font-bold text-primary-foreground">
 										Admin
 									</span>

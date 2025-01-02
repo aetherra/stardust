@@ -1,5 +1,7 @@
+import type auth from "@stardust/common/auth";
+import { adminClient, inferAdditionalFields } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
-
-const client = createAuthClient();
-export type Session = typeof client.$Infer.Session;
+const client = createAuthClient({
+	plugins: [inferAdditionalFields<typeof auth>(), adminClient()],
+});
 export default client;

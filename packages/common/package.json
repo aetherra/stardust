@@ -9,7 +9,13 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@stardust/config": "workspace:*",
 		"@stardust/db": "workspace:*",
-		"better-auth": "^1.1.7"
+		"argon2": "^0.41.1",
+		"better-auth": "^1.1.7",
+		"dockerode": "^4.0.2"
+	},
+	"devDependencies": {
+		"@types/dockerode": "^3.3.32"
 	}
 }
