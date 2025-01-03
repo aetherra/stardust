@@ -2,10 +2,10 @@ import { getConfig } from "@stardust/config";
 import db from "@stardust/db";
 import * as authSchema from "@stardust/db/schema/auth";
 import { hash, verify } from "argon2";
-import { type BetterAuthPlugin, betterAuth } from "better-auth";
+import { APIError, type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
-import { admin } from "better-auth/plugins";
+import { admin, createAuthMiddleware } from "better-auth/plugins";
 const { auth: config } = getConfig();
 const conditionalPlugins: BetterAuthPlugin[] = [];
 if (typeof process.env.NEXT_RUNTIME !== "undefined") conditionalPlugins.push(nextCookies());
@@ -21,7 +21,7 @@ const auth = betterAuth({
 	}),
 	plugins: [admin(), ...conditionalPlugins],
 	emailAndPassword: {
-		enabled: true,
+		enabled: config.credentials?.enabled || false,
 		autoSignIn: false,
 		password: {
 			hash,
@@ -31,6 +31,16 @@ const auth = betterAuth({
 		},
 	},
 	socialProviders: config.oauth?.providers,
+	hooks: {
+		before: createAuthMiddleware(async (ctx) => {
+			if (ctx.path !== "/sign-up/email" || config.credentials?.signups) {
+				return;
+			}
+			throw new APIError("BAD_REQUEST", {
+				message: "Signups are disabled",
+			});
+		}),
+	},
 });
 export type SessionSchema = typeof auth.$Infer.Session;
 export default auth;

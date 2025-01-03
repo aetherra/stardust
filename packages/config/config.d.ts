@@ -47,9 +47,14 @@ export interface AuthConfig {
 	 **/
 	turnstile?: TurnstileConfig;
 	/**
-	 * Credentials configuration. Leave `undefined` to disable user/password signups, or as `{}` to enable.
+	 * Credentials configuration.
 	 **/
 	credentials?: {
+		/**
+		 * To enable or disable email/password authentication.
+		 * @default false
+		 */
+		enabled?: boolean;
 		/**
 		 * Whether to allow user signups.
 		 * @default false
@@ -80,7 +85,7 @@ export interface AuthConfig {
 				| "dropbox"
 				| "linkedin"
 				| "gitlab"
-				| "reddit"]: {
+				| "reddit"]?: {
 				/**
 				 * The client ID for the OAuth provider.
 				 **/

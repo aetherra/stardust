@@ -1,4 +1,14 @@
+import { readFileSync } from "node:fs";
+import { Ajv } from "ajv";
+import { load } from "js-yaml";
 import type { Config } from "./config.d.ts";
+import schema from "./schema.json" with { type: "json" };
+const loadedConfig = load(readFileSync(`${process.cwd()}/config.yml`, "utf-8"));
 export function getConfig(): Config {
-	return JSON.parse(process.env.CONFIG as string);
+	return loadedConfig as Config;
+}
+export function validateConfig(config: unknown) {
+	const validate = new Ajv().compile(schema);
+	const res = validate(config);
+	return res;
 }

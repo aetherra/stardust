@@ -1,5 +1,10 @@
 {
 	"extends": "@stardust/tsconfig/base.json",
 	"exclude": ["node_modules"],
-	"include": ["./**/*.ts"]
+	"include": ["./**/*.ts"],
+	"compilerOptions": {
+		"moduleResolution": "nodenext",
+		"module": "NodeNext",
+		"resolveJsonModule": true
+	}
 }
