@@ -2,8 +2,8 @@
 	"name": "stardust-new",
 	"private": true,
 	"scripts": {
-		"build": "turbo build",
-		"dev": "turbo dev",
+		"build": "CONFIG=$(cat config.yml) turbo build",
+		"dev": "CONFIG=$(cat config.yml) turbo dev",
 		"check": "biome check . --write"
 	},
 	"devDependencies": {

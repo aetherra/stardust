@@ -18,7 +18,6 @@ const nextConfig: NextConfig = {
 	},
 	experimental: {
 		ppr: true,
-		typedRoutes: true,
 		webpackBuildWorker: true,
 		reactCompiler: true,
 		serverActions: {

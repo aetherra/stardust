@@ -1,9 +1,11 @@
+import { reqWithTrustedOrigin } from "@/lib/real-origin-req";
 import type { SessionSchema } from "@stardust/common/auth";
 import { type NextRequest, NextResponse } from "next/server";
-
-const allowedPaths = ["/auth/login", "/auth/error", "/auth/verify", "/auth/signup"];
+const allowedPaths = ["/auth/signin", "/auth/error", "/auth/verify", "/auth/signup"];
 export default async function authMiddleware(req: NextRequest) {
-	const res = await fetch(`${req.nextUrl.protocol}//${req.nextUrl.origin}/api/auth/get-session`, {
+	const sessionEndpoint = `${reqWithTrustedOrigin(req).nextUrl.origin}/api/auth/get-session`;
+	console.log(sessionEndpoint);
+	const res = await fetch(sessionEndpoint, {
 		headers: {
 			cookie: req.headers.get("cookie") || "",
 		},
@@ -12,7 +14,7 @@ export default async function authMiddleware(req: NextRequest) {
 	if (session || allowedPaths.includes(req.nextUrl.pathname)) {
 		return NextResponse.next();
 	}
-	const url = new URL("/auth/login", req.url);
+	const url = new URL("/auth/signin", req.url);
 	return NextResponse.redirect(url);
 }
 

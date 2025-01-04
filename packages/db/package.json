@@ -2,8 +2,10 @@
 	"name": "@stardust/db",
 	"version": "1.0.0",
 	"description": "",
+	"type": "module",
 	"scripts": {
-		"check-types": "tsc --noEmit"
+		"check-types": "tsc --noEmit",
+		"drizzle-kit": "CONFIG=$(cat ../../config.yml) drizzle-kit"
 	},
 	"keywords": [],
 	"author": "",
@@ -14,6 +16,7 @@
 		"postgres": "^3.4.5"
 	},
 	"devDependencies": {
-		"@stardust/tsconfig": "workspace:*"
+		"@stardust/tsconfig": "workspace:*",
+		"drizzle-kit": "^0.30.1"
 	}
 }
