@@ -18,22 +18,18 @@ const nextConfig: NextConfig = {
 	},
 	experimental: {
 		ppr: true,
+		typedRoutes: true,
 		webpackBuildWorker: true,
 		reactCompiler: true,
 		serverActions: {
 			allowedOrigins: ["localhost:3000", "*.use.devtunnels.ms"],
 		},
 	},
-	webpack(config, { webpack }) {
+	webpack(config) {
 		config.module.rules.push({
 			test: /\.node$/,
 			loader: "node-loader",
 		});
-		config.plugins.push(
-			new webpack.IgnorePlugin({
-				resourceRegExp: /^pg-native$|^cloudflare:sockets$/,
-			}),
-		);
 		return config;
 	},
 };

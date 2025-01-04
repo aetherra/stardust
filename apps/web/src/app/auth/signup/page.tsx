@@ -49,7 +49,7 @@ export default async function Page(props: {
 							redirect("/auth/signup?error=Failed%captcha");
 						}
 						const userCheck = await db.query.user.findFirst({
-							where: (user, { eq }) => eq(user.email_address, data.get("email")?.toString() || ""),
+							where: (user, { eq }) => eq(user.email, data.get("email")?.toString() || ""),
 						});
 						if (userCheck) redirect("/auth/login?error=Email%20already%20in%20use");
 						const email = data.get("email")?.toString() || "";
@@ -62,7 +62,7 @@ export default async function Page(props: {
 						) {
 							redirect("/auth/signup?error=Bad%20email");
 						}
-						if (email.length >= 64 || email.length >= 64 || email.length <= 7 || name.length <= 3) {
+						if (email.length > 64 || email.length < 8 || name.length > 32 || name.length < 3) {
 							redirect("/auth/signup?error=Bad%20email%20or%20name");
 						}
 						if (!password) redirect("/auth/signup?error=Bad%20password");
@@ -76,7 +76,7 @@ export default async function Page(props: {
 									.digest("hex")}?d=404&s=128`,
 							},
 						});
-						redirect("/auth/login?message=Account%20created%20successfully");
+						redirect("/auth/signin?message=Account%20created%20successfully");
 					} catch (e) {
 						unstable_rethrow(e);
 						throw e;
@@ -84,7 +84,16 @@ export default async function Page(props: {
 				}}
 			>
 				<Label htmlFor="name">Name</Label>
-				<Input id="name" type="text" name="name" placeholder="Name" autoComplete="name" className="w-full" />
+				<Input
+					id="name"
+					type="text"
+					name="name"
+					placeholder="Name"
+					autoComplete="name"
+					className="w-full"
+					minLength={3}
+					maxLength={32}
+				/>
 				<Label htmlFor="email">Email</Label>
 				<Input
 					id="email"
@@ -94,6 +103,8 @@ export default async function Page(props: {
 					autoComplete="email"
 					required
 					className="w-full"
+					minLength={8}
+					maxLength={64}
 				/>
 				<Label htmlFor="password">Password</Label>
 				<Input

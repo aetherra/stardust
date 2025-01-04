@@ -34,6 +34,11 @@ const auth = betterAuth({
 			});
 		}),
 	},
+	user: {
+		deleteUser: {
+			enabled: true,
+		},
+	},
 });
 export type SessionSchema = typeof auth.$Infer.Session;
 export default auth;

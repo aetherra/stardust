@@ -93,11 +93,10 @@ export default function Navigation({
 			url: "https://ui.shadcn.com/",
 		},
 		{
-			name: "Auth.js",
-			url: "https://authjs.dev/",
+			name: "better-auth",
+			url: "https://better-auth.com/",
 		},
 	];
-	const developers = ["incognitotgt", "proudparrot2", "genericness"];
 	return (
 		<nav className="flex h-16 min-w-full items-center justify-between px-4 border-b">
 			<div className="flex items-center gap-2">
@@ -157,22 +156,6 @@ export default function Navigation({
 											rel="noreferrer nopener"
 										>
 											{project.name}
-										</a>
-									</li>
-								))}
-							</ul>
-							Developers:
-							<br />
-							<ul className="list-inside list-disc">
-								{developers.map((developer) => (
-									<li key={developer}>
-										<a
-											href={`https://github.com/${developer}`}
-											className="inline font-medium text-primary underline-offset-4 hover:underline"
-											target="_blank"
-											rel="noreferrer nopener"
-										>
-											{developer}
 										</a>
 									</li>
 								))}
@@ -267,19 +250,13 @@ export default function Navigation({
 							<span>About Stardust</span>
 						</DropdownMenuItem>
 						<DropdownMenuItem asChild>
-							<Link href="/auth/reset-password">
-								<Key className="size-4 mr-2" />
-								<span>Reset Password</span>
-							</Link>
-						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
 							<Link href="/auth/delete">
 								<Trash className="size-4 mr-2" />
 								<span>Delete Account</span>
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem asChild>
-							<Link href="/auth/logout">
+							<Link href="/auth/signout">
 								<LogOut className="size-4 mr-2" />
 								<span>Log Out</span>
 							</Link>

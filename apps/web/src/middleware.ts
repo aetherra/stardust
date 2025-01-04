@@ -4,7 +4,6 @@ import { type NextRequest, NextResponse } from "next/server";
 const allowedPaths = ["/auth/signin", "/auth/error", "/auth/verify", "/auth/signup"];
 export default async function authMiddleware(req: NextRequest) {
 	const sessionEndpoint = `${reqWithTrustedOrigin(req).nextUrl.origin}/api/auth/get-session`;
-	console.log(sessionEndpoint);
 	const res = await fetch(sessionEndpoint, {
 		headers: {
 			cookie: req.headers.get("cookie") || "",
