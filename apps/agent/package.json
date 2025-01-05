@@ -1,0 +1,17 @@
+{
+	"name": "agent",
+	"version": "1.0.50",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "bun run --watch src/index.ts",
+		"check-types": "tsc --noEmit"
+	},
+	"dependencies": {
+		"elysia": "latest"
+	},
+	"devDependencies": {
+		"bun-types": "latest",
+		"@stardust/tsconfig": "workspace:*"
+	},
+	"module": "src/index.js"
+}

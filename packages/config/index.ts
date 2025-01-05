@@ -1,7 +1,7 @@
 import { Ajv } from "ajv";
 import { load } from "js-yaml";
 import type { Config } from "./config.d.ts";
-import schema from "./schema.json" with { type: "json" };
+import schema from "./schema.json";
 const loadedConfig = load(process.env.CONFIG as string);
 export function getConfig(): Config {
 	return loadedConfig as Config;
