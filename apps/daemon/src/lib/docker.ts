@@ -1,4 +1,4 @@
-import { getConfig } from "@stardust/config";
+import { getConfig } from "@/lib/config/index.js";
 import Dockerode from "dockerode";
 const { docker: config } = getConfig();
 export const createDocker = () =>

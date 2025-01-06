@@ -1,17 +1,31 @@
 {
 	"name": "daemon",
+	"type": "module",
 	"version": "1.0.50",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "bun run --watch src/index.ts",
-		"check-types": "tsc --noEmit"
+		"check-types": "tsc --noEmit",
+		"config-schema": "ts-json-schema-generator --tsconfig ./tsconfig.json --path ./src/lib/config/types.d.ts --type Config > ./schema.json",
+		"postinstall": "pnpm config-schema"
+	},
+	"imports": {
+		"@/*": "./src/*"
 	},
 	"dependencies": {
-		"elysia": "latest"
+		"@stardust/config": "workspace:*",
+		"ajv": "^8.17.1",
+		"dockerode": "^4.0.2",
+		"elysia": "latest",
+		"js-yaml": "^4.1.0"
 	},
 	"devDependencies": {
+		"@stardust/tsconfig": "workspace:*",
+		"@types/bun": "^1.1.15",
+		"@types/dockerode": "^3.3.32",
+		"@types/js-yaml": "^4.0.9",
 		"bun-types": "latest",
-		"@stardust/tsconfig": "workspace:*"
+		"ts-json-schema-generator": "^2.3.0"
 	},
 	"module": "src/index.js"
 }

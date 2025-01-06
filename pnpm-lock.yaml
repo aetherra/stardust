@@ -21,18 +21,42 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
 
-  apps/agent:
+  apps/daemon:
     dependencies:
+      '@stardust/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      ajv:
+        specifier: ^8.17.1
+        version: 8.17.1
+      dockerode:
+        specifier: ^4.0.2
+        version: 4.0.2
       elysia:
         specifier: latest
         version: 1.2.10(@sinclair/typebox@0.34.13)(typescript@5.5.4)
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
     devDependencies:
       '@stardust/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
+      '@types/bun':
+        specifier: ^1.1.15
+        version: 1.1.15
+      '@types/dockerode':
+        specifier: ^3.3.32
+        version: 3.3.32
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       bun-types:
         specifier: latest
         version: 1.1.42
+      ts-json-schema-generator:
+        specifier: ^2.3.0
+        version: 2.3.0
 
   apps/web:
     dependencies:
@@ -1309,6 +1333,9 @@ packages:
 
   '@ts-morph/common@0.19.0':
     resolution: {integrity: sha512-Unz/WHmd4pGax91rdIKWi51wnVUW11QttMEPpBiBgIewnc9UQIX7UDLxr5vRlqeByXCwhkF6VabSsI0raWcyAQ==}
+
+  '@types/bun@1.1.15':
+    resolution: {integrity: sha512-Fi7ND1jCq8O5iU3s9z3TKHggD0hidgpe7wSxyisviXpbMmY4B1KiokF3f/mmjOoDrEcf873tSpixgen7Wm9X0g==}
 
   '@types/docker-modem@3.0.6':
     resolution: {integrity: sha512-yKpAGEuKRSS8wwx0joknWxsmLha78wNMe9R2S3UNsVOkZded8UqOrV8KoeDXoXsjndxwyF3eIhyClGbO1SEhEg==}
@@ -3935,6 +3962,10 @@ snapshots:
       minimatch: 7.4.6
       mkdirp: 2.1.6
       path-browserify: 1.0.1
+
+  '@types/bun@1.1.15':
+    dependencies:
+      bun-types: 1.1.42
 
   '@types/docker-modem@3.0.6':
     dependencies:

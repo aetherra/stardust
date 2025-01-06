@@ -3,8 +3,8 @@
 	"exclude": ["node_modules"],
 	"include": ["./**/*.ts"],
 	"compilerOptions": {
-		"moduleResolution": "bundler",
-		"module": "Preserve",
+		"moduleResolution": "nodenext",
+		"module": "NodeNext",
 		"resolveJsonModule": true
 	}
 }

@@ -8,7 +8,8 @@
 	"license": "ISC",
 	"scripts": {
 		"check-types": "tsc --noEmit",
-		"postinstall": "ts-json-schema-generator --tsconfig ./tsconfig.json --path ./config.d.ts --type Config > ./schema.json"
+		"config-schema": "ts-json-schema-generator --tsconfig ./tsconfig.json --path ./config.d.ts --type Config > ./schema.json",
+		"postinstall": "pnpm config-schema"
 	},
 	"devDependencies": {
 		"@stardust/tsconfig": "workspace:*",

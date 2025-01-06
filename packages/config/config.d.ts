@@ -8,7 +8,6 @@ export interface Config {
 	 */
 	metadataUrl?: string;
 	nodes: NodeConfig[];
-	docker: DockerConfig;
 	auth: AuthConfig;
 	session?: SessionConfig;
 }
@@ -16,8 +15,9 @@ export interface Config {
 export interface NodeConfig {
 	/**
 	 * Hostname of the stardust node
+	 * @default 0.0.0.0
 	 */
-	hostname: string;
+	hostname?: string;
 	/**
 	 * Port stardustd is running on.
 	 * @default 4000
@@ -29,36 +29,12 @@ export interface NodeConfig {
 	token: string;
 }
 
-export interface DockerConfig {
-	/**
-	 * The type of connection to use to connect to the Docker daemon.
-	 * @default "socket"
-	 */
-	type?: "http" | "socket";
-	/**
-	 * The path to the Docker socket to connect to, if using a socket connection.
-	 * @default "/var/run/docker.sock"
-	 */
-	socket?: string;
-	/**
-	 * The host to connect to, if using an HTTP connection.
-	 */
-	host?: string;
-	/**
-	 * The port for the docker host, if using an HTTP connection.
-	 */
-	port?: number;
-	/**
-	 * The Docker network used for connecting to containers
-	 */
-	network: string;
-}
-
 export interface AuthConfig {
 	/**
 	 * The JWT secret used to sign tokens.
+	 * @default `sigmasigmaonthewall`
 	 **/
-	secret: string;
+	secret?: string;
 	/**
 	 * Cloudflare turnstile configuration. Leave `undefined` to disable turnstile.
 	 **/

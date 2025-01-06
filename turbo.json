@@ -16,6 +16,7 @@
 			"cache": false,
 			"persistent": true,
 			"passThroughEnv": ["CONFIG"]
-		}
+		},
+		"config-schema": {}
 	}
 }
