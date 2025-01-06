@@ -7,9 +7,26 @@ export interface Config {
 	 * The public URL of your Stardust instance. Use this if you want to display site metadata.
 	 */
 	metadataUrl?: string;
+	nodes: NodeConfig[];
 	docker: DockerConfig;
 	auth: AuthConfig;
 	session?: SessionConfig;
+}
+
+export interface NodeConfig {
+	/**
+	 * Hostname of the stardust node
+	 */
+	hostname: string;
+	/**
+	 * Port stardustd is running on.
+	 * @default 4000
+	 */
+	port?: number;
+	/**
+	 * Authentication token for the node.
+	 */
+	token: string;
 }
 
 export interface DockerConfig {
