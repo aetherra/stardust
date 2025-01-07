@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 
-# Stardust install script by truekas
 
 darwin_check() {
     if [[ $OSTYPE != "linux-gnu"* ]]; then
@@ -36,7 +35,7 @@ install_service() {
 
 prompts() {
     read -p "✨ Install directory [/opt/stardust]: " install_path
-    reap -p "✨ Make a systemd service? [Y/n]: " systemd
+    read -p "✨ Make a systemd service? [Y/n]: " systemd
     install_path=${install_path:-/opt/stardust}
     systemd=${systemd:-Y}
     install_st $install_path

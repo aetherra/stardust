@@ -9,7 +9,11 @@ export interface Config {
 	 * @default 0.0.0.0
 	 */
 	host?: string;
-
+	/**
+	 * Run stardustd as a systemd/launchd service.
+	 * @default true
+	 */
+	service?: boolean;
 	docker: DockerConfig;
 }
 

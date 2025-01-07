@@ -1,6 +1,6 @@
 # Elysia with Bun runtime
 
-**Create the file NOSERVICE in this directory if you don't want to use systemd/launchd**
+**Set `service` to `false` in config.yml if you don't want to use systemd/launchd**
 
 ## Getting Started
 To get started with this template, simply paste this command into your terminal:
