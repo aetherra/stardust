@@ -1,6 +1,6 @@
 [Unit]
 Description=Stardust Daemon
-After=docker.service postgresql.service
+After=docker.service
 
 [Service]
 WorkingDirectory=/opt/stardust/apps/daemon/
