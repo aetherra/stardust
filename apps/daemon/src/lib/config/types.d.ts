@@ -14,6 +14,11 @@ export interface Config {
 	 * @default true
 	 */
 	service?: boolean;
+	/**
+	 * Token used to authorize stardust servers. Uses an auto-generated token by default.
+	 * Do not change unless you know what you're doing.
+	 */
+	token?: string;
 	docker: DockerConfig;
 }
 
@@ -29,6 +34,12 @@ export interface DockerConfig {
 	 */
 	socket?: string;
 	/**
+	 * Enable interconnectivity between containers.
+	 * Do not enable unless you know what you're doing.
+	 * @default false
+	 */
+	enableIcc?: boolean;
+	/**
 	 * The host to connect to, if using an HTTP connection.
 	 */
 	host?: string;
@@ -36,6 +47,10 @@ export interface DockerConfig {
 	 * The port for the docker host, if using an HTTP connection.
 	 */
 	port?: number;
+	/**
+	 * Protocol, if using an HTTP connection
+	 */
+	protocol?: "http" | "https";
 	/**
 	 * The Docker network used for connecting to containers
 	 * @default `stardust`

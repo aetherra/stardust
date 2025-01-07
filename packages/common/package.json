@@ -10,13 +10,16 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@elysiajs/eden": "^1.2.0",
 		"@stardust/config": "workspace:*",
 		"@stardust/db": "workspace:*",
 		"better-auth": "^1.1.7",
 		"dockerode": "^4.0.2"
 	},
 	"devDependencies": {
+		"@stardust/tsconfig": "workspace:*",
 		"@types/dockerode": "^3.3.32",
-		"@stardust/tsconfig": "workspace:*"
+		"daemon": "workspace:*",
+		"elysia": "latest"
 	}
 }

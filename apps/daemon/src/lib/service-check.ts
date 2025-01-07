@@ -1,7 +1,7 @@
 import { existsSync as exists, readFileSync as read, writeFileSync as write } from "node:fs";
 import { getuid, platform } from "node:process";
 
-export default function doServiceCheck() {
+export default function checkSystemService() {
 	if (
 		(exists("/usr/bin/systemd") || exists("/usr/local/bin/systemd")) &&
 		!exists("/etc/systemd/system/stardustd.service") &&

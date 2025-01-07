@@ -14,6 +14,10 @@ export interface Config {
 
 export interface NodeConfig {
 	/**
+	 * ID of the node. Make it a unique string that helps identify it.
+	 */
+	id: string;
+	/**
 	 * Hostname of the stardust node
 	 * @default 0.0.0.0
 	 */

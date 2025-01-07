@@ -1,10 +1,13 @@
 import { getConfig } from "@/lib/config/index.js";
 import Dockerode from "dockerode";
 const { docker: config } = getConfig();
-export const createDocker = () =>
-	new Dockerode({
-		socketPath: !config.type || config.type === "socket" ? config.socket || "/var/run/docker.sock" : undefined,
-		host: config.type === "http" ? config.host : undefined,
-		port: config.type === "http" ? config.port : undefined,
-		protocol: config.type === "http" ? "http" : undefined,
-	});
+const socketConfig: Dockerode.DockerOptions = { socketPath: config.socket || "/var/run/docker.sock" };
+const httpConfig: Dockerode.DockerOptions = {
+	host: config.host,
+	port: config.port,
+	protocol: config.protocol || "http",
+};
+const dockerodeConfig =
+	config.type === "http" ? httpConfig : !config.type || config.type === "socket" ? socketConfig : {};
+
+export const docker = new Dockerode(dockerodeConfig);

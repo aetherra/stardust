@@ -55,3 +55,5 @@ main() {
     darwin_check
     prompts
 }
+
+main

@@ -19,6 +19,7 @@ export const workspaceRelations = relations(workspace, ({ many }) => ({
 export const session = pgTable("session", {
 	id: text("id").primaryKey().notNull(),
 	dockerImage: text("dockerImage").notNull(),
+	node: text("node").notNull(),
 	createdAt: bigint("createdAt", { mode: "number" }).notNull(),
 	expiresAt: bigint("expiresAt", { mode: "number" }).notNull(),
 	userId: text("userId")
