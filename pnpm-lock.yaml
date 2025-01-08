@@ -26,9 +26,6 @@ importers:
 
   apps/daemon:
     dependencies:
-      '@stardust/config':
-        specifier: workspace:*
-        version: link:../../packages/config
       ajv:
         specifier: ^8.17.1
         version: 8.17.1

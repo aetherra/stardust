@@ -3,7 +3,8 @@
 	"type": "module",
 	"version": "1.0.50",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "./stardustd",
+		"build": "bun build src/index.ts --compile --minify --outfile stardustd",
 		"dev": "bun run --watch src/index.ts",
 		"check-types": "tsc --noEmit",
 		"config-schema": "ts-json-schema-generator --tsconfig ./tsconfig.json --path ./src/lib/config/types.d.ts --type Config > ./schema.json",
@@ -13,7 +14,6 @@
 		"@/*": "./src/*"
 	},
 	"dependencies": {
-		"@stardust/config": "workspace:*",
 		"ajv": "^8.17.1",
 		"dockerode": "^4.0.2",
 		"elysia": "latest",

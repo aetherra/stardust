@@ -6,13 +6,26 @@ import manageSession from "./manage.js";
 export default new Elysia({ prefix: "/session" })
 	.put(
 		"/",
-		// todo: add other container config stuff here
 		async ({ body }) => {
-			await createSession(body.workspace);
+			try {
+				const session = await createSession(body);
+				return {
+					success: true,
+					id: session.Id,
+					created: session.Created,
+				};
+			} catch (e) {
+				return { success: false, error: e };
+			}
 		},
 		{
 			body: t.Object({
 				workspace: t.String(),
+				user: t.String(),
+				environment: t.Optional(t.Record(t.String(), t.String())),
+				offline: t.Optional(t.Boolean()),
+				exposePorts: t.Optional(t.Array(t.String())),
+				memory: t.Optional(t.Number()),
 			}),
 		},
 	)

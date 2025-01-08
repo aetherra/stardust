@@ -19,6 +19,10 @@ export interface Config {
 	 * Do not change unless you know what you're doing.
 	 */
 	token?: string;
+	/**
+	 * DNS servers for the session to use.
+	 */
+	dnsServers?: string[];
 	docker: DockerConfig;
 }
 

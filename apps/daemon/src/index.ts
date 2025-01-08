@@ -1,26 +1,32 @@
-import { getConfig, validateConfig } from "@/lib/config/index.js";
+import "@/lib/config/validate.js";
 import checkDockerNetwork from "@/lib/network-check.js";
 import checkSystemService from "@/lib/service-check.js";
 import sessionHandler from "@/session/index.js";
 import { Elysia } from "elysia";
-const config = getConfig();
-if (!validateConfig(config)) {
-	console.error("Invalid configuration");
-	process.exit(1);
-}
-
+import { authCheck } from "./auth-middleware.js";
+import { getConfig } from "./lib/config/index.js";
+import { docker } from "./lib/docker.js";
 await checkDockerNetwork();
-
+const config = getConfig();
 if (typeof config.service !== "boolean" || config.service === true) {
 	checkSystemService();
 }
 
-export const app = new Elysia()
-	.get("/", () => ({
-		message:
-			"✨ Stardust daemon by spaceness. \nSource tree: https://github.com/spaceness/stardust/tree/rewrite/apps/daemon",
+const app = new Elysia()
+	.get("/", async (c) => {
+		return {
+			message:
+				"✨ Stardust daemon by spaceness. \nSource tree: https://github.com/spaceness/stardust/tree/rewrite/apps/daemon",
+			success: true,
+			authenticated: authCheck(c)?.success !== false,
+		};
+	})
+	.onBeforeHandle(authCheck)
+	.get("/healthcheck", {
 		success: true,
-	}))
+		cpu: process.cpuUsage(),
+		sessions: (await docker.listContainers()).filter((s) => s.Names[0].startsWith("/stardust")).length,
+	})
 	.use(sessionHandler);
 
 app.listen({
