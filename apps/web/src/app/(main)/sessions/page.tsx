@@ -4,8 +4,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { inspectSession } from "@/lib/sessions/inspect";
 import auth from "@stardust/common/auth";
-import { createDocker } from "@stardust/common/docker";
 import db, { type SelectSession } from "@stardust/db";
 import { Container, Loader2, PauseCircle, PlayCircle, ScreenShare, Square, Trash2 } from "lucide-react";
 import { revalidatePath } from "next/cache";
@@ -22,13 +22,14 @@ const ManageSessionButton = ({
 	icon,
 }: {
 	session: SelectSession;
-	action: keyof ReturnType<ReturnType<typeof createDocker>["getContainer"]>;
+	action: string;
 	redirectToView?: boolean;
 	icon: React.ReactNode;
 }) => (
 	<form
 		action={async () => {
 			"use server";
+
 			console.log("managing", session.id, action);
 
 			if (redirectToView) redirect(`/view/${session.id}`);
@@ -48,7 +49,6 @@ const ManageSessionButton = ({
 	</form>
 );
 export default async function Dashboard() {
-	const docker = createDocker();
 	const userSession = await auth.api.getSession({ headers: await headers() });
 	const sessions = await db.query.session.findMany({
 		with: {
@@ -56,7 +56,7 @@ export default async function Dashboard() {
 		},
 		where: (users, { eq }) => eq(users.userId, userSession?.user.id as string),
 	});
-	const containerStates = await Promise.all(sessions.map((session) => docker.getContainer(session.id).inspect()));
+	const containerStates = await Promise.all(sessions.map(inspectSession));
 	return (
 		<div className="m-auto flex w-full flex-col p-4">
 			<h1 className="text-3xl font-bold mb-6">Sessions</h1>

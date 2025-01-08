@@ -1,22 +1,20 @@
+import { getConfig } from "@/lib/config/index.js";
+import { docker } from "@/lib/docker.js";
 import { Elysia, t } from "elysia";
 import createSession from "./create.js";
 import deleteSession from "./delete.js";
 import manageSession from "./manage.js";
 // fill this
-export default new Elysia({ prefix: "/session" })
+export default new Elysia({ prefix: "/sessions" })
 	.put(
 		"/",
 		async ({ body }) => {
-			try {
-				const session = await createSession(body);
-				return {
-					success: true,
-					id: session.Id,
-					created: session.Created,
-				};
-			} catch (e) {
-				return { success: false, error: e };
-			}
+			const session = await createSession(body);
+			return {
+				success: true,
+				id: session.Id,
+				created: session.Created,
+			};
 		},
 		{
 			body: t.Object({
@@ -29,15 +27,31 @@ export default new Elysia({ prefix: "/session" })
 			}),
 		},
 	)
+	.get("/list", async () => {
+		const config = getConfig();
+		const containers = (await docker.listContainers()).filter(
+			(s) => s.HostConfig.NetworkMode === config.docker.network,
+		);
+		return {
+			success: true,
+			containers,
+		};
+	})
+	.get("/:id", async ({ params: { id } }) => {
+		const container = await docker.getContainer(id).inspect();
+		if (!container) {
+			throw new Error(`No such container with id ${id}`);
+		}
+		return {
+			success: true,
+			...container,
+		};
+	})
 	.patch(
 		"/:id",
 		async ({ params: { id }, body }) => {
-			try {
-				await manageSession(id, body.action);
-				return { success: true };
-			} catch (e) {
-				return { success: false, error: e };
-			}
+			await manageSession(id, body.action);
+			return { success: true };
 		},
 		{
 			body: t.Object({
@@ -46,10 +60,6 @@ export default new Elysia({ prefix: "/session" })
 		},
 	)
 	.delete("/:id", async ({ params: { id } }) => {
-		try {
-			await deleteSession(id);
-			return { success: true };
-		} catch (e) {
-			return { success: false, error: e };
-		}
+		await deleteSession(id);
+		return { success: true };
 	});

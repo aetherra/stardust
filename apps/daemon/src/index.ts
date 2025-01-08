@@ -22,10 +22,16 @@ const app = new Elysia()
 		};
 	})
 	.onBeforeHandle(authCheck)
+	.onError(({ error }) => {
+		return {
+			success: false,
+			error: error.toString(),
+		};
+	})
 	.get("/healthcheck", {
 		success: true,
 		cpu: process.cpuUsage(),
-		sessions: (await docker.listContainers()).filter((s) => s.Names[0].startsWith("/stardust")).length,
+		sessions: (await docker.listContainers()).filter((s) => s.HostConfig.NetworkMode === config.docker.network).length,
 	})
 	.use(sessionHandler);
 
@@ -35,6 +41,4 @@ app.listen({
 });
 
 console.log(`✨ Stardust daemon is running at ${app.server?.hostname}:${app.server?.port}`);
-
-// eden
 export type App = typeof app;
