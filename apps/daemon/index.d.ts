@@ -1,1 +1,1 @@
-export { App } from "@/index.ts";
+export { App } from "~/index.ts";

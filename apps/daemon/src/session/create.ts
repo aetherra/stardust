@@ -1,6 +1,6 @@
 import { randomBytes } from "node:crypto";
-import { getConfig } from "@/lib/config/index.js";
-import { docker } from "@/lib/docker.js";
+import { getConfig } from "~/lib/config/index.js";
+import { docker } from "~/lib/docker.js";
 
 export default async function createSession({
 	workspace,

@@ -5,7 +5,7 @@
 		"module": "NodeNext",
 		"resolveJsonModule": true,
 		"paths": {
-			"@/*": ["./src/*"]
+			"~/*": ["./src/*"]
 		}
 	},
 	"include": ["**/*.ts"],

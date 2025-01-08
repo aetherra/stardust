@@ -1,6 +1,6 @@
-import defaultSchema from "@/../schema.json";
 import { Ajv } from "ajv";
 import { load } from "js-yaml";
+import defaultSchema from "~/../schema.json";
 import type { Config } from "./types.d.ts";
 let loadedConfig: unknown;
 try {

@@ -1,5 +1,5 @@
-import { getConfig } from "@/lib/config/index.js";
 import Dockerode from "dockerode";
+import { getConfig } from "~/lib/config/index.js";
 const { docker: config } = getConfig();
 const socketConfig: Dockerode.DockerOptions = { socketPath: config.socket || "/var/run/docker.sock" };
 const httpConfig: Dockerode.DockerOptions = {

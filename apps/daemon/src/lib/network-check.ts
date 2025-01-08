@@ -1,5 +1,5 @@
-import { getConfig } from "@/lib/config/index.js";
-import { docker } from "@/lib/docker.js";
+import { getConfig } from "~/lib/config/index.js";
+import { docker } from "~/lib/docker.js";
 const { docker: config } = getConfig();
 
 export default async function checkDockerNetwork() {

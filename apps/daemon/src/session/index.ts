@@ -1,6 +1,6 @@
-import { getConfig } from "@/lib/config/index.js";
-import { docker } from "@/lib/docker.js";
 import { Elysia, t } from "elysia";
+import { getConfig } from "~/lib/config/index.js";
+import { docker } from "~/lib/docker.js";
 import createSession from "./create.js";
 import deleteSession from "./delete.js";
 import manageSession from "./manage.js";
