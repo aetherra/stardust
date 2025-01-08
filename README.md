@@ -1,3 +1,8 @@
+> [!CAUTION]
+> This is a new rewrite branch of stardust. If you're looking to host it, go to [`v0.9`](https://github.com/spaceness/stardust/tree/v0.9)
+
+
+
 # Turborepo starter
 
 This is an official starter Turborepo.
