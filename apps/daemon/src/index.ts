@@ -31,6 +31,7 @@ const app = new Elysia()
 	.get("/healthcheck", {
 		success: true,
 		cpu: process.cpuUsage(),
+		mem: process.memoryUsage(),
 		sessions: (await docker.listContainers()).filter((s) => s.HostConfig.NetworkMode === config.docker.network).length,
 	})
 	.use(sessionHandler)

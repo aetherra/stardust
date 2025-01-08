@@ -3,6 +3,7 @@ import { getConfig } from "~/lib/config/index.js";
 import { docker } from "~/lib/docker.js";
 import createSession from "./create.js";
 import deleteSession from "./delete.js";
+import { getFile, sendFile } from "./file.js";
 import manageSession from "./manage.js";
 // fill this
 export default new Elysia({ prefix: "/sessions" })
@@ -62,4 +63,23 @@ export default new Elysia({ prefix: "/sessions" })
 	.delete("/:id", async ({ params: { id } }) => {
 		await deleteSession(id);
 		return { success: true };
-	});
+	})
+	.group("/:id/files", (app) =>
+		app
+			.get("/list", () => {
+				return true; // do this later (I HATE DOCKER)
+			})
+			.get("/download/:name", async ({ params: { id, name } }) => getFile(id, name))
+			.put(
+				"/upload/:name",
+				async ({ params: { id, name }, body }) => {
+					const res = await sendFile(id, name, Buffer.from(body));
+					return {
+						success: res,
+					};
+				},
+				{
+					body: t.Uint8Array(),
+				},
+			),
+	);

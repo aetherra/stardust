@@ -22,6 +22,7 @@ export default async function createSession({
 	const container = await docker.createContainer({
 		name: `stardust-session-${workspace.replaceAll("/", "_")}-${Buffer.from(randomBytes(4)).toString("hex")}`,
 		Image: workspace,
+		Tty: true,
 		HostConfig: {
 			ShmSize: 1024,
 			NetworkMode: config.docker.network,
