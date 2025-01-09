@@ -5,7 +5,7 @@ import { docker } from "~/lib/docker.js";
 export default async function createSession({
 	workspace,
 	user,
-	environment,
+	environment = {},
 	offline,
 	exposePorts,
 	memory,
@@ -18,7 +18,7 @@ export default async function createSession({
 	memory?: number;
 }) {
 	const config = getConfig();
-	const envArray = Object.entries(environment || { STARDUST_USER: user }).map(([key, value]) => `${key}=${value}`);
+	const envArray = Object.entries(environment).map(([key, value]) => `${key}=${value}`);
 	const container = await docker.createContainer({
 		name: `stardust-session-${workspace.replaceAll("/", "_")}-${Buffer.from(randomBytes(4)).toString("hex")}`,
 		Image: workspace,
@@ -29,7 +29,7 @@ export default async function createSession({
 			Dns: config.dnsServers,
 			Memory: memory,
 		},
-		Env: envArray,
+		Env: [`STARDUST_USER=${user}`, ...envArray],
 		NetworkDisabled: offline || false,
 		ExposedPorts: exposePorts ? Object.fromEntries(exposePorts.map((e) => [e, {}])) : undefined, // world class types by docker
 	});
