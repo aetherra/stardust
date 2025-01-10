@@ -3,7 +3,7 @@ import { getConfig } from "~/lib/config/index.js";
 import { docker } from "~/lib/docker.js";
 import createSession from "./create.js";
 import deleteSession from "./delete.js";
-import { getFile, sendFile } from "./file.js";
+import { getFile, listFiles, sendFile } from "./file.js";
 import manageSession from "./manage.js";
 import screenshot from "./screenshot.js";
 // fill this
@@ -81,19 +81,7 @@ export default new Elysia({ prefix: "/sessions" })
 	.group("/:id/files", (app) =>
 		app
 			.get("/list", async ({ params: { id } }) => {
-				const exec = await docker.getContainer(id).exec({
-					Cmd: ["sh", "-c", "ls /home/stardust/Downloads"],
-					AttachStdout: true,
-					AttachStderr: true,
-				});
-
-				const stream = await exec.start({ hijack: true, stdin: true });
-				const data = await new Promise<string>((res, err) => {
-					const out: string[] = [];
-					stream.on("error", err);
-					stream.on("data", (chunk) => out.push(chunk.toString()));
-					stream.on("end", () => res(out.join("")));
-				});
+				const data = await listFiles(id);
 				return {
 					success: true,
 					data: data.split("\n").filter(Boolean),

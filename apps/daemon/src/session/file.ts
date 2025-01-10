@@ -21,3 +21,20 @@ export async function getFile(id: string, name: string) {
 	const unzipped = Bun.gunzipSync(file.read());
 	return unzipped;
 }
+
+export async function listFiles(id: string) {
+	const exec = await docker.getContainer(id).exec({
+		Cmd: ["sh", "-c", "ls /home/stardust/Downloads"],
+		AttachStdout: true,
+		AttachStderr: true,
+	});
+
+	const stream = await exec.start({ hijack: true, stdin: true });
+	const data = await new Promise<string>((res, err) => {
+		const out: string[] = [];
+		stream.on("error", err);
+		stream.on("data", (chunk) => out.push(chunk.toString()));
+		stream.on("end", () => res(out.join("")));
+	});
+	return data;
+}

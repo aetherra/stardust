@@ -41,4 +41,6 @@ const app = new Elysia()
 	});
 
 console.log(`✨ Stardust daemon is running at ${app.server?.hostname}:${app.server?.port}`);
+
+// eden
 export type App = typeof app;
