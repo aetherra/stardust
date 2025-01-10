@@ -4,6 +4,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { getNode } from "@/lib/sessions/client";
 import { inspectSession } from "@/lib/sessions/inspect";
 import auth from "@stardust/common/auth";
 import db, { type SelectSession } from "@stardust/db";
@@ -22,16 +23,16 @@ const ManageSessionButton = ({
 	icon,
 }: {
 	session: SelectSession;
-	action: string;
+	// world class code
+	action: Parameters<ReturnType<ReturnType<typeof getNode>["sessions"]>["patch"]>[0]["action"];
 	redirectToView?: boolean;
 	icon: React.ReactNode;
 }) => (
 	<form
 		action={async () => {
 			"use server";
-
-			console.log("managing", session.id, action);
-
+			const node = getNode(session);
+			await node.sessions({ id: session.id }).patch({ action });
 			if (redirectToView) redirect(`/view/${session.id}`);
 			else revalidatePath("/sessions");
 		}}
@@ -134,6 +135,7 @@ export default async function Dashboard() {
 												<Tooltip>
 													<TooltipTrigger asChild>
 														<Button size="icon" variant="ghost" asChild>
+															{/* @ts-expect-error this will be fixed in the future */}
 															<Link href={`/view/${session.id}`}>
 																<ScreenShare />
 															</Link>

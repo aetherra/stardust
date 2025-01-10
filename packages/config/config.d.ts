@@ -7,6 +7,10 @@ export interface Config {
 	 * The public URL of your Stardust instance. Use this if you want to display site metadata.
 	 */
 	metadataUrl?: string;
+	/**
+	 * The URL of the Nostr relay to connect to.
+	 */
+	nostrUrl: string;
 	nodes: NodeConfig[];
 	auth: AuthConfig;
 	session?: SessionConfig;
