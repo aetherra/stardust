@@ -1,9 +1,10 @@
 import { randomBytes } from "node:crypto";
 import { dump } from "js-yaml";
 import { getConfig } from "./config/index";
+import getConfigFile from "./config/location";
 import type { Config } from "./config/types.d.ts";
 
-export default function generateToken() {
+export default async function generateToken() {
 	const config = getConfig();
 	if (config.token) {
 		console.log("✨ Stardust: Config token already set");
@@ -11,7 +12,7 @@ export default function generateToken() {
 	}
 	console.log("✨ Stardust: Token not set in configuration, generating...");
 	const token = Buffer.from(randomBytes(32)).toString("hex");
-	const writer = Bun.file(`${process.cwd()}/config.yml`).writer();
+	const writer = (await getConfigFile()).writer();
 	const newConfig = dump({
 		...config,
 		token,

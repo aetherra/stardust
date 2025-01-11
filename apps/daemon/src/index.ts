@@ -1,3 +1,4 @@
+#!/usr/bin/env bun
 import "./help-message";
 import { getConfig, validateConfig } from "~/lib/config";
 if (!validateConfig(getConfig())) {
@@ -21,7 +22,7 @@ const app = new Elysia()
 			message:
 				"✨ Stardust daemon by spaceness. \nSource tree: https://github.com/spaceness/stardust/tree/rewrite/apps/daemon",
 			success: true,
-			authenticated: authCheck(c)?.success !== false,
+			authenticated: (await authCheck(c))?.success !== false,
 		};
 	})
 	.onBeforeHandle(authCheck)
