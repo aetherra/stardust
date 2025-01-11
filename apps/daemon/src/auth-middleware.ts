@@ -1,5 +1,5 @@
 import type { Context } from "elysia";
-import generateToken from "~/lib/auth-token.js";
+import generateToken from "~/lib/auth-token";
 const configuredToken = generateToken();
 export function authCheck(c: Context) {
 	const authHeader = c.request.headers.get("Authorization");

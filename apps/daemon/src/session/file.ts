@@ -1,4 +1,4 @@
-import { docker } from "~/lib/docker.js";
+import { docker } from "~/lib/docker";
 
 export async function sendFile(id: string, name: string, file: Uint8Array) {
 	const container = docker.getContainer(id);

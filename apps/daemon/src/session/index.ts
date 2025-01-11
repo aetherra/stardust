@@ -1,11 +1,11 @@
 import { Elysia, t } from "elysia";
-import { getConfig } from "~/lib/config/index.js";
-import { docker } from "~/lib/docker.js";
-import createSession from "./create.js";
-import deleteSession from "./delete.js";
-import { getFile, listFiles, sendFile } from "./file.js";
-import manageSession from "./manage.js";
-import screenshot from "./screenshot.js";
+import { getConfig } from "~/lib/config";
+import { docker } from "~/lib/docker";
+import createSession from "./create";
+import deleteSession from "./delete";
+import { getFile, listFiles, sendFile } from "./file";
+import manageSession from "./manage";
+import screenshot from "./screenshot";
 export default new Elysia({ prefix: "/sessions" })
 	.put(
 		"/create",

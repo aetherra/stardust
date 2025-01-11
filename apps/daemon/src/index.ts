@@ -1,17 +1,20 @@
-import "~/lib/config/validate.js";
+import "./help-message";
+import { getConfig, validateConfig } from "~/lib/config";
+if (!validateConfig(getConfig())) {
+	console.error("Invalid configuration");
+	process.exit(1);
+}
 import { Elysia } from "elysia";
-import { docker } from "~/lib/docker.js";
-import checkDockerNetwork from "~/lib/network-check.js";
-import checkSystemService from "~/lib/service-check.js";
-import sessionHandler from "~/session/index.js";
-import { authCheck } from "./auth-middleware.js";
-import { getConfig } from "./lib/config/index.js";
+import { authCheck } from "~/auth-middleware";
+import { docker } from "~/lib/docker";
+import checkDockerNetwork from "~/lib/network-check";
+import checkSystemService from "~/lib/service-check";
+import sessionHandler from "~/session";
 await checkDockerNetwork();
 const config = getConfig();
 if (typeof config.service !== "boolean" || config.service === true) {
 	checkSystemService();
 }
-
 const app = new Elysia()
 	.get("/", async (c) => {
 		return {

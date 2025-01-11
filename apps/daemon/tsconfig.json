@@ -1,8 +1,7 @@
 {
 	"extends": "@stardust/tsconfig/base.json",
 	"compilerOptions": {
-		"moduleResolution": "nodenext",
-		"module": "NodeNext",
+		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 		"paths": {
 			"~/*": ["./src/*"]

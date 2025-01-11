@@ -4,6 +4,7 @@
 	"version": "1.0.50",
 	"scripts": {
 		"start": "./stardustd",
+		"build:debug": "bun build src/index.ts --compile --sourcemap --outfile stardustd",
 		"build": "bun build src/index.ts --compile --minify --outfile stardustd",
 		"dev": "bun run --watch src/index.ts",
 		"check-types": "tsc --noEmit",
@@ -26,5 +27,5 @@
 		"bun-types": "latest",
 		"ts-json-schema-generator": "^2.3.0"
 	},
-	"module": "src/index.js"
+	"module": "src/index.ts"
 }

@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { dump } from "js-yaml";
-import { getConfig } from "./config/index.js";
-import type { Config } from "./config/types.js";
+import { getConfig } from "./config/index";
+import type { Config } from "./config/types.d.ts";
 
 export default function generateToken() {
 	const config = getConfig();
@@ -17,7 +17,7 @@ export default function generateToken() {
 		token,
 	} satisfies Config);
 	writer.write(`${newConfig}\n`);
-	writer.write("# yaml-language-server: $schema=schema.json");
+	writer.write("# yaml-language-server: $schema=schemaon");
 	writer.end();
 	console.log("✨ Stardust: Token generated: %s", token);
 	return token;

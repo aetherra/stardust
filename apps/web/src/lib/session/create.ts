@@ -53,7 +53,7 @@ export async function createSession(workspace: string) {
 		})
 		.returning()
 		.catch(async (e) => {
-			await node.sessions({ ...container }).delete();
+			await node.sessions(container).delete();
 			throw e;
 		});
 }

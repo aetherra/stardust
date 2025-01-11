@@ -32,7 +32,7 @@ const ManageSessionButton = ({
 		action={async () => {
 			"use server";
 			const node = getNode(session);
-			await node.sessions({ id: session.id }).patch({ action });
+			await node.sessions(session).patch({ action });
 			if (redirectToView) redirect(`/view/${session.id}`);
 			else revalidatePath("/sessions");
 		}}

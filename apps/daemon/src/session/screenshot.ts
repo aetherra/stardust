@@ -1,4 +1,4 @@
-import { docker } from "~/lib/docker.js";
+import { docker } from "~/lib/docker";
 export default async function screenshot(id: string) {
 	const container = docker.getContainer(id);
 	const exec = await container.exec({
