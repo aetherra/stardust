@@ -6,16 +6,15 @@ import deleteSession from "./delete.js";
 import { getFile, listFiles, sendFile } from "./file.js";
 import manageSession from "./manage.js";
 import screenshot from "./screenshot.js";
-// fill this
 export default new Elysia({ prefix: "/sessions" })
 	.put(
-		"/",
+		"/create",
 		async ({ body }) => {
 			const session = await createSession(body);
 			return {
 				success: true,
 				id: session.Id,
-				created: session.Created,
+				created: Number.parseInt(session.Created),
 			};
 		},
 		{

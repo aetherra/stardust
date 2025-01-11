@@ -53,7 +53,7 @@ export default async function Dashboard() {
 											Close
 										</Button>
 									</DialogClose>
-									<CreateSessionButton image={workspace.dockerImage} />
+									<CreateSessionButton workspace={workspace.dockerImage} />
 								</DialogFooter>
 							</DialogContent>
 						</Dialog>

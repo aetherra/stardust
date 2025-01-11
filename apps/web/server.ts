@@ -1,6 +1,4 @@
 import { createServer } from "node:http";
-import auth from "@stardust/common/auth";
-import { fromNodeHeaders } from "better-auth/node";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import next from "next";
 const dev = process.env.NODE_ENV !== "production";

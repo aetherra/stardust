@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { bigint, pgTable, text } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { user } from "./auth";
 
 export type SelectUser = typeof user.$inferSelect;
@@ -20,8 +20,8 @@ export const session = pgTable("session", {
 	id: text("id").primaryKey().notNull(),
 	dockerImage: text("dockerImage").notNull(),
 	node: text("node").notNull(),
-	createdAt: bigint("createdAt", { mode: "number" }).notNull(),
-	expiresAt: bigint("expiresAt", { mode: "number" }).notNull(),
+	createdAt: timestamp("createdAt").notNull(),
+	expiresAt: timestamp("expiresAt").notNull(),
 	userId: text("userId")
 		.notNull()
 		.references(() => user.id),
