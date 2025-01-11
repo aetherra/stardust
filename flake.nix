@@ -44,14 +44,13 @@
       ];
 
       perSystem =
-        {
-          lib,
-          pkgs,
-          self',
-          config,
-          inputs',
-          system,
-          ...
+        { lib
+        , pkgs
+        , self'
+        , config
+        , inputs'
+        , system
+        , ...
         }:
         {
           # this is what controls how packages in the flake are built, but this is not passed to the
@@ -126,6 +125,20 @@
                 pkgs.postgresql_16
                 pkgs.libpqxx
                 pkgs.jq
+                (pkgs.bun.overrideAttrs rec {
+                  version = "1.1.43";
+                  passthru.sources = {
+                    "x86_64-linux" = pkgs.fetchurl {
+                      url = "https://github.com/oven-sh/bun/releases/download/bun-v1.1.43/bun-linux-x64-baseline.zip";
+                      hash = "sha256-6xY2I50sQoggJq3F3whD86kmTPHykOxzX5RbQsXxoX8=";
+                    };
+                    "x86_64-darwin" = pkgs.fetchurl {
+                      url = "https://github.com/oven-sh/bun/releases/download/bun-v1.1.43/bun-darwin-x64-baseline.zip";
+                      hash = "sha256-q2vBAlBJ7FRowGje7F50MUdgDrOmeyG0xHYC1nRpETY=";
+                    };
+                  };
+                  src = passthru.sources.${system};
+                })
               ];
 
               inputsFrom = [ config.treefmt.build.devShell ];
