@@ -1,0 +1,5 @@
+#!/bin/bash
+xrdb $HOME/.Xresources
+export DISPLAY=":1"
+startxfce4
+sleep 30

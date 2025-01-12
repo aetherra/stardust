@@ -8,18 +8,18 @@
 		"lineEnding": "lf",
 		"lineWidth": 120,
 		"attributePosition": "auto",
-		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**"]
+		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**", "./starlight/**"]
 	},
 	"organizeImports": {
 		"enabled": true,
-		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**"]
+		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**", "./starlight/**"]
 	},
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true
 		},
-		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**"]
+		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**", "./starlight/**"]
 	},
 	"javascript": {
 		"formatter": {

@@ -83,7 +83,7 @@ export default new Elysia({ prefix: "/sessions" })
 				const data = await listFiles(id);
 				return {
 					success: true,
-					data: data.split("\n").filter(Boolean),
+					list: data.split("\n").filter(Boolean),
 				};
 			})
 			.get("/download/:name", async ({ params: { id, name } }) => getFile(id, name))

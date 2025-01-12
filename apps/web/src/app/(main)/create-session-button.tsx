@@ -16,7 +16,6 @@ export function CreateSessionButton({ workspace }: { workspace: string }) {
 						toast.error("Error creating session");
 					});
 					if (!session) return;
-					// @ts-expect-error to be fixed later
 					router.push(`/view/${session[0].id}`);
 				})
 			}

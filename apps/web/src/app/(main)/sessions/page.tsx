@@ -6,6 +6,7 @@ import { CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { getNode } from "@/lib/session/client";
 import { inspectSession } from "@/lib/session/inspect";
+import type { SessionAction } from "@/lib/session/manage";
 import auth from "@stardust/common/auth";
 import db, { type SelectSession } from "@stardust/db";
 import { Container, Loader2, PauseCircle, PlayCircle, ScreenShare, Square, Trash2 } from "lucide-react";
@@ -24,7 +25,7 @@ const ManageSessionButton = ({
 }: {
 	session: SelectSession;
 	// world class code
-	action: Parameters<ReturnType<ReturnType<typeof getNode>["sessions"]>["patch"]>[0]["action"];
+	action: SessionAction;
 	redirectToView?: boolean;
 	icon: React.ReactNode;
 }) => (
@@ -135,7 +136,6 @@ export default async function Dashboard() {
 												<Tooltip>
 													<TooltipTrigger asChild>
 														<Button size="icon" variant="ghost" asChild>
-															{/* @ts-expect-error this will be fixed in the future */}
 															<Link href={`/view/${session.id}`}>
 																<ScreenShare />
 															</Link>
