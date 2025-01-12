@@ -6,16 +6,16 @@ ENV PNPM_HOME="/home/stardust/.local/share/pnpm"
 ENV DEBIAN_FRONTEND=noninteractive
 
 COPY ./scripts /opt/stardust/scripts
-
+# idk if all of these are needed someone fix this - @incognitotgt
 RUN apt-get update && apt-get install --no-install-recommends -y \
-  xfonts-75dpi xvfb passwd sudo dbus dbus-x11 \
-  libxrandr2 libxext-dev libxrender-dev libxtst-dev python3 python3-pip xterm git procps python3-numpy neofetch \
-  xfce4 wget curl xfce4-goodies inetutils-ping firefox-esr chromium gimp remmina remmina-plugin-vnc remmina-plugin-rdp flatpak vim \
-  tigervnc-tools tigervnc-standalone-server tigervnc-common
+  xfonts-75dpi xvfb passwd sudo dbus dbus-x11 libxrandr2 libxext-dev libxrender-dev libxtst-dev \
+  python3 python3-pip xterm procps python3-numpy xfwm4 xfce4-terminal xfce4-session xfconf xfce4-notifyd \
+  wget curl inetutils-ping vim tigervnc-tools tigervnc-standalone-server tigervnc-common \
+  {{APPLICATION_PACKAGE}}
 
 RUN bash /opt/stardust/scripts/prepare.sh
 USER stardust
-COPY ./debian/xstartup /home/stardust/.vnc/xstartup
+COPY ./{{NAME}}/xstartup /home/stardust/.vnc/xstartup
 RUN bash /opt/stardust/scripts/vnc-setup.sh
 
 WORKDIR /home/stardust

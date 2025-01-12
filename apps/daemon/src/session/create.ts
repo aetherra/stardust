@@ -5,13 +5,17 @@ import { docker } from "~/lib/docker";
 export default async function createSession({
 	workspace,
 	user,
+	nostrUrl,
 	environment = {},
 	offline,
 	exposePorts,
 	memory,
+	password,
 }: {
 	workspace: string;
 	user: string;
+	password: string;
+	nostrUrl: string;
 	environment?: Record<string, string>;
 	offline?: boolean;
 	exposePorts?: string[];
@@ -29,7 +33,7 @@ export default async function createSession({
 			Dns: config.dnsServers,
 			Memory: memory,
 		},
-		Env: [`STARDUST_USER=${user}`, ...envArray],
+		Env: [`STARDUST_USER=${user}`, `VNCPASSWORD=${password}`, `STARLIGHT_NOSTR=${nostrUrl}`, ...envArray],
 		NetworkDisabled: offline || false,
 		ExposedPorts: exposePorts ? Object.fromEntries(exposePorts.map((e) => [e, {}])) : undefined, // world class types by docker
 	});

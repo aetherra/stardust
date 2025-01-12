@@ -1,5 +1,6 @@
 "use server";
 
+import { randomBytes } from "node:crypto";
 import auth from "@stardust/common/auth";
 import { stardustConnector } from "@stardust/common/daemon/client";
 import { getConfig } from "@stardust/config";
@@ -37,6 +38,8 @@ export async function createSession(workspace: string) {
 	const { data: container, error } = await node.sessions.create.put({
 		workspace,
 		user: userSession.user.id,
+		password: Buffer.from(randomBytes(16)).toString("hex"),
+		nostrUrl: config.nostrUrl,
 	});
 	if (error) throw error;
 	const expiry = new Date();

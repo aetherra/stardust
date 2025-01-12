@@ -99,8 +99,9 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 		mutate: sessionMutate,
 	} = useSWR<{
 		exists: boolean;
-		url: string | null;
+		url?: string;
 		error?: string;
+		password?: string;
 	} | null>(`/api/session/${params.slug}`, fetcher, {
 		onErrorRetry: (error, _key, _config, revalidate, { retryCount }) => {
 			if (error.status === 404) return;
@@ -519,7 +520,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 							rfbOptions={{
 								credentials: {
 									username: "",
-									password: "",
+									password: session.password || "",
 									target: "",
 								},
 							}}
