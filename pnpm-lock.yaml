@@ -74,7 +74,7 @@ importers:
         version: 15.1.4
       '@novnc/novnc':
         specifier: github:spaceness/starlight#path:/client
-        version: https://codeload.github.com/spaceness/starlight/tar.gz/b52192e0bd446fbf849709654c437cdcc23df448#path:/client
+        version: https://codeload.github.com/spaceness/starlight/tar.gz/9ac55a473c363da6c696bd1156ec0b6a87ad9f07#path:/client
       '@radix-ui/react-accordion':
         specifier: ^1.2.2
         version: 1.2.2(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
@@ -1139,8 +1139,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@novnc/novnc@https://codeload.github.com/spaceness/starlight/tar.gz/b52192e0bd446fbf849709654c437cdcc23df448#path:/client':
-    resolution: {path: /client, tarball: https://codeload.github.com/spaceness/starlight/tar.gz/b52192e0bd446fbf849709654c437cdcc23df448}
+  '@novnc/novnc@https://codeload.github.com/spaceness/starlight/tar.gz/9ac55a473c363da6c696bd1156ec0b6a87ad9f07#path:/client':
+    resolution: {path: /client, tarball: https://codeload.github.com/spaceness/starlight/tar.gz/9ac55a473c363da6c696bd1156ec0b6a87ad9f07}
     version: 1.5.0
 
   '@peculiar/asn1-android@2.3.15':
@@ -4064,7 +4064,7 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.18.0
 
-  '@novnc/novnc@https://codeload.github.com/spaceness/starlight/tar.gz/b52192e0bd446fbf849709654c437cdcc23df448#path:/client': {}
+  '@novnc/novnc@https://codeload.github.com/spaceness/starlight/tar.gz/9ac55a473c363da6c696bd1156ec0b6a87ad9f07#path:/client': {}
 
   '@peculiar/asn1-android@2.3.15':
     dependencies:

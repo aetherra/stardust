@@ -19,7 +19,7 @@ export async function GET(req: NextRequest, props: { params: Promise<{ slug: str
 	}
 	const { data, error } = await nodeSession.files.list.get();
 	if (error) return Response.json({ error }, { status: 500 });
-	return data.list;
+	return Response.json(data.list);
 }
 export async function PUT(req: NextRequest, props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;
