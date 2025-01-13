@@ -23,7 +23,7 @@ export default async function createSession({
 }) {
 	const config = getConfig();
 	const envArray = Object.entries(environment).map(([key, value]) => `${key}=${value}`);
-	const sessionName =  `stardust-session-${user}-${Buffer.from(randomBytes(4)).toString("hex")}`
+	const sessionName = `stardust-session-${user}-${Buffer.from(randomBytes(4)).toString("hex")}`;
 	const container = await docker.createContainer({
 		name: sessionName,
 		Image: workspace,
@@ -34,7 +34,13 @@ export default async function createSession({
 			Dns: config.dnsServers,
 			Memory: memory,
 		},
-		Env: [`STARDUST_USER=${user}`, `VNCPASSWORD=${password}`, `STARLIGHT_NOSTR=${nostrUrl}`,`STARLIGHT_ID=${sessionName}`, ...envArray],
+		Env: [
+			`STARDUST_USER=${user}`,
+			`VNCPASSWORD=${password}`,
+			`STARLIGHT_NOSTR=${nostrUrl}`,
+			`STARLIGHT_ID=${sessionName}`,
+			...envArray,
+		],
 		NetworkDisabled: offline || false,
 		ExposedPorts: exposePorts ? Object.fromEntries(exposePorts.map((e) => [e, {}])) : undefined, // world class types by docker
 	});
