@@ -19,7 +19,7 @@ export async function GET(_req: NextRequest, props: { params: Promise<{ slug: st
 			{ status: 500 },
 		);
 	}
-	const { State } = data;
+	const { State, sessionId } = data;
 	if (!State.Running) {
 		await nodeSession.patch({ action: "start" });
 	}
@@ -29,7 +29,7 @@ export async function GET(_req: NextRequest, props: { params: Promise<{ slug: st
 	return Response.json({
 		exists: true,
 		password: data.password,
-		url: `/websockify/${session.id}`,
+		url: `/nostr/${sessionId}`,
 	});
 }
 export const dynamic = "force-dynamic";

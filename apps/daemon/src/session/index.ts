@@ -47,9 +47,9 @@ export default new Elysia({ prefix: "/sessions" })
 		}
 		// world class code
 		const password = container.Config.Env.find((e) => e.startsWith("VNCPASSWORD="))?.split("=")[1];
-		const user = container.Config.Env.find((e) => e.startsWith("STARDUST_USER="))?.split("=")[1];
+		const sessionId = container.Name
 		return {
-			user,
+			sessionId,
 			password,
 			success: true,
 			...container,
