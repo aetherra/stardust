@@ -21,12 +21,13 @@ export default new Elysia({ prefix: "/sessions" })
 			body: t.Object({
 				workspace: t.String(),
 				user: t.String(),
-				password: t.String(),
+				password: t.Optional(t.String()),
 				nostrUrl: t.String(),
 				environment: t.Optional(t.Record(t.String(), t.String())),
 				offline: t.Optional(t.Boolean()),
 				exposePorts: t.Optional(t.Array(t.String())),
 				memory: t.Optional(t.Number()),
+				nodeId: t.String(),
 			}),
 		},
 	)

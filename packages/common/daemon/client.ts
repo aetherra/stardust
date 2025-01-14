@@ -1,9 +1,10 @@
 import { treaty } from "@elysiajs/eden";
+import type { NodeConfig } from "@stardust/config/config";
 import type { App } from "daemon";
 
-export const stardustConnector = (host: string, token: string) =>
-	treaty<App>(host, {
+export const stardustConnector = (node: NodeConfig) =>
+	treaty<App>(`http://${node.hostname}:${node.port || 4000}`, {
 		headers: {
-			authorization: token,
+			authorization: node.token,
 		},
 	});

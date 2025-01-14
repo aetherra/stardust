@@ -9,9 +9,9 @@ export default async function getSession(id: string, admin?: boolean): Promise<S
 		where: (session, { and, eq }) => {
 			const base = eq(session.id, id);
 			if (admin && userSession?.user.role === "admin") {
-				return and(base, eq(session.userId, userSession?.user.id || ""));
+				return base;
 			}
-			return base;
+			return and(base, eq(session.userId, userSession?.user.id || ""));
 		},
 	});
 	if (!res) throw new Error("session does not exist or is not tied to the current user");

@@ -18,7 +18,7 @@ export interface Config {
 
 export interface NodeConfig {
 	/**
-	 * ID of the node. Make it a unique string that helps identify it.
+	 * ID of the node. Make it a unique string that helps identify it. This MUST be under 16 characters or issues can happen.
 	 */
 	id: string;
 	/**

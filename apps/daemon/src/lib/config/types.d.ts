@@ -24,6 +24,7 @@ export interface Config {
 	 */
 	dnsServers?: string[];
 	docker: DockerConfig;
+	session: SessionConfig;
 }
 
 export interface DockerConfig {
@@ -60,4 +61,12 @@ export interface DockerConfig {
 	 * @default `stardust`
 	 */
 	network: string;
+}
+
+export interface SessionConfig {
+	/**
+	 * Default VNC password to use.
+	 * @default `randomly generated`
+	 */
+	vncPassword?: string;
 }

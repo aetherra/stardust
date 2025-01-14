@@ -5,25 +5,28 @@ import { docker } from "~/lib/docker";
 export default async function createSession({
 	workspace,
 	user,
+	password,
 	nostrUrl,
 	environment = {},
 	offline,
 	exposePorts,
 	memory,
-	password,
+	nodeId,
 }: {
 	workspace: string;
 	user: string;
-	password: string;
+	password?: string;
 	nostrUrl: string;
 	environment?: Record<string, string>;
 	offline?: boolean;
 	exposePorts?: string[];
 	memory?: number;
+	nodeId: string;
 }) {
 	const config = getConfig();
+	const pass = password || config.session.vncPassword || Buffer.from(randomBytes(3)).toString("hex");
 	const envArray = Object.entries(environment).map(([key, value]) => `${key}=${value}`);
-	const sessionName = `stardust-session-${user}-${Buffer.from(randomBytes(4)).toString("hex")}`;
+	const sessionName = `stardust-${user}-${nodeId}-${Buffer.from(randomBytes(3)).toString("hex")}`;
 	const container = await docker.createContainer({
 		name: sessionName,
 		Image: workspace,
@@ -36,9 +39,9 @@ export default async function createSession({
 		},
 		Env: [
 			`STARDUST_USER=${user}`,
-			`VNCPASSWORD=${password}`,
 			`STARLIGHT_NOSTR=${nostrUrl}`,
 			`STARLIGHT_ID=${sessionName}`,
+			`VNCPASSWORD=${pass}`,
 			...envArray,
 		],
 		NetworkDisabled: offline || false,

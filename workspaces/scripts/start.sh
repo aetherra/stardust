@@ -1,5 +1,7 @@
 #!/bin/bash
 echo $VNCPASSWORD | vncpasswd -f > /home/stardust/.vnc/passwd
+export VNCPASSWORD=hahayes
+unset VNCPASSWORD
 vncserver -kill :1
 sudo rm -rf /run/dbus
 sudo mkdir -p /run/dbus
