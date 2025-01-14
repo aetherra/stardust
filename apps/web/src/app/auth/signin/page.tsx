@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import turnstileCheck from "@/lib/turnstile";
 import auth from "@stardust/common/auth";
+import { APIError, type BetterAuthOptions } from "@stardust/common/auth/lib";
 import { getConfig } from "@stardust/config";
-import { APIError, type BetterAuthOptions } from "better-auth";
 import { AlertCircle, IdCard, Info } from "lucide-react";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -57,6 +57,7 @@ export default async function Login(props: {
 								} catch (error) {
 									if (error instanceof APIError) {
 										console.log(error.message, error.status);
+										redirect(`/auth/login?error=${error.message}`);
 									}
 								}
 							} else {

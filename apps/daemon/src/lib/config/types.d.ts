@@ -65,8 +65,7 @@ export interface DockerConfig {
 
 export interface SessionConfig {
 	/**
-	 * Default VNC password to use.
-	 * @default `randomly generated`
+	 * Default VNC password to use. Defaults to randomly generated.
 	 */
 	vncPassword?: string;
 }

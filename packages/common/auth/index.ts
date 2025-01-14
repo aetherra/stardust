@@ -1,10 +1,11 @@
 import { getConfig } from "@stardust/config";
 import db from "@stardust/db";
 import * as authSchema from "@stardust/db/schema/auth";
-import { APIError, type BetterAuthPlugin, betterAuth } from "better-auth";
+import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { admin, createAuthMiddleware } from "better-auth/plugins";
+import { APIError } from "better-call";
 const { auth: config } = getConfig();
 const conditionalPlugins: BetterAuthPlugin[] = [];
 if (typeof process.env.NEXT_RUNTIME !== "undefined") conditionalPlugins.push(nextCookies());

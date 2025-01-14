@@ -97,8 +97,7 @@
       "additionalProperties": false,
       "properties": {
         "vncPassword": {
-          "default": "`randomly generated`",
-          "description": "Default VNC password to use.",
+          "description": "Default VNC password to use. Defaults to randomly generated.",
           "type": "string"
         }
       },

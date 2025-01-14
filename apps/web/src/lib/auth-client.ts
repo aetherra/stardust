@@ -1,6 +1,5 @@
 import type auth from "@stardust/common/auth";
-import { adminClient, inferAdditionalFields } from "better-auth/client/plugins";
-import { createAuthClient } from "better-auth/react";
+import { adminClient, createAuthClient, inferAdditionalFields } from "@stardust/common/auth/lib";
 const authClient = createAuthClient({
 	plugins: [inferAdditionalFields<typeof auth>(), adminClient()],
 });
