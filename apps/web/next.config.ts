@@ -17,7 +17,6 @@ const nextConfig: NextConfig = {
 		BUILD_DATE: Date.now().toString(),
 	},
 	experimental: {
-		ppr: "incremental",
 		typedRoutes: true,
 		webpackBuildWorker: true,
 		reactCompiler: true,
