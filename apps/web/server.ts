@@ -9,9 +9,6 @@ import db, { session } from "@stardust/db";
 import { eq } from "@stardust/db/utils";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import next from "next";
-if (process.argv.includes("--turbo")) {
-	process.env.TURBOPACK = "1";
-}
 const dev = process.env.NODE_ENV !== "production";
 const { nostrUrl, nodes, ...appConfig } = getConfig();
 const port = Number.parseInt(process.env.PORT as string) || 3000;
@@ -19,23 +16,24 @@ console.log(
 	`✨ Stardust: Starting ${dev ? "development" : "production"} server ${process.env.TURBOPACK ? "With turbopack" : ""}...`,
 );
 const httpServer = createServer();
-const nostrProxy = createProxyMiddleware({
-	target: nostrUrl,
-	ws: true,
-});
 const app = next({
 	dev,
 	port,
 	httpServer,
+	customServer: true,
+	hostname: process.env.HOSTNAME,
+	turbopack: process.argv.includes("--turbo"),
 });
 await app.prepare();
+const nextRequest = app.getRequestHandler();
+const nextUpgrade = app.getUpgradeHandler();
 httpServer
-	.on("request", app.getRequestHandler())
+	.on("request", nextRequest)
 	.on("upgrade", async (req, socket: Socket, head) => {
 		if (req.url?.startsWith("/nostr")) {
 			const parsed = parseSessionId(req.url?.split("/")[2]);
 			const userSession = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
-			if (parsed?.user !== userSession?.user.id) socket.destroy();
+			if (parsed?.user !== userSession?.user.id) socket.end();
 			const intervalId = setInterval(async () => {
 				try {
 					console.log(`✨ Stardust: Updating keepalive for session ${parsed?.code}@${parsed?.node}`);
@@ -58,9 +56,12 @@ httpServer
 				clearInterval(intervalId);
 				console.log(`✨ Stardust: Connection closed for session ${parsed?.code}@${parsed?.node}`);
 			});
-			return nostrProxy.upgrade(req, socket, head);
+			createProxyMiddleware({
+				target: nostrUrl,
+				ws: true,
+			}).upgrade(req, socket, head);
 		}
-		return app.getUpgradeHandler()(req, socket, head);
+		nextUpgrade(req, socket, head);
 	})
 	.listen(port, () => {
 		console.log(`✨ Stardust: Server listening on ${port}`);
