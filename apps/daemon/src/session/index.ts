@@ -14,7 +14,7 @@ export default new Elysia({ prefix: "/sessions" })
 			return {
 				success: true,
 				id: session.Id,
-				created: Number.parseInt(session.Created),
+				created: new Date().getTime(),
 			};
 		},
 		{
@@ -48,7 +48,7 @@ export default new Elysia({ prefix: "/sessions" })
 		}
 		// world class code
 		const password = container.Config.Env.find((e) => e.startsWith("VNCPASSWORD="))?.split("=")[1];
-		const sessionId = container.Name;
+		const sessionId = container.Name.replace("/", "");
 		return {
 			sessionId,
 			password,

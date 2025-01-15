@@ -7,7 +7,6 @@ import type { Config } from "./config/types.d.ts";
 export default async function generateToken() {
 	const config = getConfig();
 	if (config.token) {
-		console.log("✨ Stardust: Config token already set");
 		return config.token;
 	}
 	console.log("✨ Stardust: Token not set in configuration, generating...");
@@ -18,8 +17,11 @@ export default async function generateToken() {
 		token,
 	} satisfies Config);
 	writer.write(`${newConfig}\n`);
-	writer.write("# yaml-language-server: $schema=schemaon");
+	writer.write(
+		"# yaml-language-server: $schema=https://raw.githubusercontent.com/spaceness/stardust/refs/heads/rewrite/apps/daemon/schema.json",
+	);
 	writer.end();
 	console.log("✨ Stardust: Token generated: %s", token);
-	return token;
+	console.log("✨ Stardust: Daemon restart required: exiting now");
+	process.exit();
 }

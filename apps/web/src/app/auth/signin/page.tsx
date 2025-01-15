@@ -12,6 +12,7 @@ import { getConfig } from "@stardust/config";
 import { AlertCircle, IdCard, Info } from "lucide-react";
 import { headers } from "next/headers";
 import Link from "next/link";
+import { unstable_rethrow } from "next/navigation";
 import { redirect } from "next/navigation";
 
 export default async function Login(props: {
@@ -56,15 +57,15 @@ export default async function Login(props: {
 									});
 								} catch (error) {
 									if (error instanceof APIError) {
-										console.log(error.message, error.status);
-										redirect(`/auth/login?error=${error.message}`);
+										redirect(`/auth/signin?error=${error.message}`);
 									}
 								}
 							} else {
 								throw new Error("Failed captcha");
 							}
 						} catch (error) {
-							redirect(`/auth/login?error=${(error as Error).message}`);
+							unstable_rethrow(error);
+							redirect(`/auth/signin?error=${(error as Error).message}`);
 						}
 					}}
 				>

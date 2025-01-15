@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import type { Socket } from "node:net";
-import auth from "@stardust/common/auth";
+import auth, { type SessionSchema } from "@stardust/common/auth";
 import { fromNodeHeaders } from "@stardust/common/auth/lib";
 import { stardustConnector } from "@stardust/common/daemon/client";
 import parseSessionId from "@stardust/common/daemon/parse-session-id";
@@ -13,7 +13,7 @@ const dev = process.env.NODE_ENV !== "production";
 const { nostrUrl, nodes, ...appConfig } = getConfig();
 const port = Number.parseInt(process.env.PORT as string) || 3000;
 console.log(
-	`✨ Stardust: Starting ${dev ? "development" : "production"} server ${process.env.TURBOPACK ? "With turbopack" : ""}...`,
+	`✨ Stardust: Starting ${dev ? "development" : "production"} server ${process.argv.includes("--turbo") ? "With turbopack" : ""}...`,
 );
 const httpServer = createServer();
 const app = next({
@@ -31,8 +31,15 @@ httpServer
 	.on("request", nextRequest)
 	.on("upgrade", async (req, socket: Socket, head) => {
 		if (req.url?.startsWith("/nostr")) {
+			const proto = req.headers["x-forwarded-proto"] || "http";
+			const host = req.headers["x-forwarded-host"] || req.headers.host;
 			const parsed = parseSessionId(req.url?.split("/")[2]);
-			const userSession = await auth.api.getSession({ headers: fromNodeHeaders(req.headers) });
+			const res = await fetch(`${proto}://${host}/api/auth/get-session`, {
+				headers: {
+					cookie: req.headers.cookie || "",
+				},
+			});
+			const userSession: SessionSchema = await res.json();
 			if (parsed?.user !== userSession?.user.id) socket.end();
 			const intervalId = setInterval(async () => {
 				try {
@@ -46,7 +53,7 @@ httpServer
 					await db
 						.update(session)
 						.set({ expiresAt })
-						.where(eq(session.id, data.containers.find((c) => c.Names[0] === req.url?.split("/")[2])?.Id || ""));
+						.where(eq(session.id, data.containers.find((c) => c.Names[0] === `/${req.url?.split("/")[2]}`)?.Id || ""));
 				} catch (e) {
 					console.log(`✨ Stardust: Error updating keepalive for session ${parsed?.code}@${parsed?.node} - ${e}`);
 				}

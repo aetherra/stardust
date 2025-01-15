@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import auth from "@stardust/common/auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
 	const userSession = await auth.api.getSession({ headers: await headers() });
@@ -34,11 +35,15 @@ export default async function Page() {
 							"use server";
 							const delSure = data.get("delete-sure")?.toString();
 							if (delSure !== delString) return;
-							await auth.api.deleteUser({
-								body: {
-									password: data.get("password")?.toString(),
-								},
-							});
+							try {
+								await auth.api.deleteUser({
+									body: {
+										password: data.get("password")?.toString(),
+									},
+								});
+							} catch (error) {
+								redirect(`/auth/error?error=${(error as Error).message}`);
+							}
 						}}
 					>
 						<DialogHeader>

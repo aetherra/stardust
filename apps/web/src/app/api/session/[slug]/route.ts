@@ -8,7 +8,7 @@ export async function GET(_req: NextRequest, props: { params: Promise<{ slug: st
 	if (!session) {
 		return Response.json({ exists: false, error: "Container not found" }, { status: 404 });
 	}
-	const nodeSession = getNode(session).sessions(session);
+	const nodeSession = getNode(session).sessions({ id: session.id });
 	const { data, error } = await nodeSession.get();
 	if (error) {
 		return Response.json(
@@ -20,12 +20,10 @@ export async function GET(_req: NextRequest, props: { params: Promise<{ slug: st
 		);
 	}
 	const { State, sessionId } = data;
-	if (!State.Running) {
-		await nodeSession.patch({ action: "start" });
-	}
-	if (State.Paused) {
-		await nodeSession.patch({ action: "unpause" });
-	}
+	if (!State.Running) await nodeSession.patch({ action: "start" });
+
+	if (State.Paused) await nodeSession.patch({ action: "unpause" });
+
 	return Response.json({
 		exists: true,
 		password: data.password,

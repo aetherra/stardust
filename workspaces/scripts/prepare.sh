@@ -10,3 +10,6 @@ chmod 777 /home/stardust
 chmod 777 /app
 echo "stardust ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 usermod -aG sudo stardust
+npm i -g pnpm
+git clone https://github.com/spaceness/starlight /opt/stardust/starlight
+pnpm install -C /opt/stardust/starlight

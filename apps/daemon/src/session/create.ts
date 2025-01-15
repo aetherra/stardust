@@ -26,7 +26,7 @@ export default async function createSession({
 	const config = getConfig();
 	const pass = password || config.session.vncPassword || Buffer.from(randomBytes(3)).toString("hex");
 	const envArray = Object.entries(environment).map(([key, value]) => `${key}=${value}`);
-	const sessionName = `stardust-${user}-${nodeId}-${Buffer.from(randomBytes(3)).toString("hex")}`;
+	const sessionName = `stardust-${user}-${nodeId}-${Buffer.from(randomBytes(32)).toString("hex")}`;
 	const container = await docker.createContainer({
 		name: sessionName,
 		Image: workspace,

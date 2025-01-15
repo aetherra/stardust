@@ -1,13 +1,13 @@
 {
-	"name": "stardust-new",
+	"name": "stardust",
 	"private": true,
 	"scripts": {
 		"build": "CONFIG=$(cat config.yml) turbo build",
 		"dev": "CONFIG=$(cat config.yml) turbo dev",
 		"check-types": "turbo check-types",
 		"check": "biome check . --write",
-		"workspaces:build": "bash workspaces/build.sh",
-		"workspaces:buildx": "bash workspaces/buildx.sh",
+		"db:seed": "pnpm --dir packages/db run seed",
+		"workspaces:build": "pnpm --dir workspaces run build",
 		"workspaces:format": "prettier --write \"./workspaces/**/*.sh\" \"./workspaces/**/Dockerfile*\"  \"./workspaces/**/xstartup\""
 	},
 	"devDependencies": {

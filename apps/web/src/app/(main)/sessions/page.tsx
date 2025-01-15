@@ -6,7 +6,7 @@ import { CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { getNode } from "@/lib/session/client";
 import { inspectSession } from "@/lib/session/inspect";
-import type { SessionAction } from "@/lib/session/manage";
+import { type SessionAction, deleteSession } from "@/lib/session/manage";
 import auth from "@stardust/common/auth";
 import db, { type SelectSession } from "@stardust/db";
 import { Container, Loader2, PauseCircle, PlayCircle, ScreenShare, Square, Trash2 } from "lucide-react";
@@ -33,14 +33,14 @@ const ManageSessionButton = ({
 		action={async () => {
 			"use server";
 			const node = getNode(session);
-			await node.sessions(session).patch({ action });
+			await node.sessions({ id: session.id }).patch({ action });
 			if (redirectToView) redirect(`/view/${session.id}`);
 			else revalidatePath("/sessions");
 		}}
 	>
 		<Tooltip>
 			<TooltipTrigger asChild>
-				<SubmitButton variant="ghost" size="icon" pendingSpinner>
+				<SubmitButton variant="ghost" size="icon" pendingSpinner className="[&_svg]:size-6">
 					{icon}
 				</SubmitButton>
 			</TooltipTrigger>
@@ -96,7 +96,7 @@ export default async function Dashboard() {
 												<form
 													action={async () => {
 														"use server";
-														console.log("deleting", session.id);
+														deleteSession(session.id);
 													}}
 												>
 													<SubmitButton
