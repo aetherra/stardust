@@ -1,22 +1,10 @@
-#!/usr/bin/env bun
-import "./help-message";
-import { getConfig, validateConfig } from "~/lib/config";
-if (!validateConfig(getConfig())) {
-	console.error("Invalid configuration");
-	process.exit(1);
-}
 import { Elysia } from "elysia";
 import { authCheck } from "~/auth-middleware";
+import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
-import checkDockerNetwork from "~/lib/network-check";
-import checkSystemService from "~/lib/service-check";
 import sessionHandler from "~/session";
-await checkDockerNetwork();
 const config = getConfig();
-if (typeof config.service !== "boolean" || config.service === true) {
-	checkSystemService();
-}
-const app = new Elysia()
+export const app = new Elysia()
 	.get("/", async (c) => {
 		return {
 			message:
@@ -38,13 +26,7 @@ const app = new Elysia()
 		mem: process.memoryUsage(),
 		sessions: (await docker.listContainers()).filter((s) => s.HostConfig.NetworkMode === config.docker.network).length,
 	})
-	.use(sessionHandler)
-	.listen({
-		hostname: config.host,
-		port: config.port || 4000,
-	});
-
-console.log(`✨ Stardust daemon is running at ${app.server?.hostname}:${app.server?.port}`);
+	.use(sessionHandler);
 
 // eden
 export type App = typeof app;

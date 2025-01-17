@@ -1,4 +1,6 @@
+import { connect } from "node:net";
 import { Elysia, t } from "elysia";
+import generateToken from "~/lib/auth-token";
 import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
 import createSession from "./create";
@@ -6,6 +8,7 @@ import deleteSession from "./delete";
 import { getFile, listFiles, sendFile } from "./file";
 import manageSession from "./manage";
 import screenshot from "./screenshot";
+import { vncWs } from "./vnc";
 export default new Elysia({ prefix: "/sessions" })
 	.put(
 		"/create",
@@ -22,7 +25,6 @@ export default new Elysia({ prefix: "/sessions" })
 				workspace: t.String(),
 				user: t.String(),
 				password: t.Optional(t.String()),
-				nostrUrl: t.String(),
 				environment: t.Optional(t.Record(t.String(), t.String())),
 				offline: t.Optional(t.Boolean()),
 				exposePorts: t.Optional(t.Array(t.String())),
@@ -48,9 +50,7 @@ export default new Elysia({ prefix: "/sessions" })
 		}
 		// world class code
 		const password = container.Config.Env.find((e) => e.startsWith("VNCPASSWORD="))?.split("=")[1];
-		const sessionId = container.Name.replace("/", "");
 		return {
-			sessionId,
 			password,
 			success: true,
 			...container,
@@ -72,6 +72,7 @@ export default new Elysia({ prefix: "/sessions" })
 		await deleteSession(id);
 		return { success: true };
 	})
+	.get("/:id/vnc", ({ request }) => vncWs.upgrade(request))
 	.get("/:id/screenshot", async ({ params: { id }, set }) => {
 		try {
 			const res = await screenshot(id);

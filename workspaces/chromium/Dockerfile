@@ -15,8 +15,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 RUN bash /opt/stardust/scripts/prepare.sh
 USER stardust
-COPY ./chromium/xstartup /home/stardust/.vnc/xstartup
+COPY ./chromium/xstartup /opt/stardust/xstartup
 RUN bash /opt/stardust/scripts/vnc-setup.sh
 
 WORKDIR /home/stardust
 CMD ["bash", "/opt/stardust/scripts/start.sh"]
+EXPOSE 5901

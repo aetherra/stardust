@@ -6,7 +6,6 @@ export default async function createSession({
 	workspace,
 	user,
 	password,
-	nostrUrl,
 	environment = {},
 	offline,
 	exposePorts,
@@ -16,7 +15,6 @@ export default async function createSession({
 	workspace: string;
 	user: string;
 	password?: string;
-	nostrUrl: string;
 	environment?: Record<string, string>;
 	offline?: boolean;
 	exposePorts?: string[];
@@ -37,13 +35,7 @@ export default async function createSession({
 			Dns: config.dnsServers,
 			Memory: memory,
 		},
-		Env: [
-			`STARDUST_USER=${user}`,
-			`STARLIGHT_NOSTR=${nostrUrl}`,
-			`STARLIGHT_ID=${sessionName}`,
-			`VNCPASSWORD=${pass}`,
-			...envArray,
-		],
+		Env: [`STARDUST_USER=${user}`, `VNCPASSWORD=${pass}`, ...envArray],
 		NetworkDisabled: offline || false,
 		ExposedPorts: exposePorts ? Object.fromEntries(exposePorts.map((e) => [e, {}])) : undefined, // world class types by docker
 	});

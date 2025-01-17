@@ -4,9 +4,9 @@
 	"version": "1.0.50",
 	"scripts": {
 		"start": "./stardustd",
-		"build:debug": "bun build src/index.ts --compile --sourcemap --outfile stardustd",
-		"build": "bun build src/index.ts --compile --minify --outfile stardustd",
-		"dev": "bun run --watch src/index.ts",
+		"build:debug": "bun build src/server.ts --compile --sourcemap --outfile stardustd",
+		"build": "bun build src/server.ts --compile --minify --outfile stardustd",
+		"dev": "bun run --watch src/server.ts",
 		"check-types": "tsc --noEmit",
 		"config-schema": "ts-json-schema-generator --tsconfig ./tsconfig.json --path ./src/lib/config/types.d.ts --type Config > ./schema.json",
 		"postinstall": "pnpm config-schema"

@@ -96,7 +96,8 @@ export default async function Dashboard() {
 												<form
 													action={async () => {
 														"use server";
-														deleteSession(session.id);
+														await deleteSession(session.id);
+														revalidatePath("/sessions");
 													}}
 												>
 													<SubmitButton

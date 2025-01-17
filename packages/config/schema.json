@@ -357,17 +357,12 @@
           },
           "type": "array"
         },
-        "nostrUrl": {
-          "description": "The URL of the Nostr relay to connect to.",
-          "type": "string"
-        },
         "session": {
           "$ref": "#/definitions/SessionConfig"
         }
       },
       "required": [
         "databaseUrl",
-        "nostrUrl",
         "nodes",
         "auth"
       ],

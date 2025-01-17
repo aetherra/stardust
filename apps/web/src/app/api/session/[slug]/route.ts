@@ -19,7 +19,7 @@ export async function GET(_req: NextRequest, props: { params: Promise<{ slug: st
 			{ status: 500 },
 		);
 	}
-	const { State, sessionId } = data;
+	const { State } = data;
 	if (!State.Running) await nodeSession.patch({ action: "start" });
 
 	if (State.Paused) await nodeSession.patch({ action: "unpause" });
@@ -27,7 +27,7 @@ export async function GET(_req: NextRequest, props: { params: Promise<{ slug: st
 	return Response.json({
 		exists: true,
 		password: data.password,
-		url: `/nostr/${sessionId}`,
+		url: `/vnc/${session.id}`,
 	});
 }
 export const dynamic = "force-dynamic";

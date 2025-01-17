@@ -37,7 +37,6 @@ export async function createSession(workspace: string) {
 	const { data: container, error } = await node.sessions.create.put({
 		workspace,
 		user: userSession.user.id,
-		nostrUrl: config.nostrUrl,
 		nodeId: sessionNode.id,
 	});
 	if (error) throw error;
