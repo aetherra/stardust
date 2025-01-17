@@ -96,6 +96,10 @@
     "SessionConfig": {
       "additionalProperties": false,
       "properties": {
+        "showVncPassword": {
+          "description": "Doesn't unset $VNCPASSWORD in containers",
+          "type": "boolean"
+        },
         "vncPassword": {
           "description": "Default VNC password to use. Defaults to randomly generated.",
           "type": "string"
