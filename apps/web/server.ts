@@ -9,7 +9,7 @@ import { createProxyMiddleware } from "http-proxy-middleware";
 import next from "next";
 const dev = process.env.NODE_ENV !== "production";
 const config = getConfig();
-const port = Number.parseInt(process.env.PORT as string) || 3000;
+const port = config.port || 3000;
 console.log(
 	`✨ Stardust: Starting ${dev ? "development" : "production"} server ${process.argv.includes("--turbo") ? "with turbopack" : ""}...`,
 );
@@ -45,7 +45,7 @@ httpServer
 			const nodeConfig = config.nodes.find(({ id }) => id === dbSession.node);
 			const intervalId = setInterval(async () => {
 				try {
-					console.log(`✨ Stardust: Updating keepalive for session ${session?.id}`);
+					console.log(`✨ Stardust: Updating keepalive for session ${dbSession?.id}`);
 					const expiresAt = new Date();
 					expiresAt.setMinutes(expiresAt.getMinutes() + (config.session?.keepaliveDuration || 1440));
 					await db
@@ -53,7 +53,7 @@ httpServer
 						.set({ expiresAt })
 						.where(eq(session.id, dbSession?.id || ""));
 				} catch (e) {
-					console.log(`✨ Stardust: Error updating keepalive for session ${session?.id} - ${e}`);
+					console.log(`✨ Stardust: Error updating keepalive for session ${dbSession?.id} - ${e}`);
 				}
 			}, 60000);
 
@@ -61,12 +61,13 @@ httpServer
 				clearInterval(intervalId);
 			});
 			const middleware = createProxyMiddleware({
-				target: `ws://${nodeConfig?.hostname || "0.0.0.0"}:${nodeConfig?.port || 4000}/${session.id}/vnc`,
+				target: `ws://${nodeConfig?.hostname || "0.0.0.0"}:${nodeConfig?.port || 4000}/sessions/${dbSession.id}/vnc`,
+				ignorePath: true,
 				headers: {
 					Authorization: nodeConfig?.token as string,
 				},
 			});
-			middleware.upgrade(req, socket as Socket, head);
+			return middleware.upgrade(req, socket as Socket, head);
 		}
 		nextUpgrade(req, socket, head);
 	})

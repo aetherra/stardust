@@ -1,30 +1,25 @@
-"use client";
-import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { ShieldX } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { BackButton } from "./page.client";
 
-export default function AuthError() {
-	const params = useSearchParams();
-	const router = useRouter();
+export default async function AuthError({
+	searchParams,
+}: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+	const { error } = await searchParams;
 	return (
 		<>
 			<CardHeader className="mx-auto mb-2 flex flex-col items-center justify-center">
 				<ShieldX className="mb-10 h-12 w-12" />
 				There was an error with authentication:
-				{params.get("error") ? (
+				{error ? (
 					<span>
 						<br />
-						<span className="font-bold font-mono text-destructive">{params.get("error")}</span>
+						<span className="font-bold font-mono text-destructive">{error}</span>
 					</span>
 				) : null}
 			</CardHeader>
 			<CardContent className="text-center">
-				Please{" "}
-				<Button variant="link" onClick={router.back} className="-px-0 text-md">
-					try again
-				</Button>
-				. If the problem persists, please contact support.
+				Please <BackButton />. If the problem persists, please contact support.
 			</CardContent>
 		</>
 	);

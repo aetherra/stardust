@@ -1,5 +1,10 @@
 export interface Config {
 	/**
+	 * Port to run stardust on
+	 * @default 3000
+	 */
+	port?: number;
+	/**
 	 * The URL of the database to connect to.
 	 */
 	databaseUrl: string;

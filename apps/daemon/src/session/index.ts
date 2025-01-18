@@ -8,7 +8,6 @@ import deleteSession from "./delete";
 import { getFile, listFiles, sendFile } from "./file";
 import manageSession from "./manage";
 import screenshot from "./screenshot";
-import { vncWs } from "./vnc";
 export default new Elysia({ prefix: "/sessions" })
 	.put(
 		"/create",
@@ -72,7 +71,6 @@ export default new Elysia({ prefix: "/sessions" })
 		await deleteSession(id);
 		return { success: true };
 	})
-	.get("/:id/vnc", ({ request }) => vncWs.upgrade(request))
 	.get("/:id/screenshot", async ({ params: { id }, set }) => {
 		try {
 			const res = await screenshot(id);

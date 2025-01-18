@@ -357,6 +357,11 @@
           },
           "type": "array"
         },
+        "port": {
+          "default": 3000,
+          "description": "Port to run stardust on",
+          "type": "number"
+        },
         "session": {
           "$ref": "#/definitions/SessionConfig"
         }

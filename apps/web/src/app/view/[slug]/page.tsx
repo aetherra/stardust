@@ -1,5 +1,6 @@
 "use client";
 
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
 	AlertDialog,
@@ -12,21 +13,15 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { deleteSession, manageSession } from "@/lib/session/manage";
-
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import type { VncViewerHandle } from "@/components/vnc-screen";
-import { fetcher } from "@/lib/utils";
 import {
 	AlertCircle,
 	Camera,
@@ -47,12 +42,19 @@ import {
 	Square,
 	TrashIcon,
 } from "lucide-react";
+
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useRef, useState } from "react";
+
+import { deleteSession, manageSession } from "@/lib/session/manage";
+import { fetcher } from "@/lib/utils";
 import { toast } from "sonner";
 import useSWR from "swr";
+
+import type { VncViewerHandle } from "@/components/vnc-screen";
+
 type ScalingValues = "remote" | "local" | "none";
 import { Loader2 } from "lucide-react";
 
@@ -69,7 +71,7 @@ function ConnectionAlert({ text, error }: { text: string; error?: boolean }) {
 	return (
 		<div className="h-40 w-96 bg-accent/50 rounded-lg border border-border/50 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 backdrop-blur-md flex items-center justify-center text-muted-foreground gap-3">
 			<Comp className={`${error && "text-destructive"}`} />
-			<h1 className={`text-2xl ${error && "font-mono"} font-semibold`}>{text}</h1>
+			<h1 className="text-2xl font-semibold">{text}</h1>
 		</div>
 	);
 }
