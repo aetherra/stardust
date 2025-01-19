@@ -5,7 +5,12 @@ startxfce4 &
 sleep 1
 echo "while :
 do
-chromium --no-sandbox --disable-dev-shm-usage
+chromium --no-sandbox --disable-dev-shm-usage --start-maximized --test-type
+window_ids=\$(wmctrl -l | cut -f1 -d " ")
+for window_id in \$window_ids
+do
+    wmctrl -i -r "\$window_id" -b add,fullscreen
+done
 sleep 2
 done
 " | bash

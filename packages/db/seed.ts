@@ -1,3 +1,4 @@
+import "@stardust/config/load-config";
 import db, { workspace } from "./index";
 const workspaces = [
 	{

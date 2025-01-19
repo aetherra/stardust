@@ -14,7 +14,8 @@ export const app = new Elysia()
 		};
 	})
 	.onBeforeHandle(authCheck)
-	.onError(({ error }) => {
+	.onError(({ error, path }) => {
+		console.error(`✨ Stardust: [${path}] ${error}`);
 		return {
 			success: false,
 			error: error.toString(),

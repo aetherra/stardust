@@ -27,7 +27,6 @@ export async function GET(_req: NextRequest, props: { params: Promise<{ slug: st
 	return Response.json({
 		exists: true,
 		password: data.password,
-		url: `/vnc/${session.id}`,
 	});
 }
 export const dynamic = "force-dynamic";

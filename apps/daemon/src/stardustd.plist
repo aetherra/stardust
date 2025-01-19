@@ -2,41 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
     <dict>
-
         <key>Label</key>
         <string>org.spaceness.stardustd.plist</string>
-
         <key>RunAtLoad</key>
         <false/>
-
         <key>KeepAlive</key>
         <true/>
-
         <key>UserName</key>
         <string>root</string>
-
         <key>StandardErrorPath</key>
-        <string>/usr/local/opt/stardust/stderr.log</string>
-
+        <string>/opt/stardust/stderr.log</string>
         <key>StandardOutPath</key>
-        <string>/usr/local/opt/stardust/stdout.log</string>
-
+        <string>/opt/stardust/stdout.log</string>
         <key>EnvironmentVariables</key>
         <dict>
             <key>PATH</key>
             <string><![CDATA[/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin]]></string>
         </dict>
-
-        <key>WorkingDirectory</key>
-        <string>/usr/local/opt/stardust/apps/daemon</string>
-
         <key>ProgramArguments</key>
         <array>
-            <!-- use /usr/local/bin for now -->
-
-            <string>/usr/local/bin/pnpm</string>
-            <string>start</string>
+            <string>/opt/stardust/apps/daemon/stardustd</string>
         </array>
-
     </dict>
 </plist>

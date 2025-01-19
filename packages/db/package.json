@@ -5,8 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"check-types": "tsc --noEmit",
-		"drizzle-kit": "CONFIG=$(cat ../../config.yml) drizzle-kit",
-		"seed": "CONFIG=$(cat ../../config.yml) tsx seed.ts"
+		"drizzle-kit": "drizzle-kit",
+		"seed": "tsx seed.ts"
 	},
 	"keywords": [],
 	"author": "",

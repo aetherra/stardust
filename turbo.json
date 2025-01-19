@@ -5,8 +5,7 @@
 		"build": {
 			"dependsOn": ["^build"],
 			"inputs": ["$TURBO_DEFAULT$", ".env*"],
-			"outputs": [".next/**", "!.next/cache/**", "stardustd"],
-			"env": ["CONFIG"]
+			"outputs": [".next/**", "!.next/cache/**", "stardustd"]
 		},
 		"//#check": {},
 		"check-types": {
@@ -14,8 +13,7 @@
 		},
 		"dev": {
 			"cache": false,
-			"persistent": true,
-			"passThroughEnv": ["CONFIG"]
+			"persistent": true
 		},
 		"config-schema": {
 			"cache": false

@@ -4,7 +4,7 @@ After=docker.service
 
 [Service]
 WorkingDirectory=/opt/stardust/apps/daemon/
-ExecStart=/usr/bin/bun start
+ExecStart=stardustd
 Restart=on-failure
 RestartSec=5
 

@@ -2,9 +2,8 @@ import { Ajv } from "ajv";
 import { load } from "js-yaml";
 import type { Config } from "./config.d.ts";
 import defaultSchema from "./schema.json";
-const loadedConfig = load(process.env.CONFIG as string);
 export function getConfig<T = Config>(): T {
-	return loadedConfig as T;
+	return load(process.env.CONFIG as string) as T;
 }
 export function validateConfig(config: unknown, sch?: unknown) {
 	const validate = new Ajv().compile(sch || defaultSchema);

@@ -7,12 +7,9 @@ export async function GET(_req: NextRequest, props: { params: Promise<{ slug: st
 	const nodeSession = getNode(session).sessions({ id: session.id });
 	const { data, error } = await nodeSession.screenshot.get();
 	if (error) return Response.json({ error }, { status: 500 });
-	if (data instanceof Buffer) {
-		return new Response(data, {
-			headers: {
-				"Content-Type": "image/png",
-			},
-		});
-	}
-	return Response.json(data, { status: 500 });
+	return new Response(Buffer.from(data.encoded, "base64"), {
+		headers: {
+			"Content-Type": "image/png",
+		},
+	});
 }

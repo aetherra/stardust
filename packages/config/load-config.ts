@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import { parseArgs } from "node:util";
 const {
 	values: { config: cmdConfig = "" },
@@ -23,6 +23,6 @@ const configLocations = [
 for (const loc of configLocations) {
 	if (existsSync(loc)) {
 		console.log("✨ Stardust: Loaded config from %s", loc);
-		process.env.CONFIG = await readFile(loc, "utf-8");
+		process.env.CONFIG = readFileSync(loc, "utf-8");
 	}
 }

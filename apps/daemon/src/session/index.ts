@@ -1,6 +1,4 @@
-import { connect } from "node:net";
 import { Elysia, t } from "elysia";
-import generateToken from "~/lib/auth-token";
 import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
 import createSession from "./create";
@@ -71,18 +69,9 @@ export default new Elysia({ prefix: "/sessions" })
 		await deleteSession(id);
 		return { success: true };
 	})
-	.get("/:id/screenshot", async ({ params: { id }, set }) => {
-		try {
-			const res = await screenshot(id);
-			set.headers["Content-Type"] = "image/png";
-			return res;
-		} catch (e) {
-			set.status = 500;
-			return {
-				success: false,
-				error: e,
-			};
-		}
+	.get("/:id/screenshot", async ({ params: { id } }) => {
+		const res = await screenshot(id);
+		return { success: true, encoded: res };
 	})
 	.group("/:id/files", (app) =>
 		app
@@ -90,19 +79,21 @@ export default new Elysia({ prefix: "/sessions" })
 				const data = await listFiles(id);
 				return {
 					success: true,
-					list: data.split("\n").filter(Boolean),
+					list: data,
 				};
 			})
 			.get("/download/:name", async ({ params: { id, name } }) => getFile(id, name))
 			.put(
 				"/upload/:name",
 				async ({ params: { id, name }, body }) => {
+					console.log(body);
 					const res = await sendFile(id, name, body);
 					return {
 						success: res,
 					};
 				},
 				{
+					parse: "none",
 					body: t.Uint8Array(),
 				},
 			),

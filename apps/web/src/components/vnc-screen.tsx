@@ -97,7 +97,7 @@ const VncScreen = ({
 	onDesktopName,
 	onCapabilities,
 	ref,
-}: VncViewerProps & { ref: React.Ref<VncViewerHandle> }) => {
+}: VncViewerProps & { ref?: React.Ref<VncViewerHandle> }) => {
 	const rfb = useRef<RFB | null>(null);
 	const connected = useRef<boolean>(autoConnect);
 	const timeouts = useRef<Array<ReturnType<typeof setTimeout>>>([]);

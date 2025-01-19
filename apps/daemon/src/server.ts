@@ -16,20 +16,24 @@ const config = getConfig();
 if (typeof config.service !== "boolean" || config.service === true) {
 	checkSystemService();
 }
-const srv = Bun.serve<{ socket: Socket }>({
+const srv = Bun.serve<{ socket: Socket; path: string }>({
 	async fetch(req, server) {
 		const path = new URL(req.url).pathname;
-		if (path.startsWith("/sessions") && path.split("/")[3] === "vnc") {
+		const portMap: Record<string, number> = {
+			vnc: 5901,
+			audio: 4713,
+		};
+		if (path.startsWith("/sessions") && ["vnc", "audio"].includes(path.split("/")[3])) {
 			const containerInfo = await docker.getContainer(path.split("/")[2]).inspect();
 			const socket = connect(
-				5901,
+				portMap[path.split("/")[3]],
 				containerInfo.NetworkSettings.Networks[config.docker.network || "stardust"].IPAddress,
 			);
 			const authToken = await generateToken();
 			if (req.headers.get("Authorization") === authToken) {
 				if (
 					server.upgrade(req, {
-						data: { socket },
+						data: { socket, path },
 					})
 				) {
 					return;
@@ -45,7 +49,7 @@ const srv = Bun.serve<{ socket: Socket }>({
 			});
 
 			ws.data.socket.on("error", (err) => {
-				console.warn(`✨ Stardust: ${err.message}`);
+				console.error(`✨ Stardust: [${ws.data.path}] ${err.message}`);
 				ws.close();
 			});
 
@@ -58,7 +62,7 @@ const srv = Bun.serve<{ socket: Socket }>({
 		},
 		close(ws, code, reason) {
 			console.info(
-				`✨ Stardust: Connection closed with code ${code} and ${
+				`✨ Stardust: [${ws.data.path}] Connection closed with code ${code} and ${
 					reason.toString() ? `reason ${reason.toString()}` : "no reason"
 				}`,
 			);

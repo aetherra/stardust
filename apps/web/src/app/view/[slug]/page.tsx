@@ -50,13 +50,19 @@ import { use, useEffect, useRef, useState } from "react";
 
 import { deleteSession, manageSession } from "@/lib/session/manage";
 import { fetcher } from "@/lib/utils";
+import VncAudio from "@stardust/common/session/client/audio";
 import { toast } from "sonner";
 import useSWR from "swr";
+import useLocalStorage from "use-local-storage";
 
 import type { VncViewerHandle } from "@/components/vnc-screen";
 
 type ScalingValues = "remote" | "local" | "none";
 import { Loader2 } from "lucide-react";
+
+const VncScreen = dynamic(() => import("@/components/vnc-screen"), {
+	loading: () => <Loading text="Loading" />,
+});
 
 function Loading({ text }: { text: string }) {
 	return (
@@ -75,33 +81,30 @@ function ConnectionAlert({ text, error }: { text: string; error?: boolean }) {
 		</div>
 	);
 }
-const VncScreen = dynamic(() => import("@/components/vnc-screen"), {
-	loading: () => <Loading text="Loading" />,
-});
+
 export default function View(props: { params: Promise<{ slug: string }> }) {
 	const params = use(props.params);
 	const vncRef = useRef<VncViewerHandle>(null);
+	const audioRef = useRef<VncAudio | null>(null);
 	const [connected, setConnected] = useState(false);
 	const [fullScreen, setFullScreen] = useState(false);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [workingClipboard, setWorkingClipboard] = useState(true);
 	// noVNC options start
 	const [clipboard, setClipboard] = useState("");
-	const [viewOnly, setViewOnly] = useState(false);
-	const [qualityLevel, setQualityLevel] = useState(6);
-	const [compressionLevel, setCompressionLevel] = useState(2);
-	const [clipViewport, setClipViewport] = useState(false);
-	const [scaling, setScaling] = useState<ScalingValues>("remote");
+	const [viewOnly, setViewOnly] = useLocalStorage("stardust_viewonly", false);
+	const [qualityLevel, setQualityLevel] = useLocalStorage("stardust_qualitylevel", 6);
+	const [compressionLevel, setCompressionLevel] = useLocalStorage("stardust_compressionlevel", 2);
+	const [clipViewport, setClipViewport] = useLocalStorage("stardust_clipviewport", false);
+	const [scaling, setScaling] = useLocalStorage<ScalingValues>("stardust_scaling", "remote");
 	// noVNC options end
 	const router = useRouter();
 	const {
 		data: session,
 		error: sessionError,
 		isLoading: sessionLoading,
-		mutate: sessionMutate,
 	} = useSWR<{
 		exists: boolean;
-		url?: string;
 		error?: string;
 		password?: string;
 	} | null>(`/api/session/${params.slug}`, fetcher, {
@@ -119,20 +122,6 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 		refreshInterval: 10000,
 	});
 	useEffect(() => {
-		if (connected && vncRef.current?.rfb) {
-			vncRef.current.rfb.viewOnly = viewOnly;
-			vncRef.current.rfb.qualityLevel = qualityLevel;
-			vncRef.current.rfb.compressionLevel = compressionLevel;
-			vncRef.current.rfb.clipViewport = clipViewport;
-			vncRef.current.rfb.resizeSession = scaling === "remote";
-			vncRef.current.rfb.scaleViewport = scaling === "local";
-		}
-	}, [connected, viewOnly, qualityLevel, compressionLevel, scaling, clipViewport]);
-	// why did i even use swr for this raaaaaaah
-	useEffect(() => {
-		if (!session) sessionMutate();
-	}, [session, sessionMutate]);
-	useEffect(() => {
 		const requestClipboardPermissions = async () => {
 			try {
 				const result = await navigator.permissions.query({ name: "clipboard-write" as PermissionName });
@@ -147,6 +136,28 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 		};
 		requestClipboardPermissions();
 	}, []);
+	useEffect(() => {
+		if (session)
+			audioRef.current = new VncAudio(
+				`${window.location.protocol.replace("http", "ws")}//${window.location.host}/audio/${params.slug}`,
+			);
+		return () => {
+			audioRef.current = null;
+		};
+	}, [session, params.slug]);
+	useEffect(() => {
+		if (connected && document.hasFocus()) audioRef.current?.start();
+	}, [connected]);
+	useEffect(() => {
+		if (connected && vncRef.current?.rfb) {
+			vncRef.current.rfb.viewOnly = viewOnly;
+			vncRef.current.rfb.qualityLevel = qualityLevel;
+			vncRef.current.rfb.compressionLevel = compressionLevel;
+			vncRef.current.rfb.clipViewport = clipViewport;
+			vncRef.current.rfb.resizeSession = scaling === "remote";
+			vncRef.current.rfb.scaleViewport = scaling === "local";
+		}
+	}, [connected, viewOnly, qualityLevel, compressionLevel, scaling, clipViewport]);
 	useEffect(() => {
 		const interval = setInterval(() => {
 			if (workingClipboard && document.hasFocus()) {
@@ -202,7 +213,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 					filesMutate();
 				}}
 			>
-				<SheetContent side="left" className="w-2/5 overflow-y-auto">
+				<SheetContent side="left" className="w-full overflow-y-auto bg-background/80 backdrop-blur-lg">
 					<SheetHeader>
 						<SheetTitle className="text-2xl">Control Panel</SheetTitle>
 					</SheetHeader>
@@ -239,7 +250,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 						</Button>
 
 						<Button
-							className="w-full"
+							className="w-full px-3"
 							onClick={() =>
 								toast.promise(() => manageSession(params.slug, "restart"), {
 									loading: "Restarting container...",
@@ -277,7 +288,6 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 									Delete Session
 								</Button>
 							</AlertDialogTrigger>
-
 							<AlertDialogContent>
 								<AlertDialogHeader>
 									<AlertDialogTitle>Confirm session deletion</AlertDialogTitle>
@@ -325,7 +335,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 							</AccordionTrigger>
 							<AccordionContent className="space-y-4">
 								<Textarea
-									className="h-48 w-full !ring-0 resize-none"
+									className="h-48 w-full resize-none outline-none"
 									tabIndex={-20}
 									spellCheck={false}
 									autoCorrect="off"
@@ -499,10 +509,11 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 			</Sheet>
 			{!sessionError ? (
 				!sessionLoading ? (
-					session?.exists && session.url ? (
+					session?.exists ? (
 						<VncScreen
-							url={session.url}
+							url={`/vnc/${params.slug}`}
 							loader={<Loading text="Connecting" />}
+							ref={vncRef}
 							onClipboard={(e) => {
 								if (e?.detail.text) {
 									setClipboard(e.detail.text);
@@ -517,8 +528,6 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 								setConnected(false);
 								setSidebarOpen(false);
 							}}
-							onSecurityFailure={() => sessionMutate(null)}
-							ref={vncRef}
 							rfbOptions={{
 								credentials: {
 									username: "",

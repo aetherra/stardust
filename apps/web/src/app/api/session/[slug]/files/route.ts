@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, props: { params: Promise<{ slug: str
 	const nodeSession = getNode(session).sessions({ id: session.id });
 	if (name) {
 		const { data, error } = await nodeSession.files.download({ name }).get();
-		if (error) return Response.json({ error }, { status: 500 });
+		if (error) return Response.json(error, { status: 500 });
 		return new Response(new Blob([data]), {
 			headers: {
 				"Content-Disposition": `attachment; filename=${name}`,
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest, props: { params: Promise<{ slug: str
 		});
 	}
 	const { data, error } = await nodeSession.files.list.get();
-	if (error) return Response.json({ error }, { status: 500 });
+	if (error) return Response.json(error, { status: 500 });
 	return Response.json(data.list);
 }
 export async function PUT(req: NextRequest, props: { params: Promise<{ slug: string }> }) {
@@ -28,6 +28,6 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ slug: str
 	const session = await getSession(params.slug);
 	const nodeSession = getNode(session).sessions({ id: session.id });
 	const { data, error } = await nodeSession.files.upload({ name }).put(new Uint8Array(await req.arrayBuffer()));
-	if (error) return Response.json({ error }, { status: 500 });
+	if (error) return Response.json(error, { status: 500 });
 	return Response.json(data);
 }

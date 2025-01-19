@@ -15,7 +15,8 @@
 		"@stardust/db": "workspace:*",
 		"better-auth": "^1.1.11",
 		"better-call": "^0.3.3",
-		"dockerode": "^4.0.2"
+		"dockerode": "^4.0.2",
+		"http-proxy-middleware": "^3.0.3"
 	},
 	"devDependencies": {
 		"@stardust/tsconfig": "workspace:*",
