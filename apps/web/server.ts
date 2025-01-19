@@ -1,6 +1,6 @@
+import "@stardust/config/load-config";
 import { createServer } from "node:http";
 import type { Socket } from "node:net";
-import { getNode } from "@/lib/session/client";
 import type { SessionSchema } from "@stardust/common/auth";
 import { getConfig } from "@stardust/config";
 import db, { session } from "@stardust/db";
@@ -58,6 +58,7 @@ httpServer
 			}, 60000);
 
 			socket.on("close", () => {
+				console.log(`✨ Stardust: Client disconnected from ${dbSession?.id}`);
 				clearInterval(intervalId);
 			});
 			const middleware = createProxyMiddleware({

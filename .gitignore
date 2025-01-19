@@ -40,3 +40,4 @@ yarn-error.log*
 
 # Sensitive configuration
 config.yml
+config.yaml
