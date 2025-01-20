@@ -20,4 +20,4 @@ RUN bash /opt/stardust/scripts/vnc-setup.sh
 
 WORKDIR /home/stardust
 CMD ["bash", "/opt/stardust/scripts/start.sh"]
-EXPOSE 5901 4713
+EXPOSE 5901 4713 6080

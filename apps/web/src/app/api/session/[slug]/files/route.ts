@@ -10,7 +10,7 @@ export async function GET(req: NextRequest, props: { params: Promise<{ slug: str
 	if (name) {
 		const { data, error } = await nodeSession.files.download({ name }).get();
 		if (error) return Response.json(error, { status: 500 });
-		return new Response(new Blob([data]), {
+		return new Response(data, {
 			headers: {
 				"Content-Disposition": `attachment; filename=${name}`,
 				"Content-Type": "application/octet-stream",
@@ -24,10 +24,10 @@ export async function GET(req: NextRequest, props: { params: Promise<{ slug: str
 export async function PUT(req: NextRequest, props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;
 	const name = req.nextUrl.searchParams.get("name");
-	if (!name) return Response.json({ error: "no file name specified" }, { status: 400 });
+	if (!name) return Response.json({ error: "no file name or file specified" }, { status: 400 });
 	const session = await getSession(params.slug);
 	const nodeSession = getNode(session).sessions({ id: session.id });
-	const { data, error } = await nodeSession.files.upload({ name }).put(new Uint8Array(await req.arrayBuffer()));
+	const { data, error } = await nodeSession.files.upload({ name }).put(await req.arrayBuffer());
 	if (error) return Response.json(error, { status: 500 });
 	return Response.json(data);
 }

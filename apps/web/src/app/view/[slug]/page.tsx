@@ -30,7 +30,6 @@ import {
 	File,
 	Files,
 	HardDriveUpload,
-	Info,
 	LogOut,
 	Maximize,
 	Minimize,
@@ -42,12 +41,15 @@ import {
 	Square,
 	TrashIcon,
 } from "lucide-react";
+import { ConnectionAlert, Loading } from "./components";
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useRef, useState } from "react";
 
+import useFullScreen from "@/hooks/use-full-screen";
+import useVncClipboard from "@/hooks/use-vnc-clipboard";
 import { deleteSession, manageSession } from "@/lib/session/manage";
 import { fetcher } from "@/lib/utils";
 import VncAudio from "@stardust/common/session/client/audio";
@@ -58,40 +60,19 @@ import useLocalStorage from "use-local-storage";
 import type { VncViewerHandle } from "@/components/vnc-screen";
 
 type ScalingValues = "remote" | "local" | "none";
-import { Loader2 } from "lucide-react";
 
 const VncScreen = dynamic(() => import("@/components/vnc-screen"), {
 	loading: () => <Loading text="Loading" />,
 });
 
-function Loading({ text }: { text: string }) {
-	return (
-		<div className="h-40 w-96 bg-accent/50 rounded-lg border border-border/50 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 backdrop-blur-md flex items-center justify-center text-muted-foreground gap-3">
-			<Loader2 className="animate-spin" />
-			<h1 className="text-2xl font-bold">{text}</h1>
-		</div>
-	);
-}
-function ConnectionAlert({ text, error }: { text: string; error?: boolean }) {
-	const Comp = error ? AlertCircle : Info;
-	return (
-		<div className="h-40 w-96 bg-accent/50 rounded-lg border border-border/50 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 backdrop-blur-md flex items-center justify-center text-muted-foreground gap-3">
-			<Comp className={`${error && "text-destructive"}`} />
-			<h1 className="text-2xl font-semibold">{text}</h1>
-		</div>
-	);
-}
-
-export default function View(props: { params: Promise<{ slug: string }> }) {
+export default function Page(props: { params: Promise<{ slug: string }> }) {
 	const params = use(props.params);
 	const vncRef = useRef<VncViewerHandle>(null);
 	const audioRef = useRef<VncAudio | null>(null);
 	const [connected, setConnected] = useState(false);
-	const [fullScreen, setFullScreen] = useState(false);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
-	const [workingClipboard, setWorkingClipboard] = useState(true);
+	const { clipboard, setClipboard, workingClipboard, setWorkingClipboard } = useVncClipboard(vncRef.current?.rfb);
 	// noVNC options start
-	const [clipboard, setClipboard] = useState("");
 	const [viewOnly, setViewOnly] = useLocalStorage("stardust_viewonly", false);
 	const [qualityLevel, setQualityLevel] = useLocalStorage("stardust_qualitylevel", 6);
 	const [compressionLevel, setCompressionLevel] = useLocalStorage("stardust_compressionlevel", 2);
@@ -99,6 +80,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 	const [scaling, setScaling] = useLocalStorage<ScalingValues>("stardust_scaling", "remote");
 	// noVNC options end
 	const router = useRouter();
+	const { fullScreen, setFullScreen } = useFullScreen();
 	const {
 		data: session,
 		error: sessionError,
@@ -121,21 +103,6 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 	} = useSWR<string[]>(`/api/session/${params.slug}/files`, fetcher, {
 		refreshInterval: 10000,
 	});
-	useEffect(() => {
-		const requestClipboardPermissions = async () => {
-			try {
-				const result = await navigator.permissions.query({ name: "clipboard-write" as PermissionName });
-				if (result.state === "granted") {
-					setWorkingClipboard(true);
-				} else {
-					setWorkingClipboard(false);
-				}
-			} catch (error) {
-				setWorkingClipboard(false);
-			}
-		};
-		requestClipboardPermissions();
-	}, []);
 	useEffect(() => {
 		if (session)
 			audioRef.current = new VncAudio(
@@ -163,37 +130,10 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 			vncRef.current.rfb.scaleViewport = scaling === "local";
 		}
 	}, [connected, viewOnly, qualityLevel, compressionLevel, scaling, clipViewport]);
-	useEffect(() => {
-		const interval = setInterval(() => {
-			if (workingClipboard && document.hasFocus()) {
-				vncRef?.current?.rfb?.focus();
-				navigator.clipboard
-					.readText()
-					.then((text) => {
-						if (text !== clipboard) {
-							setClipboard(text);
-							vncRef.current?.rfb?.clipboardPasteFrom(text);
-						}
-					})
-					.catch(() => setWorkingClipboard(false));
-			}
-		}, 2000);
-		return () => clearInterval(interval);
-	}, [clipboard, workingClipboard]);
-	useEffect(() => {
-		if (document.fullscreenElement === null && fullScreen) {
-			document.documentElement.requestFullscreen();
-		} else if (document.fullscreenElement !== null && !fullScreen) {
-			document.exitFullscreen();
-		}
-		const listener = () => setFullScreen(Boolean(document.fullscreenElement));
-		document.addEventListener("fullscreenchange", listener);
-		return () => document.removeEventListener("fullscreenchange", listener);
-	}, [fullScreen]);
 	return (
 		<div className="h-screen w-screen justify-center items-center flex">
 			{connected ? (
-				<section className="flex flex-col gap-2 z-40 absolute -translate-y-1/2 left-0 top-1/2 rounded-r-md bg-background/80 p-[0.25rem] text-xs backdrop-blur-lg w-12">
+				<section className="flex flex-col gap-2 z-40 absolute -translate-y-1/2 -left-10 hover:left-0 duration-150 top-1/2 rounded-r-md bg-background/80 p-[0.25rem] text-xs backdrop-blur-lg w-12">
 					<Button
 						variant="ghost"
 						size="icon"
@@ -406,6 +346,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 															<Link
 																key={file}
 																download={file}
+																target="_blank"
 																href={{
 																	pathname: `/api/session/${params.slug}/files`,
 																	query: { name: file },

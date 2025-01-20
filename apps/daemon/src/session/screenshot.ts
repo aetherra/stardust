@@ -9,9 +9,10 @@ export default async function screenshot(id: string) {
 	const stream = await exec.start({});
 	const encoded = await new Promise<string>((res, err) => {
 		const out: string[] = [];
-		stream.on("error", err);
-		stream.on("data", (chunk) => out.push(chunk.toString()));
-		stream.on("end", () => res(out.join("")));
+		stream
+			.on("error", err)
+			.on("data", (chunk) => out.push(chunk.toString()))
+			.on("end", () => res(out.join("")));
 	});
 	return encoded.replaceAll(/[^A-Za-z0-9+/=]/g, "");
 }

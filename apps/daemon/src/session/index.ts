@@ -3,10 +3,11 @@ import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
 import createSession from "./create";
 import deleteSession from "./delete";
-import { getFile, listFiles, sendFile } from "./file";
+import { filesFetch } from "./file";
 import manageSession from "./manage";
 import screenshot from "./screenshot";
 export default new Elysia({ prefix: "/sessions" })
+	.parser("arrbuf", ({ request }) => request.arrayBuffer())
 	.put(
 		"/create",
 		async ({ body }) => {
@@ -76,25 +77,26 @@ export default new Elysia({ prefix: "/sessions" })
 	.group("/:id/files", (app) =>
 		app
 			.get("/list", async ({ params: { id } }) => {
-				const data = await listFiles(id);
+				const res = await filesFetch(id, "/list");
 				return {
-					success: true,
-					list: data,
+					success: res.ok,
+					list: await res.json(),
 				};
 			})
-			.get("/download/:name", async ({ params: { id, name } }) => getFile(id, name))
+			.get("/download/:name", async ({ params: { id, name } }) => {
+				const res = await filesFetch(id, `/download?name=${name}`);
+				return res.blob();
+			})
 			.put(
 				"/upload/:name",
 				async ({ params: { id, name }, body }) => {
-					console.log(body);
-					const res = await sendFile(id, name, body);
+					const res = await filesFetch(id, `/upload?name=${name}`, "PUT", Buffer.from(body as ArrayBuffer));
 					return {
-						success: res,
+						success: res.ok,
 					};
 				},
 				{
-					parse: "none",
-					body: t.Uint8Array(),
+					parse: "arrbuf",
 				},
 			),
 	);
