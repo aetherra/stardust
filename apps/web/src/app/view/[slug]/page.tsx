@@ -146,7 +146,11 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 		};
 	}, [session, params.slug]);
 	useEffect(() => {
-		if (connected && document.hasFocus()) audioRef.current?.start();
+		const listener = () => audioRef.current?.start();
+		if (connected && !audioRef.current?.connected) {
+			document.querySelector("canvas")?.addEventListener("keydown", listener);
+		}
+		return () => document.querySelector("canvas")?.removeEventListener("keydown", listener);
 	}, [connected]);
 	useEffect(() => {
 		if (connected && vncRef.current?.rfb) {

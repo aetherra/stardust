@@ -2,13 +2,19 @@
 sudo chmod +x /home/stardust/.vnc/xstartup
 echo $VNCPASSWORD | vncpasswd -f > /home/stardust/.vnc/passwd
 if [[ "$WIPEVNCENV" == "true" ]]; then
-    unset VNCPASSWORD
-    unset WIPEVNCENV
+  unset VNCPASSWORD
+  unset WIPEVNCENV
 fi
 vncserver -kill :1
 sudo rm -rf /run/dbus
 sudo mkdir -p /run/dbus
 sleep 1
+echo "while :
+do
+/opt/stardust/tcpulse 0.0.0.0 4713
+sleep 5
+done
+" | bash &
 echo "while :
 do
 vncserver :1 -passwd /home/stardust/.vnc/passwd -fg -localhost no
