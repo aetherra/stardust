@@ -80,12 +80,12 @@ export default async function Dashboard() {
 													src={session.workspace.icon}
 													alt={session.workspace.friendlyName}
 												/>
-												<span className="flex items-center gap-4">
+												<Link className="flex items-center gap-4" href={`/view/${session.id}`}>
 													{session.workspace.friendlyName}{" "}
 													<span className="font-mono text-xs font-thin text-muted-foreground">
 														{session.id.slice(0, 6)}
 													</span>
-												</span>
+												</Link>
 											</TooltipTrigger>
 											<TooltipContent>
 												<SessionDate expiresAt={expiresAt} />
@@ -116,13 +116,12 @@ export default async function Dashboard() {
 									<div className="flex justify-center w-full p-0">
 										<AspectRatio ratio={16 / 9}>
 											{!State.Paused && State.Running ? (
-												<SkeletionImage
-													priority
+												<Image
 													src={`/api/session/${session.id}/preview`}
-													fill
 													sizes="6.5rem 13rem"
 													alt=""
-													className="object-fill rounded-none md:h-[6.5rem] md:w-[13rem] h-[3.25rem] w-[6.5rem]"
+													fill
+													className="object-fill outline-none rounded-none md:h-[6.5rem] md:w-[13rem] h-[3.25rem] w-[6.5rem]"
 												/>
 											) : (
 												<div className="flex items-center justify-center rounded-sm bg-muted h-36 w-full">

@@ -146,11 +146,12 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 		};
 	}, [session, params.slug]);
 	useEffect(() => {
-		const listener = () => audioRef.current?.start();
-		if (connected && !audioRef.current?.connected) {
-			document.querySelector("canvas")?.addEventListener("keydown", listener);
-		}
-		return () => document.querySelector("canvas")?.removeEventListener("keydown", listener);
+		const listener = () => {
+			if (connected) audioRef.current?.start();
+		};
+		const elm = document.querySelector("canvas");
+		elm?.addEventListener("keydown", listener);
+		return () => elm?.removeEventListener("keydown", listener);
 	}, [connected]);
 	useEffect(() => {
 		if (connected && vncRef.current?.rfb) {
@@ -193,6 +194,16 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 		<div className="h-screen w-screen justify-center items-center flex">
 			{connected ? (
 				<section className="flex flex-col gap-2 z-40 absolute -translate-y-1/2 left-0 top-1/2 rounded-r-md bg-background/80 p-[0.25rem] text-xs backdrop-blur-lg w-12">
+					<Button
+						variant="ghost"
+						size="icon"
+						onClick={() => {
+							setSidebarOpen(false);
+							router.push("/");
+						}}
+					>
+						<ScreenShareOff />
+					</Button>
 					<Button variant="ghost" size="icon" onClick={() => setFullScreen(!fullScreen)}>
 						{fullScreen ? <Minimize /> : <Maximize />}
 					</Button>
@@ -254,7 +265,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 						</Button>
 
 						<Button
-							className="w-full px-3"
+							className="w-full px-3 "
 							onClick={() =>
 								toast.promise(() => manageSession(params.slug, "restart"), {
 									loading: "Restarting container...",
@@ -334,7 +345,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 						<AccordionItem value="clipboard">
 							<AccordionTrigger>
 								<div className="flex items-center gap-4">
-									<Clipboard className="h-9 w-9 rounded-md bg-accent p-1.5" /> Clipboard
+									<Clipboard className="size-9 rounded bg-accent p-1.5" /> Clipboard
 								</div>
 							</AccordionTrigger>
 							<AccordionContent className="space-y-4">
@@ -378,7 +389,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 						<AccordionItem value="files">
 							<AccordionTrigger>
 								<div className="flex items-center gap-4">
-									<Files className="h-9 w-9 rounded-md bg-accent p-1.5" /> Files
+									<Files className="size-9 bg-accent rounded p-1.5" /> Files
 								</div>
 							</AccordionTrigger>
 							<AccordionContent>
@@ -459,7 +470,7 @@ export default function View(props: { params: Promise<{ slug: string }> }) {
 						<AccordionItem value="vnc">
 							<AccordionTrigger>
 								<div className="flex items-center gap-4">
-									<MonitorUp className="size-9 rounded-md bg-accent p-1.5" /> VNC Options
+									<MonitorUp className="size-9 rounded bg-accent p-1.5" /> VNC Options
 								</div>
 							</AccordionTrigger>
 							<AccordionContent className="flex flex-col gap-4">

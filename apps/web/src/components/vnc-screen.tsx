@@ -357,6 +357,7 @@ const VncScreen = ({
 					ref={screen}
 					onMouseEnter={handleMouseEnter}
 					onMouseLeave={handleMouseLeave}
+					id="stardust-vnc-screen"
 				/>
 			) : null}
 		</>

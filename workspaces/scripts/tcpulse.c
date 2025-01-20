@@ -25,7 +25,7 @@
 #define BUF_SIZE 4096
 // the command we need to pipe to our socket
 #define COMMAND                                                                \
-  "gst-launch-1.0 -q -v alsasrc ! audio/x-raw, channels=2, rate=24000 ! "      \
+  "gst-launch-1.0 -q -v pulsesrc ! audio/x-raw, channels=2, rate=24000 ! "     \
   "cutter ! voaacenc  ! mp4mux streamable=true fragment_duration=10 ! fdsink " \
   "fd=1"
 
@@ -188,7 +188,7 @@ int main(int argc, char *argv[]) {
   for (;;) {
     if ((client = wait_for_client(server_socket)) < 0)
       continue;
-
+    system("pulseaudio -D");
     FILE *pipeFile = popen(COMMAND, "r");
 
     if (pipeFile <= 0) {

@@ -48,13 +48,16 @@ export default async function Login(props: {
 						try {
 							if (await turnstileCheck(data)) {
 								try {
-									await auth.api.signInEmail({
+									const result = await auth.api.signInEmail({
 										body: {
 											email: data.get("email")?.toString() as string,
 											password: data.get("password")?.toString() as string,
 											callbackURL: "/",
 										},
 									});
+									if (result.user) {
+										redirect("/");
+									}
 								} catch (error) {
 									if (error instanceof APIError) {
 										redirect(`/auth/signin?error=${error.message}`);
