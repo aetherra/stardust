@@ -390,6 +390,11 @@
           "description": "Port stardustd is running on.",
           "type": "number"
         },
+        "proto": {
+          "default": "http",
+          "description": "Protocol to use for the node",
+          "type": "string"
+        },
         "token": {
           "description": "Authentication token for the node.",
           "type": "string"
@@ -397,6 +402,7 @@
       },
       "required": [
         "id",
+        "proto",
         "token"
       ],
       "type": "object"
