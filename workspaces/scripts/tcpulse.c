@@ -25,8 +25,10 @@
 #define BUF_SIZE 4096
 // the command we need to pipe to our socket
 #define COMMAND                                                                \
-  "gst-launch-1.0 -q -v pulsesrc ! audio/x-raw, channels=2, rate=24000 ! "     \
-  "cutter ! voaacenc  ! mp4mux streamable=true fragment_duration=10 ! fdsink " \
+  "gst-launch-1.0 -q -v pulsesrc buffer-time=20000 latency-time=5000 ! "       \
+  "audio/x-raw, channels=2, rate=48000 ! audioconvert ! "                      \
+  "voaacenc bitrate=192000 ! mp4mux streamable=true fragment_duration=100 ! "  \
+  "fdsink "                                                                    \
   "fd=1"
 
 // little helper macro

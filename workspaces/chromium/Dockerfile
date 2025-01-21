@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     xfonts-75dpi xvfb passwd sudo dbus dbus-x11 libxrandr2 libxext-dev libxrender-dev libxtst-dev imagemagick x11-apps build-essential pulseaudio gstreamer1.0* \
     python3 python3-pip xterm git procps python3-numpy xfwm4 xfce4-terminal xfce4-session xfconf xfce4-notifyd \
     wget curl inetutils-ping vim tigervnc-tools tigervnc-standalone-server tigervnc-common wmctrl \
-    chromium   gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly
+    chromium gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly
 
 RUN bash /opt/stardust/scripts/prepare.sh
 USER stardust
