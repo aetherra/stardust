@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import turnstileCheck from "@/lib/turnstile";
 import auth from "@stardust/common/auth";
-import { APIError, type BetterAuthOptions } from "@stardust/common/auth/lib";
+import type { BetterAuthOptions } from "@stardust/common/auth/lib";
 import { getConfig } from "@stardust/config";
 import { AlertCircle, IdCard, Info } from "lucide-react";
 import { headers } from "next/headers";
@@ -47,22 +47,14 @@ export default async function Login(props: {
 						"use server";
 						try {
 							if (await turnstileCheck(data)) {
-								try {
-									const result = await auth.api.signInEmail({
-										body: {
-											email: data.get("email")?.toString() as string,
-											password: data.get("password")?.toString() as string,
-											callbackURL: "/",
-										},
-									});
-									if (result.user) {
-										redirect("/");
-									}
-								} catch (error) {
-									if (error instanceof APIError) {
-										redirect(`/auth/signin?error=${error.message}`);
-									}
-								}
+								const res = await auth.api.signInEmail({
+									body: {
+										email: data.get("email")?.toString() as string,
+										password: data.get("password")?.toString() as string,
+										callbackURL: "/",
+									},
+								});
+								if (res.url) redirect(res.url);
 							} else {
 								throw new Error("Failed captcha");
 							}

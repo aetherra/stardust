@@ -402,7 +402,6 @@
       },
       "required": [
         "id",
-        "proto",
         "token"
       ],
       "type": "object"
