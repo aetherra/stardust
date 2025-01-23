@@ -347,6 +347,11 @@
           "description": "The URL of the database to connect to.",
           "type": "string"
         },
+        "hostname": {
+          "default": "0.0.0.0",
+          "description": "Hostname to run stardust on",
+          "type": "string"
+        },
         "metadataUrl": {
           "description": "The public URL of your Stardust instance. Use this if you want to display site metadata.",
           "type": "string"
@@ -393,6 +398,10 @@
         "proto": {
           "default": "http",
           "description": "Protocol to use for the node",
+          "enum": [
+            "http",
+            "https"
+          ],
           "type": "string"
         },
         "token": {

@@ -1,5 +1,10 @@
 export interface Config {
 	/**
+	 * Hostname to run stardust on
+	 * @default 0.0.0.0
+	 */
+	hostname?: string;
+	/**
 	 * Port to run stardust on
 	 * @default 3000
 	 */

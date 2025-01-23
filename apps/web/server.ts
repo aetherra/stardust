@@ -3,8 +3,10 @@ import { createServer } from "node:http";
 import { shouldRoute, stardustdUpgrade } from "@stardust/common/session/ws";
 import { getConfig } from "@stardust/config";
 import next from "next";
+const config = getConfig();
 const dev = process.env.NODE_ENV !== "production";
-const port = getConfig().port || 3000;
+const port = config.port || 3000;
+const hostname = config.hostname || "0.0.0.0";
 console.log(
 	`✨ Stardust: Starting ${dev ? "development" : "production"} server ${process.argv.includes("--turbo") ? "with turbopack" : ""}...`,
 );
@@ -26,5 +28,5 @@ httpServer
 		shouldRoute(req) ? stardustdUpgrade(req, socket, head) : nextUpgrade(req, socket, head),
 	)
 	.listen(port, () => {
-		console.log(`✨ Stardust: Server listening on ${port}`);
+		console.log(`✨ Stardust: Server listening on ${hostname}:${port}`);
 	});
