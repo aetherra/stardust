@@ -39,6 +39,7 @@ export default async function createSession({
 			`STARDUST_USER=${user}`,
 			`VNCPASSWORD=${pass}`,
 			`WIPEVNCENV=${config.session.showVncPassword ? "false" : "true"}`,
+			`RESOLUTION=${config.session.resolution || "1920x1080"}x${config.session.bitDepth?.toString() || "24"}`,
 			...envArray,
 		],
 		NetworkDisabled: offline || false,

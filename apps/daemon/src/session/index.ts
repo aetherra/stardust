@@ -5,6 +5,7 @@ import createSession from "./create";
 import deleteSession from "./delete";
 import { filesFetch } from "./file";
 import manageSession from "./manage";
+import addScreen from "./add-screen";
 import screenshot from "./screenshot";
 export default new Elysia({ prefix: "/sessions" })
 	.parser("arrbuf", ({ request }) => request.arrayBuffer())
@@ -99,4 +100,13 @@ export default new Elysia({ prefix: "/sessions" })
 					parse: "arrbuf",
 				},
 			),
-	);
+	)
+	.put(
+		"/:id/addscreen",
+		async ({ params: { id }}) => {
+			await addScreen(id)
+			return {
+				success: true
+			}
+		}
+	)

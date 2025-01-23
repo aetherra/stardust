@@ -28,7 +28,7 @@ done
 # vnc
 echo "while :
 do
-vncserver :1 -passwd /home/stardust/.vnc/passwd -fg -localhost no
+Xvnc :1 -rfbauth /home/stardust/.vnc/passwd -localhost no -screen 0 "$RESOLUTION"
 sleep 5
 done
 " | bash

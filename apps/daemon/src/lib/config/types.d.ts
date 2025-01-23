@@ -72,4 +72,14 @@ export interface SessionConfig {
 	 * Doesn't unset $VNCPASSWORD in containers
 	 */
 	showVncPassword?: boolean;
+	/**
+	 * Resolution for the display
+	 * @default 1920x1080
+	 */
+	resolution?: string;
+	/**
+	 * Bit depth for the display
+	 * @default 24
+	 */
+	bitDepth?: number;
 }
