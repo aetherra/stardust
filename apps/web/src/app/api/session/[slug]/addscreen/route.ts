@@ -1,0 +1,14 @@
+import { getNode } from "@/lib/session/client";
+import getSession from "@/lib/session/get-session";
+import type { NextRequest } from "next/server";
+
+export async function GET(req: NextRequest, props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
+  const session = await getSession(params.slug);
+  const nodeSession = getNode(session).sessions({ id: session.id });
+  await nodeSession.addscreen.put()
+  console.log("hi")
+  return Response.json({
+    success: true
+  })
+}

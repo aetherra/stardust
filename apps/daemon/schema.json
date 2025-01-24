@@ -96,9 +96,23 @@
     "SessionConfig": {
       "additionalProperties": false,
       "properties": {
+        "bitDepth": {
+          "default": 24,
+          "description": "Bit depth for the display",
+          "type": "number"
+        },
+        "resolution": {
+          "default": "1920x1080",
+          "description": "Resolution for the display",
+          "type": "string"
+        },
         "showVncPassword": {
           "description": "Doesn't unset $VNCPASSWORD in containers",
           "type": "boolean"
+        },
+        "storageLimit": {
+          "description": "Storage limit for containers in GB (in format nG, for example 25G)",
+          "type": "string"
         },
         "vncPassword": {
           "description": "Default VNC password to use. Defaults to randomly generated.",
