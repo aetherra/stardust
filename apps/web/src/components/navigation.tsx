@@ -250,6 +250,12 @@ export default function Navigation({
 							<span>About Stardust</span>
 						</DropdownMenuItem>
 						<DropdownMenuItem asChild>
+							<Link href="/auth/reset-password">
+								<Key className="size-4 mr-2" />
+								<span>Reset Password</span>
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem asChild>
 							<Link href="/auth/delete">
 								<Trash className="size-4 mr-2" />
 								<span>Delete Account</span>
@@ -258,7 +264,7 @@ export default function Navigation({
 						<DropdownMenuItem asChild>
 							<Link href="/auth/signout">
 								<LogOut className="size-4 mr-2" />
-								<span>Log Out</span>
+								<span>Sign Out</span>
 							</Link>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
