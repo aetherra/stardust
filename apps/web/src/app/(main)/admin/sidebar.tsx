@@ -15,7 +15,7 @@ export function AdminSidebar() {
 		Icon: LucideIcon;
 	}[] = [
 		{ href: "/admin", label: "Dashboard", Icon: LayoutDashboard },
-		// { href: "/admin/users", label: "Users", Icon: Users },
+		{ href: "/admin/users", label: "Users", Icon: Users },
 		// { href: "/admin/images", label: "Images", Icon: Layers },
 		{ href: "/admin/sessions", label: "Sessions", Icon: Container },
 		{ href: "/admin/config", label: "Config Viewer", Icon: Cog },

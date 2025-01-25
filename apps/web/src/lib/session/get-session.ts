@@ -1,11 +1,15 @@
 "use server";
 import auth from "@stardust/common/auth";
-import type { SelectSession } from "@stardust/db";
+import type { DrizzleClient, SelectSession } from "@stardust/db";
 import db from "@stardust/db";
 import { headers } from "next/headers";
-export default async function getSession(id: string, admin?: boolean): Promise<SelectSession> {
+export default async function getSession(
+	id: string,
+	admin?: boolean,
+	dbClient: DrizzleClient = db,
+): Promise<SelectSession> {
 	const userSession = await auth.api.getSession({ headers: await headers() });
-	const res = await db.query.session.findFirst({
+	const res = await dbClient.query.session.findFirst({
 		where: (session, { and, eq }) => {
 			const base = eq(session.id, id);
 			if (admin && userSession?.user.role === "admin") {
