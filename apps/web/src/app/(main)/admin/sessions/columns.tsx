@@ -15,7 +15,7 @@ import type { SelectSessionRelation } from "@stardust/db/relational-types";
 import type { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
-import { massDelete } from "./actions";
+import { massDelete, massManage } from "./actions";
 export const columns: ColumnDef<SelectSessionRelation>[] = [
 	{
 		id: "select",
@@ -39,38 +39,28 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 	{
 		accessorKey: "id",
 		header: "Container ID",
-		cell: ({ row }) => {
-			return row.original.id.slice(0, 7);
-		},
+		cell: ({ row }) => row.original.id.slice(0, 7),
 	},
 	{
 		accessorKey: "user",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="User Email" />,
-		cell: ({ row }) => {
-			return row.original.user.email;
-		},
+		cell: ({ row }) => row.original.user.email,
 	},
 	{ accessorKey: "dockerImage", header: ({ column }) => <DataTableColumnHeader column={column} title="Image" /> },
 	{
 		accessorKey: "createdAt",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Created at" />,
-		cell: ({ row }) => {
-			const date = new Date(row.original.createdAt);
-			return date.toLocaleString();
-		},
+		cell: ({ row }) => new Date(row.original.createdAt).toLocaleString(),
 	},
 	{
 		accessorKey: "expiresAt",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Expires at" />,
-		cell: ({ row }) => {
-			const date = new Date(row.original.expiresAt);
-			return date.toLocaleString();
-		},
+		cell: ({ row }) => new Date(row.original.expiresAt).toLocaleString(),
 	},
 	{
 		id: "actions",
-		header: ({ table }) => {
-			return table.getFilteredSelectedRowModel().rows.length > 0 ? (
+		header: ({ table }) =>
+			table.getFilteredSelectedRowModel().rows.length > 0 ? (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button variant="ghost" className="h-8 w-8 p-0">
@@ -80,6 +70,28 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
 						<DropdownMenuLabel>Actions</DropdownMenuLabel>
+						<DropdownMenuItem
+							onClick={() =>
+								toast.promise(() => massManage(table.getFilteredSelectedRowModel().rows, "pause"), {
+									loading: "Pausing containers...",
+									success: "Sessions paused",
+									error: (error) => `Failed to pause container: ${error}`,
+								})
+							}
+						>
+							Pause
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							onClick={() =>
+								toast.promise(() => massManage(table.getFilteredSelectedRowModel().rows, "stop"), {
+									loading: "Stopping containers...",
+									success: "Sessions stopped",
+									error: (error) => `Failed to stop container: ${error}`,
+								})
+							}
+						>
+							Stop
+						</DropdownMenuItem>
 						<DropdownMenuItem
 							onClick={() =>
 								toast.promise(() => massDelete(table.getFilteredSelectedRowModel().rows), {
@@ -89,56 +101,50 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 								})
 							}
 						>
-							Delete sessions
+							Delete
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
-			) : null;
-		},
-		cell: ({ row }) => {
-			const session = row.original;
-			return (
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button variant="ghost" className="h-8 w-8 p-0">
-							<span className="sr-only">Open menu</span>
-							<MoreHorizontal className="h-4 w-4" />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end">
-						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuItem onClick={() => navigator.clipboard.writeText(session.id)}>
-							Copy session ID
-						</DropdownMenuItem>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem
-							onClick={() =>
-								toast.promise(
-									() => manageSession({ id: session.id, action: "stop", admin: true, revalidate: "/admin/sessions" }),
-									{
-										loading: "Stopping container...",
-										success: "Session stopped",
-										error: (error) => `Failed to stop container: ${error}`,
-									},
-								)
-							}
-						>
-							Stop session
-						</DropdownMenuItem>
-						<DropdownMenuItem
-							onClick={() =>
-								toast.promise(() => deleteSession({ id: session.id, admin: true, revalidate: "/admin/sessions" }), {
-									loading: "Deleting session...",
-									success: "Session deleted",
-									error: (error) => `Failed to delete container: ${error}`,
-								})
-							}
-						>
-							Delete session
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
-			);
-		},
+			) : null,
+		cell: ({ row: { original: session } }) => (
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Button variant="ghost" className="h-8 w-8 p-0">
+						<span className="sr-only">Open menu</span>
+						<MoreHorizontal className="h-4 w-4" />
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align="end">
+					<DropdownMenuLabel>Actions</DropdownMenuLabel>
+					<DropdownMenuItem onClick={() => navigator.clipboard.writeText(session.id)}>Copy session ID</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem
+						onClick={() =>
+							toast.promise(
+								() => manageSession({ id: session.id, action: "stop", admin: true, revalidate: "/admin/sessions" }),
+								{
+									loading: "Stopping container...",
+									success: "Session stopped",
+									error: (error) => `Failed to stop container: ${error}`,
+								},
+							)
+						}
+					>
+						Stop session
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						onClick={() =>
+							toast.promise(() => deleteSession({ id: session.id, admin: true, revalidate: "/admin/sessions" }), {
+								loading: "Deleting session...",
+								success: "Session deleted",
+								error: (error) => `Failed to delete container: ${error}`,
+							})
+						}
+					>
+						Delete session
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+		),
 	},
 ];
