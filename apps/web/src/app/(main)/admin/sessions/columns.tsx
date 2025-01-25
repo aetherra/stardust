@@ -118,6 +118,21 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 					<DropdownMenuLabel>Actions</DropdownMenuLabel>
 					<DropdownMenuItem onClick={() => navigator.clipboard.writeText(session.id)}>Copy session ID</DropdownMenuItem>
 					<DropdownMenuSeparator />
+
+					<DropdownMenuItem
+						onClick={() =>
+							toast.promise(
+								() => manageSession({ id: session.id, action: "pause", admin: true, revalidate: "/admin/sessions" }),
+								{
+									loading: "Pausing container...",
+									success: "Session paused",
+									error: (error) => `Failed to pause container: ${error}`,
+								},
+							)
+						}
+					>
+						Pause
+					</DropdownMenuItem>
 					<DropdownMenuItem
 						onClick={() =>
 							toast.promise(
@@ -130,7 +145,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 							)
 						}
 					>
-						Stop session
+						Stop
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						onClick={() =>
@@ -141,7 +156,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 							})
 						}
 					>
-						Delete session
+						Delete
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
