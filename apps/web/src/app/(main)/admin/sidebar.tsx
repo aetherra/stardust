@@ -17,8 +17,8 @@ export function AdminSidebar() {
 		{ href: "/admin", label: "Dashboard", Icon: LayoutDashboard },
 		// { href: "/admin/users", label: "Users", Icon: Users },
 		// { href: "/admin/images", label: "Images", Icon: Layers },
-		// { href: "/admin/sessions", label: "Sessions", Icon: Container },
-		// { href: "/admin/config", label: "Config Viewer", Icon: Cog },
+		{ href: "/admin/sessions", label: "Sessions", Icon: Container },
+		{ href: "/admin/config", label: "Config Viewer", Icon: Cog },
 	];
 	return (
 		<nav className="grid gap-x-4 text-sm text-muted-foreground">

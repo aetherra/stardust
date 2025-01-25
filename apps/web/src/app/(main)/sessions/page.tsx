@@ -1,12 +1,10 @@
-import { SkeletionImage } from "@/components/skeleton-image";
 import { SubmitButton } from "@/components/submit-button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { getNode } from "@/lib/session/client";
 import { inspectSession } from "@/lib/session/inspect";
-import { type SessionAction, deleteSession } from "@/lib/session/manage";
+import { type SessionAction, deleteSession, manageSession } from "@/lib/session/manage";
 import auth from "@stardust/common/auth";
 import db, { type SelectSession } from "@stardust/db";
 import { Container, Loader2, PauseCircle, PlayCircle, ScreenShare, Square, Trash2 } from "lucide-react";
@@ -18,7 +16,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { SessionDate } from "./session-date";
 const ManageSessionButton = ({
-	session,
+	session: { id },
 	action,
 	redirectToView,
 	icon,
@@ -32,10 +30,8 @@ const ManageSessionButton = ({
 	<form
 		action={async () => {
 			"use server";
-			const node = getNode(session);
-			await node.sessions({ id: session.id }).patch({ action });
-			if (redirectToView) redirect(`/view/${session.id}`);
-			else revalidatePath("/sessions");
+			await manageSession({ id, action, revalidate: !redirectToView ? "/sessions" : undefined });
+			if (redirectToView) redirect(`/view/${id}`);
 		}}
 	>
 		<Tooltip>
@@ -96,7 +92,7 @@ export default async function Dashboard() {
 												<form
 													action={async () => {
 														"use server";
-														await deleteSession(session.id);
+														await deleteSession({ id: session.id });
 														revalidatePath("/sessions");
 													}}
 												>

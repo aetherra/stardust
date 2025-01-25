@@ -191,7 +191,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 							onClick={() =>
 								toast.promise(
 									async () => {
-										await manageSession(params.slug, "pause");
+										await manageSession({ id: params.slug, action: "pause" });
 										router.push("/");
 									},
 									{
@@ -209,7 +209,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 						<Button
 							className="w-full px-3 "
 							onClick={() =>
-								toast.promise(() => manageSession(params.slug, "restart"), {
+								toast.promise(() => manageSession({ id: params.slug, action: "restart" }), {
 									loading: "Restarting container...",
 									success: "Session restarted",
 									error: "Failed to restart container",
@@ -224,7 +224,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 							onClick={() =>
 								toast.promise(
 									async () => {
-										await manageSession(params.slug, "stop");
+										await manageSession({ id: params.slug, action: "stop" });
 										router.push("/");
 									},
 									{
@@ -260,7 +260,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 											vncRef.current?.rfb?.disconnect();
 											toast.promise(
 												async () => {
-													await deleteSession(params.slug);
+													await deleteSession({ id: params.slug });
 													router.push("/");
 												},
 												{
