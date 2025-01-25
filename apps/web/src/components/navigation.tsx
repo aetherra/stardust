@@ -70,7 +70,6 @@ export default function Navigation({
 		},
 		{
 			label: "Admin",
-			// @ts-expect-error this will be fixed soon
 			href: "/admin",
 			icon: <Settings />,
 			adminOnly: true,
