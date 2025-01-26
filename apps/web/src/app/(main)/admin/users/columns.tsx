@@ -17,7 +17,7 @@ import type { SelectUserRelation } from "@stardust/db/relational-types";
 import type { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
-import { deleteUserSessions, revalidateHandler } from "./actions";
+import { deleteUserSessions, revalidateHandler, safeDeleteUser } from "./actions";
 const clientOptions = {
 	onSuccess() {
 		revalidateHandler();
@@ -143,7 +143,7 @@ export const columns: ColumnDef<SelectUserRelation>[] = [
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						onClick={() =>
-							toast.promise(() => authClient.admin.removeUser({ userId: user.id }, clientOptions), {
+							toast.promise(() => safeDeleteUser(user.id), {
 								loading: "Deleting user...",
 								success: "User deleted",
 								error: (error) => `Failed to delete user: ${error.message}`,

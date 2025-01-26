@@ -50,6 +50,10 @@ export interface NodeConfig {
 
 export interface AuthConfig {
 	/**
+	 * Trusted origins for authentication requests. Defaults to the origin header
+	 */
+	trustedOrigins?: string[];
+	/**
 	 * The JWT secret used to sign tokens.
 	 * @default `sigmasigmaonthewall`
 	 **/

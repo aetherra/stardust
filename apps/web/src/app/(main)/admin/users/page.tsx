@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import auth from "@stardust/common/auth";
 import db from "@stardust/db";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { columns } from "./columns";
 export const metadata: Metadata = {
@@ -57,8 +58,9 @@ export default async function AdminPage() {
 										password,
 										role,
 									},
+									headers: await headers(),
 								});
-								redirect("/admin");
+								redirect("/admin/users");
 							}}
 							className="flex flex-col gap-2 w-full"
 						>

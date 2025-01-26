@@ -27,19 +27,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { SessionSchema } from "@stardust/common/auth";
-import {
-	Book,
-	ComputerIcon,
-	Globe,
-	Info,
-	Key,
-	LogOut,
-	Monitor,
-	Settings,
-	Sparkles,
-	SwatchBook,
-	Trash,
-} from "lucide-react";
+import { Book, ComputerIcon, Globe, Info, Key, LogOut, Monitor, Settings, Sparkles, SwatchBook } from "lucide-react";
 import type { Route } from "next";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -73,28 +61,6 @@ export default function Navigation({
 			href: "/admin",
 			icon: <Settings />,
 			adminOnly: true,
-		},
-	];
-	const projectsUsed = [
-		{
-			name: "Next.js",
-			url: "https://nextjs.org/",
-		},
-		{
-			name: "Docker",
-			url: "https://www.docker.com/",
-		},
-		{
-			name: "noVNC",
-			url: "https://github.com/noVNC/noVNC",
-		},
-		{
-			name: "shadcn/ui",
-			url: "https://ui.shadcn.com/",
-		},
-		{
-			name: "better-auth",
-			url: "https://better-auth.com/",
 		},
 	];
 	return (
@@ -143,41 +109,30 @@ export default function Navigation({
 						</DialogHeader>
 						<div className="flex flex-col items-start justify-start gap-2 text-foreground text-sm">
 							Stardust is the platform for streaming isolated desktop containers.
-							<br />
-							Stardust uses the following things in an important way:
-							<br />
-							<ul className="list-inside list-disc">
-								{projectsUsed.map((project) => (
-									<li key={project.name}>
-										<a
-											href={project.url}
-											className="inline font-medium text-primary underline-offset-4 hover:underline"
-											target="_blank"
-											rel="noreferrer nopener"
-										>
-											{project.name}
-										</a>
-									</li>
-								))}
-							</ul>
-							Copyleft 2024 Spaceness.
 							<section>
 								This version of Stardust is from commit{" "}
 								<a
 									href={`https://github.com/spaceness/stardust/commit/${process.env.GIT_COMMIT}`}
 									className="inline font-medium text-primary underline-offset-4 hover:underline"
 									target="_blank"
-									rel="noreferrer nopener"
+									rel="noreferrer noopener"
 								>
 									{process.env.GIT_COMMIT?.slice(0, 7)}
 								</a>
 								, built on {new Date(Number(process.env.BUILD_DATE)).toLocaleString()}
 							</section>
+							<section>
+								Stardust is licensed under the{" "}
+								<a href="https://www.gnu.org/licenses/agpl-3.0.txt" target="_blank" rel="noreferrer noopener">
+									GNU Affero General Public License v3.0 (AGPL-3.0)
+								</a>
+								. Copyleft 2024 Spaceness.
+							</section>
 							<DialogFooter>
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<Button asChild variant="outline" size="icon">
-											<a href="https://github.com/spaceness/stardust" target="_blank" rel="noreferrer nopener">
+											<a href="https://github.com/spaceness/stardust" target="_blank" rel="noreferrer noopener">
 												<GitHubIcon className="size-5" />
 											</a>
 										</Button>
@@ -187,7 +142,7 @@ export default function Navigation({
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<Button variant="outline" size="icon" asChild>
-											<a href="https://stardust-docs.vercel.app/docs" target="_blank" rel="noreferrer nopener">
+											<a href="https://stardust.spaceness.team/docs" target="_blank" rel="noreferrer noopener">
 												<Book className="size-5" />
 											</a>
 										</Button>
@@ -197,7 +152,7 @@ export default function Navigation({
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<Button variant="outline" size="icon" asChild>
-											<a href="https://stardust-docs.vercel.app/" target="_blank" rel="noreferrer nopener">
+											<a href="https://spaceness.team/" target="_blank" rel="noreferrer noopener">
 												<Globe className="size-5" />
 											</a>
 										</Button>
@@ -253,12 +208,6 @@ export default function Navigation({
 							<Link href="/auth/reset-password">
 								<Key className="size-4 mr-2" />
 								<span>Reset Password</span>
-							</Link>
-						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<Link href="/auth/delete">
-								<Trash className="size-4 mr-2" />
-								<span>Delete Account</span>
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem asChild>

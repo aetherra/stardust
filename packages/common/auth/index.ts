@@ -12,6 +12,7 @@ if (typeof process.env.NEXT_RUNTIME !== "undefined") conditionalPlugins.push(nex
 const auth = betterAuth({
 	appName: "Stardust",
 	secret: config.secret,
+	trustedOrigins: config.trustedOrigins,
 	database: drizzleAdapter(db, {
 		provider: "pg",
 		schema: {
@@ -27,18 +28,13 @@ const auth = betterAuth({
 	socialProviders: config.oauth?.providers,
 	hooks: {
 		before: createAuthMiddleware(async (ctx) => {
-			if (ctx.path !== "/sign-up/email" || config.credentials?.signups) {
-				return;
+			if (ctx.path.startsWith("/sign-up") && !config.credentials?.signups) {
+				throw new APIError("BAD_REQUEST", {
+					message: "Signups are disabled",
+				});
 			}
-			throw new APIError("BAD_REQUEST", {
-				message: "Signups are disabled",
-			});
+			return;
 		}),
-	},
-	user: {
-		deleteUser: {
-			enabled: true,
-		},
 	},
 });
 export type SessionSchema = typeof auth.$Infer.Session;

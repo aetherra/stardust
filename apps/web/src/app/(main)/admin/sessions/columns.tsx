@@ -72,6 +72,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 						<DropdownMenuLabel>Actions</DropdownMenuLabel>
 						<DropdownMenuItem
 							onClick={() =>
+								// @ts-ignore typescript is doing smth weird
 								toast.promise(() => massManage(table.getFilteredSelectedRowModel().rows, "pause"), {
 									loading: "Pausing containers...",
 									success: "Sessions paused",
@@ -83,6 +84,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							onClick={() =>
+								// @ts-ignore typescript is doing smth weird
 								toast.promise(() => massManage(table.getFilteredSelectedRowModel().rows, "stop"), {
 									loading: "Stopping containers...",
 									success: "Sessions stopped",
@@ -94,6 +96,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							onClick={() =>
+								// @ts-ignore typescript is doing smth weird
 								toast.promise(() => massDelete(table.getFilteredSelectedRowModel().rows), {
 									loading: "Deleting containers...",
 									success: "Sessions deleted",

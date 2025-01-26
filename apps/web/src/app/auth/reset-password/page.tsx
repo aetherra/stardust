@@ -5,9 +5,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import authClient from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function Page() {
+	const router = useRouter();
 	return (
 		<CardContent className="m-1 w-full flex-col flex justify-center items-center">
 			<CardDescription>Reset your password</CardDescription>
@@ -22,11 +24,18 @@ export default function Page() {
 							const revokeOtherSessions = Boolean(data.get("revoke-others"));
 							if (!oldPassword || !newPassword || !confirmPassword) throw new Error("All fields are required");
 							if (newPassword !== confirmPassword) throw new Error("Passwords do not match");
-							return authClient.changePassword({
-								revokeOtherSessions,
-								currentPassword: oldPassword,
-								newPassword,
-							});
+							return authClient.changePassword(
+								{
+									revokeOtherSessions,
+									currentPassword: oldPassword,
+									newPassword,
+								},
+								{
+									onSuccess() {
+										router.push("/");
+									},
+								},
+							);
 						},
 						{
 							loading: "Setting password...",

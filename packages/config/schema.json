@@ -330,6 +330,13 @@
           "description": "The JWT secret used to sign tokens.",
           "type": "string"
         },
+        "trustedOrigins": {
+          "description": "Trusted origins for authentication requests. Defaults to the origin header",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "turnstile": {
           "$ref": "#/definitions/TurnstileConfig",
           "description": "Cloudflare turnstile configuration. Leave `undefined` to disable turnstile."
