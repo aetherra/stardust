@@ -1,9 +1,13 @@
 import "@stardust/config/load-config";
 import { createServer } from "node:http";
 import { shouldRoute, stardustdUpgrade } from "@stardust/common/session/ws";
-import { getConfig } from "@stardust/config";
+import { getConfig, validateConfig } from "@stardust/config";
 import next from "next";
 const config = getConfig();
+if (!validateConfig(config)) {
+	console.error("✨ Stardust: Config file schema invalid");
+	process.exit(1);
+}
 const dev = process.env.NODE_ENV !== "production";
 const port = config.port || 3000;
 const hostname = config.hostname || "0.0.0.0";
