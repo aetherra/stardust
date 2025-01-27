@@ -1,3 +1,4 @@
+import "@stardust/config/load-config";
 import { getConfig } from "@stardust/config";
 import { defineConfig } from "drizzle-kit";
 export default defineConfig({
