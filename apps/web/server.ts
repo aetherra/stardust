@@ -1,5 +1,6 @@
 import "@stardust/config/load-config";
 import { createServer } from "node:http";
+import scheduleAutoDelete from "@/lib/session/auto-delete";
 import { shouldRoute, stardustdUpgrade } from "@stardust/common/session/ws";
 import { getConfig, validateConfig } from "@stardust/config";
 import next from "next";
@@ -24,6 +25,7 @@ const app = next({
 	turbopack: process.argv.includes("--turbo"),
 });
 await app.prepare();
+scheduleAutoDelete();
 const nextRequest = app.getRequestHandler();
 const nextUpgrade = app.getUpgradeHandler();
 httpServer
