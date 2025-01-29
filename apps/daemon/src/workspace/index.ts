@@ -1,10 +1,24 @@
-import { Elysia, t } from "elysia";
+import { Elysia, type Static, t } from "elysia";
 import { docker } from "~/lib/docker";
 import { pullImage } from "./pull";
-const imagePromises = new Map<string, ReturnType<typeof pullImage>>();
+const statuses = t.Union([
+	t.Literal("pulled"),
+	t.Literal("in-progress"),
+	t.Literal("not-started"),
+	t.Literal("failed"),
+	t.Literal("not-touched"),
+]);
 const query = t.Object({
 	id: t.String(),
 });
+
+const imagePromises = new Map<
+	string,
+	{
+		status: Static<typeof statuses>;
+	}
+>();
+
 export default new Elysia({ prefix: "/workspaces" })
 	.get("/", async () => {
 		const workspaces = (
@@ -48,7 +62,12 @@ export default new Elysia({ prefix: "/workspaces" })
 				return { success: false, error: "Image pull already in progress" };
 			}
 			const pullStatus = pullImage(`${body.image}:latest`);
-			imagePromises.set(body.image, pullStatus);
+			imagePromises.set(body.image, { status: "in-progress" });
+
+			pullStatus
+				.then(() => imagePromises.set(body.image, { status: "pulled" }))
+				.catch(() => imagePromises.set(body.image, { status: "failed" }));
+
 			return { success: true, status: "in-progress" };
 		},
 		{
@@ -60,18 +79,35 @@ export default new Elysia({ prefix: "/workspaces" })
 	.get(
 		"/create",
 		async ({ query }) => {
-			const image = await imagePromises.get(query.image);
+			const image = imagePromises.get(query.image);
 			if (!image) {
-				return { success: false, error: "image is not touched" };
+				try {
+					const inspect = await docker.getImage(query.image).inspect();
+					return {
+						success: true,
+						status: "pulled",
+						...inspect,
+					};
+				} catch (e) {
+					return {
+						success: false,
+						status: "failed",
+						error: (e as Error).message,
+					};
+				}
 			}
-			if (image.success) {
+			if (image.status === "pulled" || image.status === "failed") {
 				imagePromises.delete(query.image);
 			}
-			return image;
+			return { success: true, status: image.status };
 		},
 		{
 			query: t.Object({
 				image: t.String(),
+			}),
+			response: t.Object({
+				success: t.Boolean(),
+				status: statuses,
 			}),
 		},
 	);
