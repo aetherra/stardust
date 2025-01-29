@@ -16,7 +16,7 @@ export function AdminSidebar() {
 	}[] = [
 		{ href: "/admin", label: "Dashboard", Icon: LayoutDashboard },
 		{ href: "/admin/users", label: "Users", Icon: Users },
-		// { href: "/admin/images", label: "Images", Icon: Layers },
+		{ href: "/admin/workspaces", label: "Workspaces", Icon: Layers },
 		{ href: "/admin/sessions", label: "Sessions", Icon: Container },
 		{ href: "/admin/config", label: "Config Viewer", Icon: Cog },
 	];
@@ -30,7 +30,7 @@ export function AdminSidebar() {
 						variant="ghost"
 						className={cn(
 							pathname === href ? "text-primary bg-secondary" : "text-muted-foreground",
-							"hover:text-primary flex gap-2 w-full justify-start",
+							"hover:text-foreground flex gap-2 w-full justify-start",
 						)}
 					>
 						<Link href={href}>
