@@ -50,7 +50,7 @@ export async function stardustdUpgrade(req: IncomingMessage, socket: Duplex, hea
 		target: `ws://${nodeConfig?.hostname || "0.0.0.0"}:${nodeConfig?.port || 4000}/sessions/${session.id}/${connectionType}`,
 		ignorePath: true,
 		headers: {
-			Authorization: nodeConfig?.token as string,
+			Authorization: `Bearer ${nodeConfig?.token}`,
 		},
 	});
 	return middleware.upgrade(req, socket as Socket, head);

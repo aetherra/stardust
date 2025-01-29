@@ -1,7 +1,7 @@
 {
 	"name": "daemon",
 	"type": "module",
-	"version": "1.0",
+	"version": "1.0.0",
 	"scripts": {
 		"start": "./stardustd",
 		"build:debug": "bun build src/server.ts --compile --sourcemap --outfile stardustd",
@@ -18,7 +18,8 @@
 		"ajv": "^8.17.1",
 		"dockerode": "^4.0.4",
 		"elysia": "latest",
-		"js-yaml": "^4.1.0"
+		"js-yaml": "^4.1.0",
+		"@elysiajs/swagger": "^1.2.0"
 	},
 	"devDependencies": {
 		"@stardust/tsconfig": "workspace:*",

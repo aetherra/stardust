@@ -11,6 +11,7 @@ export const workspace = pgTable("workspace", {
 	friendlyName: text("friendlyName").notNull(),
 	category: text("category").array(),
 	icon: text("icon").notNull(),
+	nodes: text("nodes").array().notNull().default([]),
 });
 export type SelectWorkspace = typeof workspace.$inferSelect;
 export const workspaceRelations = relations(workspace, ({ many }) => ({

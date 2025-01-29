@@ -5,6 +5,6 @@ import type { App } from "daemon";
 export const stardustConnector = (node: NodeConfig) =>
 	treaty<App>(`${node.proto || "http"}://${node.hostname}:${node.port || 4000}`, {
 		headers: {
-			authorization: node.token,
+			authorization: `Bearer ${node.token}`,
 		},
 	});

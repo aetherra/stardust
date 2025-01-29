@@ -4,9 +4,10 @@ import { getNode } from "./client";
 
 export default function scheduleAutoDelete() {
 	const cb = async () => {
-		console.log("✨ Stardust: Checking for expired sessions...");
+		const now = new Date();
+		console.log(`✨ Stardust: Checking for expired sessions (${now.toISOString()})...`);
 		await db.transaction(async (tx) => {
-			const staleSessions = await tx.select().from(session).where(lte(session.expiresAt, new Date()));
+			const staleSessions = await tx.select().from(session).where(lte(session.expiresAt, now));
 			await Promise.all(
 				staleSessions.map(async (s) => {
 					console.log(`✨ Stardust: Deleting expired session ${s.id}`);

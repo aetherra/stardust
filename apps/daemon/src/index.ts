@@ -1,9 +1,13 @@
 import { loadavg } from "node:os";
+import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
+
 import { authCheck } from "~/auth-middleware";
 import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
 import sessionHandler from "~/session";
+import workspaceHandler from "~/workspace";
+import generateToken from "./lib/auth-token";
 const config = getConfig();
 export const app = new Elysia()
 	.get("/", async (c) => {
@@ -28,7 +32,20 @@ export const app = new Elysia()
 		mem: process.memoryUsage(),
 		sessions: (await docker.listContainers()).filter((s) => s.HostConfig.NetworkMode === config.docker.network).length,
 	})
-	.use(sessionHandler);
+	.use(sessionHandler)
+	.use(workspaceHandler)
+	.use(
+		swagger({
+			scalarConfig: {
+				metaData: {
+					title: "Stardust daemon API",
+				},
+				authentication: {
+					preferredSecurityScheme: "bearer",
+				},
+			},
+		}),
+	);
 
 // eden
 export type App = typeof app;

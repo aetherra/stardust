@@ -35,6 +35,9 @@ importers:
 
   apps/daemon:
     dependencies:
+      '@elysiajs/swagger':
+        specifier: ^1.2.0
+        version: 1.2.0(elysia@1.2.10(@sinclair/typebox@0.34.14)(openapi-types@12.1.3)(typescript@5.5.4))
       ajv:
         specifier: ^8.17.1
         version: 8.17.1
@@ -43,7 +46,7 @@ importers:
         version: 4.0.4
       elysia:
         specifier: latest
-        version: 1.2.10(@sinclair/typebox@0.34.14)(typescript@5.5.4)
+        version: 1.2.10(@sinclair/typebox@0.34.14)(openapi-types@12.1.3)(typescript@5.5.4)
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -216,7 +219,7 @@ importers:
     dependencies:
       '@elysiajs/eden':
         specifier: ^1.2.0
-        version: 1.2.0(elysia@1.2.10(@sinclair/typebox@0.34.14)(typescript@5.5.4))
+        version: 1.2.0(elysia@1.2.10(@sinclair/typebox@0.34.14)(openapi-types@12.1.3)(typescript@5.5.4))
       '@stardust/config':
         specifier: workspace:*
         version: link:../config
@@ -247,7 +250,7 @@ importers:
         version: link:../../apps/daemon
       elysia:
         specifier: latest
-        version: 1.2.10(@sinclair/typebox@0.34.14)(typescript@5.5.4)
+        version: 1.2.10(@sinclair/typebox@0.34.14)(openapi-types@12.1.3)(typescript@5.5.4)
 
   packages/config:
     dependencies:
@@ -484,6 +487,11 @@ packages:
 
   '@elysiajs/eden@1.2.0':
     resolution: {integrity: sha512-MpV45ahuF+iFZUg4tyJbLr9qxzY99m8clJVgQrDrz7Qh6eOKQ8MY6vjYMj3Wh21pTIRHPHzOLhVorRGby1/Owg==}
+    peerDependencies:
+      elysia: '>= 1.2.0'
+
+  '@elysiajs/swagger@1.2.0':
+    resolution: {integrity: sha512-OPx93DP6rM2VHjA3D44Xiz5MYm9AYlO2NGWPsnSsdyvaOCiL9wJj529583h7arX4iIEYE5LiLB0/A45unqbopw==}
     peerDependencies:
       elysia: '>= 1.2.0'
 
@@ -1685,6 +1693,26 @@ packages:
   '@radix-ui/rect@1.1.0':
     resolution: {integrity: sha512-A9+lCBZoaMJlVKcRBz2YByCG+Cp2t6nAnMnNba+XiWxnj6r4JUFqfsgwocMBZU9LPtdxC6wB56ySYpc7LQIoJg==}
 
+  '@scalar/openapi-types@0.1.1':
+    resolution: {integrity: sha512-NMy3QNk6ytcCoPUGJH0t4NNr36OWXgZhA3ormr3TvhX1NDgoF95wFyodGVH8xiHeUyn2/FxtETm8UBLbB5xEmg==}
+    engines: {node: '>=18'}
+
+  '@scalar/openapi-types@0.1.6':
+    resolution: {integrity: sha512-V+KnESyVJqorJzEN0QFlu3tAImCHjnvPov6QcQvjfY7s0+CjrI3rRO3oVIRlXURTQrQGrnhxvK0SkXGAZ+dxvw==}
+    engines: {node: '>=18'}
+
+  '@scalar/themes@0.9.62':
+    resolution: {integrity: sha512-dLJGGjZ5+z9GL98fhQsVRSyoUdDawczpjH0kt6DC4t42iyqX3dU0w5tMuQfPceoBHhvvRMGmqtl/Wn7zEgd6qA==}
+    engines: {node: '>=18'}
+
+  '@scalar/types@0.0.12':
+    resolution: {integrity: sha512-XYZ36lSEx87i4gDqopQlGCOkdIITHHEvgkuJFrXFATQs9zHARop0PN0g4RZYWj+ZpCUclOcaOjbCt8JGe22mnQ==}
+    engines: {node: '>=18'}
+
+  '@scalar/types@0.0.28':
+    resolution: {integrity: sha512-NRGWtxWE/YfpAiNKh/XCV5o9CaYlg8etwelux1q7VRAbZqbpti5c14a5/t2mCiFSrfoyh4ghAHuYC9n3uwnuXQ==}
+    engines: {node: '>=18'}
+
   '@simplewebauthn/browser@13.1.0':
     resolution: {integrity: sha512-WuHZ/PYvyPJ9nxSzgHtOEjogBhwJfC8xzYkPC+rR/+8chl/ft4ngjiK8kSU5HtRJfczupyOh33b25TjYbvwAcg==}
 
@@ -1771,6 +1799,9 @@ packages:
 
   '@types/ws@8.5.13':
     resolution: {integrity: sha512-osM/gWBTPKgHV8XkTunnegTRIsvF6owmf5w+JtAfOw472dptdm0dlGv4xCt6GwQRcC2XVOvvRE/0bAoQcL2QkA==}
+
+  '@unhead/schema@1.11.18':
+    resolution: {integrity: sha512-a3TA/OJCRdfbFhcA3Hq24k1ZU1o9szicESrw8DZcGyQFacHnh84mVgnyqSkMnwgCmfN4kvjSiTBlLEHS6+wATw==}
 
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
@@ -2473,6 +2504,9 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
+  hookable@5.5.3:
+    resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
+
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
@@ -2818,6 +2852,9 @@ packages:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
 
+  openapi-types@12.1.3:
+    resolution: {integrity: sha512-N4YtSYJqghVu4iek2ZUvcN/0aqH1kRDuNqzcycDxhOUpg7GdvLa2F3DgS6yBNhInhv2r/6I0Flkn7CqL8+nIcw==}
+
   opener@1.5.2:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
     hasBin: true
@@ -2858,6 +2895,9 @@ packages:
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
+
+  pathe@1.1.2:
+    resolution: {integrity: sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -3485,6 +3525,9 @@ packages:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
 
+  zhead@2.2.4:
+    resolution: {integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==}
+
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
@@ -3706,9 +3749,17 @@ snapshots:
 
   '@drizzle-team/brocli@0.10.2': {}
 
-  '@elysiajs/eden@1.2.0(elysia@1.2.10(@sinclair/typebox@0.34.14)(typescript@5.5.4))':
+  '@elysiajs/eden@1.2.0(elysia@1.2.10(@sinclair/typebox@0.34.14)(openapi-types@12.1.3)(typescript@5.5.4))':
     dependencies:
-      elysia: 1.2.10(@sinclair/typebox@0.34.14)(typescript@5.5.4)
+      elysia: 1.2.10(@sinclair/typebox@0.34.14)(openapi-types@12.1.3)(typescript@5.5.4)
+
+  '@elysiajs/swagger@1.2.0(elysia@1.2.10(@sinclair/typebox@0.34.14)(openapi-types@12.1.3)(typescript@5.5.4))':
+    dependencies:
+      '@scalar/themes': 0.9.62
+      '@scalar/types': 0.0.12
+      elysia: 1.2.10(@sinclair/typebox@0.34.14)(openapi-types@12.1.3)(typescript@5.5.4)
+      openapi-types: 12.1.3
+      pathe: 1.1.2
 
   '@emnapi/runtime@1.3.1':
     dependencies:
@@ -4680,6 +4731,24 @@ snapshots:
 
   '@radix-ui/rect@1.1.0': {}
 
+  '@scalar/openapi-types@0.1.1': {}
+
+  '@scalar/openapi-types@0.1.6': {}
+
+  '@scalar/themes@0.9.62':
+    dependencies:
+      '@scalar/types': 0.0.28
+
+  '@scalar/types@0.0.12':
+    dependencies:
+      '@scalar/openapi-types': 0.1.1
+      '@unhead/schema': 1.11.18
+
+  '@scalar/types@0.0.28':
+    dependencies:
+      '@scalar/openapi-types': 0.1.6
+      '@unhead/schema': 1.11.18
+
   '@simplewebauthn/browser@13.1.0': {}
 
   '@simplewebauthn/server@13.1.0':
@@ -4786,6 +4855,11 @@ snapshots:
   '@types/ws@8.5.13':
     dependencies:
       '@types/node': 20.12.14
+
+  '@unhead/schema@1.11.18':
+    dependencies:
+      hookable: 5.5.3
+      zhead: 2.2.4
 
   '@webassemblyjs/ast@1.14.1':
     dependencies:
@@ -5222,12 +5296,13 @@ snapshots:
 
   electron-to-chromium@1.5.83: {}
 
-  elysia@1.2.10(@sinclair/typebox@0.34.14)(typescript@5.5.4):
+  elysia@1.2.10(@sinclair/typebox@0.34.14)(openapi-types@12.1.3)(typescript@5.5.4):
     dependencies:
       '@sinclair/typebox': 0.34.14
       cookie: 1.0.2
       memoirist: 0.2.0
     optionalDependencies:
+      openapi-types: 12.1.3
       typescript: 5.5.4
 
   emoji-regex@8.0.0: {}
@@ -5476,6 +5551,8 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  hookable@5.5.3: {}
 
   html-escaper@2.0.2: {}
 
@@ -5769,6 +5846,8 @@ snapshots:
     dependencies:
       mimic-fn: 4.0.0
 
+  openapi-types@12.1.3: {}
+
   opener@1.5.2: {}
 
   ora@6.3.1:
@@ -5810,6 +5889,8 @@ snapshots:
       minipass: 7.1.2
 
   path-type@4.0.0: {}
+
+  pathe@1.1.2: {}
 
   picocolors@1.1.1: {}
 
@@ -6494,5 +6575,7 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
+
+  zhead@2.2.4: {}
 
   zod@3.24.1: {}

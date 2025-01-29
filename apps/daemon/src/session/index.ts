@@ -91,7 +91,6 @@ export default new Elysia({ prefix: "/sessions" })
 			.put(
 				"/upload/:name",
 				async ({ params: { id, name }, body }) => {
-					console.log(body);
 					const res = await filesFetch(id, `/upload?name=${name}`, "PUT", Buffer.from(body as ArrayBuffer));
 					return {
 						success: res.ok,
