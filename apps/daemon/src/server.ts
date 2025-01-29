@@ -30,7 +30,7 @@ const srv = Bun.serve<{ socket: Socket; path: string }>({
 				containerInfo.NetworkSettings.Networks[config.docker.network || "stardust"].IPAddress,
 			);
 			const authToken = await generateToken();
-			if (req.headers.get("Authorization") === authToken) {
+			if (req.headers.get("Authorization") === `Bearer ${authToken}`) {
 				if (
 					server.upgrade(req, {
 						data: { socket, path },

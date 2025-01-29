@@ -1,7 +1,7 @@
 import { loadavg } from "node:os";
 import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
-
+import pkgJson from "~/../package.json";
 import { authCheck } from "~/auth-middleware";
 import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
@@ -36,13 +36,28 @@ export const app = new Elysia()
 	.use(workspaceHandler)
 	.use(
 		swagger({
+			documentation: {
+				info: {
+					title: "Stardust Daemon API",
+					version: pkgJson.version,
+				},
+				components: {
+					securitySchemes: {
+						bearerAuth: {
+							type: "http",
+							scheme: "bearer",
+						},
+					},
+				},
+				security: [
+					{
+						bearerAuth: [],
+					},
+				],
+			},
 			scalarConfig: {
-				metaData: {
-					title: "Stardust daemon API",
-				},
-				authentication: {
-					preferredSecurityScheme: "bearer",
-				},
+				theme: "kepler",
+				customCss: "\n",
 			},
 		}),
 	);

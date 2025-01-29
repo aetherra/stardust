@@ -34,7 +34,7 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ slug: str
 			`${sessionNode?.proto || "http"}://${sessionNode?.hostname}:${sessionNode?.port || 4000}/sessions/${params.slug}/files/upload/${name}`,
 			{
 				headers: {
-					authorization: sessionNode?.token || "",
+					authorization: `Bearer ${sessionNode?.token}`,
 				},
 				body: await req.arrayBuffer(),
 				method: "PUT",

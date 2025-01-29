@@ -16,7 +16,7 @@ export async function GET(_req: NextRequest, props: { params: Promise<{ slug: st
 				error,
 				exists: false,
 			},
-			{ status: 500 },
+			{ status: 404 },
 		);
 	}
 	const { State } = data;
