@@ -57,7 +57,7 @@ export default new Elysia({ prefix: "/workspaces" })
 	)
 	.put(
 		"/create",
-		async ({ body }) => {
+		({ body }) => {
 			if (imagePromises.has(body.image)) {
 				return { success: false, error: "Image pull already in progress" };
 			}
@@ -78,23 +78,13 @@ export default new Elysia({ prefix: "/workspaces" })
 	)
 	.get(
 		"/create",
-		async ({ query }) => {
+		({ query }) => {
 			const image = imagePromises.get(query.image);
 			if (!image) {
-				try {
-					const inspect = await docker.getImage(query.image).inspect();
-					return {
-						success: true,
-						status: "pulled",
-						...inspect,
-					};
-				} catch (e) {
-					return {
-						success: false,
-						status: "failed",
-						error: (e as Error).message,
-					};
-				}
+				return {
+					success: true,
+					status: "not-touched",
+				};
 			}
 			if (image.status === "pulled" || image.status === "failed") {
 				imagePromises.delete(query.image);
