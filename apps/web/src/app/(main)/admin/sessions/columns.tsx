@@ -47,6 +47,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 		cell: ({ row }) => row.original.user.email,
 	},
 	{ accessorKey: "dockerImage", header: ({ column }) => <DataTableColumnHeader column={column} title="Image" /> },
+	{ accessorKey: "node", header: ({ column }) => <DataTableColumnHeader column={column} title="Node" /> },
 	{
 		accessorKey: "createdAt",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Created at" />,

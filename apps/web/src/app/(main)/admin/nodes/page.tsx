@@ -1,7 +1,11 @@
 import { DataTable } from "@/components/ui/data-table";
 import { stardustConnector } from "@stardust/common/daemon/client";
 import { getConfig } from "@stardust/config";
+import type { Metadata } from "next";
 import { columns } from "./columns";
+export const metadata: Metadata = {
+	title: "Nodes",
+};
 export default async function Page() {
 	const data = await Promise.all(
 		getConfig().nodes.map(async (n) => {

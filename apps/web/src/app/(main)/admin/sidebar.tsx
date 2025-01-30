@@ -1,4 +1,5 @@
 "use client";
+import { SubmitButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Boxes, Cog, Container, Layers, LayoutDashboard, Users } from "lucide-react";
@@ -6,6 +7,7 @@ import type { LucideIcon } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { refresh } from "./action";
 
 export function AdminSidebar() {
 	const pathname = usePathname();
@@ -22,8 +24,8 @@ export function AdminSidebar() {
 		{ href: "/admin/config", label: "Config Viewer", Icon: Cog },
 	];
 	return (
-		<nav className="grid gap-x-4 text-sm text-muted-foreground">
-			<section className="h-full p-4 items-start flex flex-col gap-2">
+		<nav className="grid gap-x-4 text-sm text-muted-foreground justify-between h-full">
+			<section className="p-4 items-start flex flex-col gap-2 flex-grow">
 				{links.map(({ href, label, Icon }) => (
 					<Button
 						asChild
@@ -41,6 +43,9 @@ export function AdminSidebar() {
 					</Button>
 				))}
 			</section>
+			<form action={refresh.bind(null, pathname)} className="p-4 items-start flex flex-col gap-2">
+				<SubmitButton>Refresh</SubmitButton>
+			</form>
 		</nav>
 	);
 }

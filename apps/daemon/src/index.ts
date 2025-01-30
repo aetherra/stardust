@@ -7,6 +7,7 @@ import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
 import sessionHandler from "~/session";
 import workspaceHandler from "~/workspace";
+import generateToken from "./lib/auth-token";
 const config = getConfig();
 export const app = new Elysia()
 	.get("/", async (c) => {
@@ -31,6 +32,7 @@ export const app = new Elysia()
 		cpu: ((os.loadavg()[0] / os.cpus().length) * 100).toFixed(2),
 		mem: (((os.totalmem() - os.freemem()) / os.totalmem()) * 100).toFixed(2),
 		os: `${os.type()} ${os.release()}`,
+		version: pkgJson.version,
 		sessions: (await docker.listContainers()).filter((s) => s.HostConfig.NetworkMode === config.docker.network).length,
 	}))
 	.use(sessionHandler)
@@ -59,6 +61,17 @@ export const app = new Elysia()
 			scalarConfig: {
 				theme: "kepler",
 				customCss: "\n",
+				authentication: {
+					http: {
+						bearer: {
+							token: await generateToken(),
+						},
+						basic: {
+							username: "stardust",
+							password: await generateToken(),
+						},
+					},
+				},
 			},
 		}),
 	);
