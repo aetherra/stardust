@@ -17,8 +17,8 @@ const configLocations = [
 	cmdConfig,
 	`${process.cwd()}/config.yaml`,
 	`${process.cwd()}/config.yml`,
-	`${process.env.XDG_CONFIG_HOME || process.env.HOME}/.config/stardust.yaml`,
-	`${process.env.XDG_CONFIG_HOME || process.env.HOME}/.config/stardust.yml`,
+	`${process.env.HOME}/.config/stardust.yaml`,
+	`${process.env.HOME}/.config/stardust.yml`,
 ];
 for (const loc of configLocations) {
 	if (existsSync(loc)) {
