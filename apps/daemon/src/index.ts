@@ -1,4 +1,4 @@
-import { loadavg } from "node:os";
+import os from "node:os";
 import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import pkgJson from "~/../package.json";
@@ -25,12 +25,14 @@ export const app = new Elysia()
 			error: error.toString(),
 		};
 	})
-	.get("/healthcheck", {
+	.get("/healthcheck", async () => ({
 		success: true,
-		cpu: loadavg()[0],
-		mem: process.memoryUsage(),
+		// broken on macos - https://github.com/oven-sh/bun/issues/16882
+		cpu: ((os.loadavg()[0] / os.cpus().length) * 100).toFixed(2),
+		mem: (((os.totalmem() - os.freemem()) / os.totalmem()) * 100).toFixed(2),
+		os: `${os.type()} ${os.release()}`,
 		sessions: (await docker.listContainers()).filter((s) => s.HostConfig.NetworkMode === config.docker.network).length,
-	})
+	}))
 	.use(sessionHandler)
 	.use(workspaceHandler)
 	.use(

@@ -7,11 +7,10 @@ import type { NodeConfig } from "@stardust/config/config";
 export async function getBestNode() {
 	const nodes: Record<number, number> = {};
 	await Promise.all(
-		getConfig().nodes.map(async (n: NodeConfig, i: number) => {
+		getConfig().nodes.map(async (n: NodeConfig, i) => {
 			const node = stardustConnector(n);
 			const { data } = await node.healthcheck.get();
-			const load = Math.ceil(data?.cpu || 0);
-			nodes[i] = load;
+			nodes[i] = Number(data?.cpu) || 0;
 		}),
 	);
 	const minVal = Math.min(...Object.values(nodes));

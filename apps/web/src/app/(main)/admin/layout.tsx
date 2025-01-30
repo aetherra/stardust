@@ -1,7 +1,7 @@
 import auth from "@stardust/common/auth";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { forbidden } from "next/navigation";
 import { AdminSidebar } from "./sidebar";
 export const metadata: Metadata = {
 	title: {
@@ -13,7 +13,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 	const session = await auth.api.getSession({
 		headers: await headers(),
 	});
-	if (session?.user?.role !== "admin") redirect("/");
+	if (session?.user?.role !== "admin") forbidden();
 	return (
 		<div className="flex flex-row gap-4">
 			<AdminSidebar />

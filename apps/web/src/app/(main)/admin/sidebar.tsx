@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Cog, Container, Layers, LayoutDashboard, Users } from "lucide-react";
+import { Boxes, Cog, Container, Layers, LayoutDashboard, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
@@ -16,6 +16,7 @@ export function AdminSidebar() {
 	}[] = [
 		{ href: "/admin", label: "Dashboard", Icon: LayoutDashboard },
 		{ href: "/admin/users", label: "Users", Icon: Users },
+		{ href: "/admin/nodes", label: "Nodes", Icon: Boxes },
 		{ href: "/admin/workspaces", label: "Workspaces", Icon: Layers },
 		{ href: "/admin/sessions", label: "Sessions", Icon: Container },
 		{ href: "/admin/config", label: "Config Viewer", Icon: Cog },
