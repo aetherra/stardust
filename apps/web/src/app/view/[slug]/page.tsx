@@ -135,7 +135,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 	return (
 		<div className="h-screen w-screen justify-center items-center flex">
 			{connected ? (
-				<section className="flex flex-col gap-2 z-40 absolute -translate-y-1/2 -left-10 hover:left-0 duration-150 top-1/2 rounded-r-md bg-background/80 p-[0.25rem] text-xs backdrop-blur-lg w-12">
+				<section className="flex flex-col gap-2 z-40 absolute -translate-y-1/2 -left-7 hover:left-0 duration-150 top-1/2 rounded-r-md bg-background/80 p-[0.25rem] text-xs backdrop-blur-lg w-12">
 					<Button
 						variant="ghost"
 						size="icon"
