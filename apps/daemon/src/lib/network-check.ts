@@ -8,7 +8,8 @@ export default async function checkDockerNetwork() {
 		await docker.createNetwork({
 			Name: config.network,
 			Options: {
-				"com.docker.network.bridge.enable_icc": `${config.enableIcc}` || "false", // CVE-2024-56630
+				// @ts-expect-error get out
+				"com.docker.network.bridge.enable_icc": `${config.enableIcc}` || false, // CVE-2024-56630
 			},
 		});
 		console.log("✨ Stardust: Created network %s", config.network);
