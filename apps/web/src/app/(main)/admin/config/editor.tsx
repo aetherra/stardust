@@ -1,6 +1,5 @@
 "use client";
 import Editor from "@monaco-editor/react";
-import { useEffect, useRef } from "react";
 export default function ConfigEditor({ current }: { current: string }) {
 	return (
 		<Editor

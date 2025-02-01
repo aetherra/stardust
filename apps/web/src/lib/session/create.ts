@@ -7,7 +7,7 @@ import db, { session } from "@stardust/db";
 import { headers } from "next/headers";
 import { getBestNode } from "./best-node";
 
-export async function createSession(workspace: string) {
+export async function createSession(workspace: string, nodeId?: string) {
 	console.log(`✨ Stardust: Creating session using workspace ${workspace}`);
 	const config = getConfig();
 	const userSession = await auth.api.getSession({ headers: await headers() });
@@ -32,7 +32,7 @@ export async function createSession(workspace: string) {
 			if (config.session?.usageLimits.user <= userSessions.length) throw new Error("User session limit exceeded");
 		}
 	}
-	const sessionNode = config.nodes[(await getBestNode()) || 0];
+	const sessionNode = config.nodes.find(({ id }) => id === nodeId) || config.nodes[await getBestNode(workspace)];
 	const node = stardustConnector(sessionNode);
 	const { data: container, error } = await node.sessions.create.put({
 		workspace,

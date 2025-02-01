@@ -10,13 +10,13 @@ export default async function AdminPage() {
 	const userSession = await auth.api.getSession({
 		headers: await headers(),
 	});
-	const { users, sessions, images } = await db.transaction(async (tx) => {
+	const { users, sessions, workspaces } = await db.transaction(async (tx) => {
 		const users = await tx.select().from(user);
 		const sessions = await tx.query.session.findMany({
 			with: { workspace: true },
 		});
-		const images = await tx.select().from(workspace);
-		return { users, sessions, images };
+		const workspaces = await tx.select().from(workspace);
+		return { users, sessions, workspaces };
 	});
 	const activeUsers = [...new Set(sessions.map((s) => s.userId))];
 	const admins = users.filter((u) => u.role === "admin");
@@ -38,13 +38,13 @@ export default async function AdminPage() {
 				</Card>
 				<Card className="w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Images</CardTitle>
+						<CardTitle className="text-sm font-medium">Workspaces</CardTitle>
 						<Layers className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
-						<div className="text-2xl font-bold">{images.length}</div>
+						<div className="text-2xl font-bold">{workspaces.length}</div>
 						<p className="text-xs text-muted-foreground">
-							Most used image is {mode(sessions.map((s) => s.workspace.friendlyName)) || "N/A"}
+							Most used workspace is {mode(sessions.map((s) => s.workspace.friendlyName)) || "N/A"}
 						</p>
 					</CardContent>
 				</Card>

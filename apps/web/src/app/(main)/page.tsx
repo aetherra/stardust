@@ -1,24 +1,25 @@
-import {
-	Dialog,
-	DialogClose,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-
-import { Button } from "@/components/ui/button";
 import { CardTitle } from "@/components/ui/card";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { stardustConnector } from "@stardust/common/daemon/client";
+import { getConfig } from "@stardust/config";
 import db, { workspace } from "@stardust/db";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
-import { CreateSessionButton } from "./create-session-button";
+import { CreateForm } from "./page.client";
 
 export default async function Dashboard() {
 	const workspaces = await db.select().from(workspace);
+	const nodeMetadata = await Promise.all(
+		getConfig().nodes.map(async (n) => {
+			const { data } = await stardustConnector(n).workspaces.index.get();
+			if (!data) throw new Error("No node data");
+			return {
+				id: n.id,
+				workspaces: data.workspaces.map((w) => w.RepoTags[0].split(":")[0]),
+			};
+		}),
+	);
 	return (
 		<div className="m-auto flex w-full flex-col p-4">
 			<h1 className="text-3xl font-bold mb-6">Workspaces</h1>
@@ -42,22 +43,12 @@ export default async function Dashboard() {
 										</div>
 									</div>
 								</DialogTrigger>
-								<DialogContent className="flex md:flex-col flex-row justify-center gap-3">
-									<DialogHeader>
-										<DialogTitle>New Session</DialogTitle>
-										<DialogDescription>
-											Would you like to launch a new {workspace.friendlyName} session?
-										</DialogDescription>
-									</DialogHeader>
-									<DialogFooter>
-										<DialogClose asChild>
-											<Button type="button" variant="secondary" className="hidden md:block">
-												Close
-											</Button>
-										</DialogClose>
-										<CreateSessionButton workspace={workspace.dockerImage} />
-									</DialogFooter>
-								</DialogContent>
+								<CreateForm
+									workspace={workspace}
+									nodeIds={nodeMetadata
+										.filter(({ workspaces }) => workspaces.includes(workspace.dockerImage))
+										.map((w) => w.id)}
+								/>
 							</Dialog>
 						))
 					) : (

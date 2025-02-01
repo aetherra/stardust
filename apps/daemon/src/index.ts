@@ -28,7 +28,6 @@ export const app = new Elysia()
 	})
 	.get("/healthcheck", async () => ({
 		success: true,
-		// broken on macos - https://github.com/oven-sh/bun/issues/16882
 		cpu: ((os.loadavg()[0] / os.cpus().length) * 100).toFixed(2),
 		mem: (((os.totalmem() - os.freemem()) / os.totalmem()) * 100).toFixed(2),
 		os: `${os.type()} ${os.release()}`,

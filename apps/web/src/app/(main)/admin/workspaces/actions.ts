@@ -1,15 +1,9 @@
 "use server";
 
-import auth from "@stardust/common/auth";
+import { check } from "@/lib/admin-check";
 import db, { workspace } from "@stardust/db";
-import { headers } from "next/headers";
-import { forbidden } from "next/navigation";
 import { redirect } from "next/navigation";
 
-async function check() {
-	const userSession = await auth.api.getSession({ headers: await headers() });
-	if (userSession?.user.role !== "admin") forbidden();
-}
 export async function updateWorkspace(data: FormData) {
 	await check();
 	const fields = {

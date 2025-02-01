@@ -69,7 +69,7 @@ export const columns: ColumnDef<
 				<PopoverContent>
 					{row.original.sessions?.map((session) => (
 						<div key={session.Id} className="text-sm">
-							{session.Id}
+							{session.Id.slice(0, 6)}
 						</div>
 					))}
 				</PopoverContent>

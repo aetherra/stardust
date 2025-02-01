@@ -14,7 +14,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { UpdateDialog } from "./components";
 
-export const columns: ColumnDef<SelectWorkspaceRelation>[] = [
+export const columns: ColumnDef<SelectWorkspaceRelation & { nodes: string[] }>[] = [
 	{
 		accessorKey: "friendlyName",
 		header: "Name",

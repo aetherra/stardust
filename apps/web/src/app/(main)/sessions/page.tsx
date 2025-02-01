@@ -22,7 +22,6 @@ const ManageSessionButton = ({
 	icon,
 }: {
 	session: SelectSession;
-	// world class code
 	action: SessionAction;
 	redirectToView?: boolean;
 	icon: React.ReactNode;
