@@ -85,7 +85,7 @@ export default async function Login(props: {
 						className="w-full"
 					/>
 					<Turnstile />
-					<SubmitButton className="w-full">Log in</SubmitButton>
+					<SubmitButton className="w-full">Sign in</SubmitButton>
 				</form>
 			) : null}
 			{config.auth.credentials?.signups ? (
@@ -94,7 +94,7 @@ export default async function Login(props: {
 				</Button>
 			) : null}
 			{config.auth.credentials && config.auth.oauth ? (
-				<span className="text-center text-sm text-muted-foreground">Or log in/sign up with:</span>
+				<span className="text-center text-sm text-muted-foreground">Or sign in/sign up with:</span>
 			) : null}
 			{config.auth.oauth ? (
 				<div className="mx-auto mt-4 flex w-full flex-row items-center justify-center gap-2 flex-wrap">
@@ -104,11 +104,29 @@ export default async function Login(props: {
 								key={provider}
 								action={async () => {
 									"use server";
-									await auth.api.signInSocial({
-										body: {
-											provider: provider as keyof BetterAuthOptions["socialProviders"],
-										},
-									});
+									try {
+										const res = await auth.api.signInSocial({
+											body: {
+												provider: provider as keyof BetterAuthOptions["socialProviders"],
+											},
+										});
+										if (!res.url) throw new Error("No URL returned");
+										const url = new URL(res.url);
+										const { get } = await headers();
+										const proto = get("x-forwarded-proto");
+										const host = get("x-forwarded-host");
+										const redirect_uri = new URL(url.searchParams.get("redirect_uri") as string);
+										if (proto && host) {
+											redirect_uri.protocol = proto;
+											redirect_uri.host = host;
+											redirect_uri.port = ""; // normally when those headers exist it's from behind a reverse proxy that goes to 443 or wtv the default port is
+										}
+										url.searchParams.set("redirect_uri", redirect_uri.href);
+										redirect(url.href);
+									} catch (error) {
+										unstable_rethrow(error);
+										redirect(`/auth/signin?error=${(error as Error).message}`);
+									}
 								}}
 							>
 								<SubmitButton variant={config.auth.credentials ? "secondary" : "default"} size="lg" className="w-32">

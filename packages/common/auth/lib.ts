@@ -3,5 +3,6 @@ export * from "better-auth/client/plugins";
 export * from "better-auth/react";
 export * from "better-auth/next-js";
 export { fromNodeHeaders } from "better-auth/node";
+export { hashPassword } from "better-auth/crypto";
 export type { BetterAuthOptions } from "better-auth";
 export type { ErrorContext } from "better-auth/client";

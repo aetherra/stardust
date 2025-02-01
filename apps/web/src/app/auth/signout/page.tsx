@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 export default function SignOut() {
 	return (
 		<CardContent>
-			<p className="text-center">Are you sure you want to log out?</p>
+			<p className="text-center">Are you sure you want to sign out?</p>
 			<form
 				action={async () => {
 					"use server";
@@ -22,7 +22,7 @@ export default function SignOut() {
 			>
 				<SubmitButton className="mt-6 w-full">
 					<LogOut className="mr-2 size-4" />
-					Log out
+					Sign out
 				</SubmitButton>
 			</form>
 			<Button

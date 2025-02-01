@@ -15,35 +15,30 @@ export default function Page() {
 			<CardDescription>Reset your password</CardDescription>
 			<form
 				className="mx-auto my-4 flex w-full flex-col items-start justify-center gap-2"
-				action={(data) =>
-					toast.promise(
-						() => {
-							const oldPassword = data.get("old-password")?.toString();
-							const newPassword = data.get("new-password")?.toString();
-							const confirmPassword = data.get("confirm-password")?.toString();
-							const revokeOtherSessions = Boolean(data.get("revoke-others"));
-							if (!oldPassword || !newPassword || !confirmPassword) throw new Error("All fields are required");
-							if (newPassword !== confirmPassword) throw new Error("Passwords do not match");
-							return authClient.changePassword(
-								{
-									revokeOtherSessions,
-									currentPassword: oldPassword,
-									newPassword,
-								},
-								{
-									onSuccess() {
-										router.push("/");
-									},
-								},
-							);
+				action={(data) => {
+					const oldPassword = data.get("old-password")?.toString();
+					const newPassword = data.get("new-password")?.toString();
+					const confirmPassword = data.get("confirm-password")?.toString();
+					const revokeOtherSessions = Boolean(data.get("revoke-others"));
+					if (!oldPassword || !newPassword || !confirmPassword) throw new Error("All fields are required");
+					if (newPassword !== confirmPassword) throw new Error("Passwords do not match");
+					return authClient.changePassword(
+						{
+							revokeOtherSessions,
+							newPassword,
+							currentPassword: oldPassword,
 						},
 						{
-							loading: "Setting password...",
-							success: "Password set!",
-							error: "Failed to set password",
+							onSuccess() {
+								router.push("/");
+								toast.success("Password changed successfully");
+							},
+							onError({ error }) {
+								toast.error(error.message);
+							},
 						},
-					)
-				}
+					);
+				}}
 			>
 				<Label htmlFor="old-password">Old Password</Label>
 				<Input
