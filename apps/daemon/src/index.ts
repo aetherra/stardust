@@ -1,5 +1,6 @@
 import os from "node:os";
 import { swagger } from "@elysiajs/swagger";
+import scalarCss from "@stardust/theme/scalar-css";
 import { Elysia } from "elysia";
 import pkgJson from "~/../package.json";
 import { authCheck } from "~/auth-middleware";
@@ -58,8 +59,8 @@ export const app = new Elysia()
 				],
 			},
 			scalarConfig: {
-				theme: "kepler",
-				customCss: "\n",
+				theme: "none",
+				customCss: scalarCss,
 				authentication: {
 					http: {
 						bearer: {

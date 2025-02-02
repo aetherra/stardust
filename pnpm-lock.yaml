@@ -51,6 +51,9 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
     devDependencies:
+      '@stardust/theme':
+        specifier: workspace:*
+        version: link:../../packages/theme
       '@stardust/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
@@ -141,6 +144,9 @@ importers:
       '@stardust/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@stardust/theme':
+        specifier: workspace:*
+        version: link:../../packages/theme
       '@stardust/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
@@ -298,6 +304,12 @@ importers:
       drizzle-kit:
         specifier: ^0.30.1
         version: 0.30.2
+
+  packages/theme:
+    dependencies:
+      '@catppuccin/palette':
+        specifier: ^1.7.1
+        version: 1.7.1
 
   packages/tsconfig: {}
 
@@ -483,6 +495,9 @@ packages:
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
+
+  '@catppuccin/palette@1.7.1':
+    resolution: {integrity: sha512-aRc1tbzrevOTV7nFTT9SRdF26w/MIwT4Jwt4fDMc9itRZUDXCuEDBLyz4TQMlqO9ZP8mf5Hu4Jr6D03NLFc6Gw==}
 
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
@@ -3783,6 +3798,8 @@ snapshots:
 
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
+
+  '@catppuccin/palette@1.7.1': {}
 
   '@discoveryjs/json-ext@0.5.7': {}
 

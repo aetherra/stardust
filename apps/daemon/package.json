@@ -23,6 +23,7 @@
 	},
 	"devDependencies": {
 		"@stardust/tsconfig": "workspace:*",
+		"@stardust/theme": "workspace:*",
 		"@types/dockerode": "^3.3.32",
 		"@types/js-yaml": "^4.0.9",
 		"bun-types": "latest",

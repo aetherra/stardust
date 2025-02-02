@@ -1,6 +1,7 @@
 import { ApiReference } from "@scalar/nextjs-api-reference";
 import auth from "@stardust/common/auth";
 import { getConfig } from "@stardust/config";
+import scalarCss from "@stardust/theme/scalar-css";
 import { forbidden } from "next/navigation";
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
 	const session = await auth.api.getSession({
@@ -12,7 +13,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 	if (!configEntry) return new Response(null, { status: 404 });
 	const baseUrl = `${configEntry?.proto || "http"}://${configEntry?.hostname || "0.0.0.0"}:${configEntry?.port || 4000}`;
 	return ApiReference({
-		theme: "kepler",
+		theme: "none",
+		customCss: scalarCss,
 		authentication: {
 			http: {
 				bearer: {
