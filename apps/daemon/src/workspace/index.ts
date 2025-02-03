@@ -4,7 +4,6 @@ import { pullImage } from "./pull";
 const statuses = t.Union([
 	t.Literal("pulled"),
 	t.Literal("in-progress"),
-	t.Literal("not-started"),
 	t.Literal("failed"),
 	t.Literal("not-touched"),
 ]);

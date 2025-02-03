@@ -1,4 +1,5 @@
 import { DataTable } from "@/components/ui/data-table";
+import { getNodeWorkspaces } from "@/lib/workspaces";
 import { stardustConnector } from "@stardust/common/daemon/client";
 import { getConfig } from "@stardust/config";
 import db from "@stardust/db";
@@ -13,25 +14,18 @@ export default async function AdminPage() {
 			session: true,
 		},
 	});
-	const nodeMetadata = await Promise.all(
-		getConfig().nodes.map(async (n) => {
-			const { data } = await stardustConnector(n).workspaces.index.get();
-			if (!data) throw new Error("No node data");
-			return {
-				id: n.id,
-				workspaces: data.workspaces.map((w) => w.RepoTags[0].split(":")[0]),
-			};
-		}),
-	);
+	const nodeMetadata = await getNodeWorkspaces();
 	const data = await Promise.all(
 		dbData.map(async (d) => ({
-			nodes: nodeMetadata.filter(({ workspaces }) => workspaces.includes(d.dockerImage)).map(({ id }) => id),
+			nodes: nodeMetadata
+				.filter(({ workspaces }) => workspaces.map((w) => w.image).includes(d.dockerImage))
+				.map(({ id }) => id),
 			...d,
 		})),
 	);
 	return (
 		<div className="flex h-full flex-col">
-			<h1 className="py-6 text-3xl font-bold">Images</h1>
+			<h1 className="py-6 text-3xl font-bold">Workspaces</h1>
 			<section className="-ml-8">
 				<DataTable data={data} columns={columns} />
 			</section>

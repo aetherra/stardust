@@ -1,7 +1,6 @@
 import { CardTitle } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { stardustConnector } from "@stardust/common/daemon/client";
-import { getConfig } from "@stardust/config";
+import { getNodeWorkspaces } from "@/lib/workspaces";
 import db, { workspace } from "@stardust/db";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
@@ -10,16 +9,7 @@ import { CreateForm } from "./page.client";
 
 export default async function Dashboard() {
 	const workspaces = await db.select().from(workspace);
-	const nodeMetadata = await Promise.all(
-		getConfig().nodes.map(async (n) => {
-			const { data } = await stardustConnector(n).workspaces.index.get();
-			if (!data) throw new Error("No node data");
-			return {
-				id: n.id,
-				workspaces: data.workspaces.map((w) => w.RepoTags[0].split(":")[0]),
-			};
-		}),
-	);
+	const nodeMetadata = await getNodeWorkspaces();
 	return (
 		<div className="m-auto flex w-full flex-col p-4">
 			<h1 className="text-3xl font-bold mb-6">Workspaces</h1>
@@ -46,7 +36,7 @@ export default async function Dashboard() {
 								<CreateForm
 									workspace={workspace}
 									nodeIds={nodeMetadata
-										.filter(({ workspaces }) => workspaces.includes(workspace.dockerImage))
+										.filter(({ workspaces }) => workspaces.map((w) => w.image).includes(workspace.dockerImage))
 										.map((w) => w.id)}
 								/>
 							</Dialog>

@@ -7,12 +7,13 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getNodeWorkspaces } from "@/lib/workspaces";
 import type { SelectWorkspaceRelation } from "@stardust/db/relational-types";
 import type { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { UpdateDialog } from "./components";
+import { NodeDialog, UpdateDialog } from "./components";
 
 export const columns: ColumnDef<SelectWorkspaceRelation & { nodes: string[] }>[] = [
 	{
@@ -41,10 +42,12 @@ export const columns: ColumnDef<SelectWorkspaceRelation & { nodes: string[] }>[]
 	{
 		id: "actions",
 		cell: ({ row: { original: workspace } }) => {
-			const [open, setOpen] = useState(false);
+			const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+			const [nodeDialogOpen, setNodeDialogOpen] = useState(false);
 			return (
 				<>
-					<UpdateDialog workspace={workspace} open={open} setOpen={setOpen} />
+					<UpdateDialog workspace={workspace} open={updateDialogOpen} setOpen={setUpdateDialogOpen} />
+					<NodeDialog workspace={workspace} open={nodeDialogOpen} setOpen={setNodeDialogOpen} />
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="ghost" className="h-8 w-8 p-0">
@@ -54,7 +57,8 @@ export const columns: ColumnDef<SelectWorkspaceRelation & { nodes: string[] }>[]
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
 							<DropdownMenuLabel>Actions</DropdownMenuLabel>
-							<DropdownMenuItem onClick={() => setOpen(true)}>Edit metadata</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => setUpdateDialogOpen(true)}>Edit metadata</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => setNodeDialogOpen(true)}>Edit nodes</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</>
