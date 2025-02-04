@@ -27,13 +27,13 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { SessionSchema } from "@stardust/common/auth";
-import { Book, ComputerIcon, Globe, Info, Key, LogOut, Monitor, Settings, Sparkles, SwatchBook } from "lucide-react";
+import { Book, ComputerIcon, Globe, Info, Key, LogOut, Monitor, Settings, SwatchBook } from "lucide-react";
 import type { Route } from "next";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment, useState } from "react";
-import { GitHubIcon } from "./icons";
+import { GitHubIcon, StardustIcon } from "./icons";
 
 export default function Navigation({
 	session,
@@ -66,7 +66,7 @@ export default function Navigation({
 	return (
 		<nav className="flex h-16 min-w-full items-center justify-between px-4 border-b">
 			<div className="flex items-center gap-2">
-				<Sparkles className="size-6" />
+				<StardustIcon className="size-8" />
 				<span className="text-2xl font-bold md:block hidden mr-2">Stardust</span>
 			</div>
 			<div className="flex justify-end gap-2">
@@ -103,7 +103,7 @@ export default function Navigation({
 					<DialogContent>
 						<DialogHeader>
 							<DialogTitle className="m-2 flex items-center justify-center text-center text-2xl text-foreground">
-								<Sparkles className="mr-2 flex size-6 flex-row" />
+								<StardustIcon className="mr-2 size-6 rounded-[5px]" />
 								Stardust {packageJson.version}
 							</DialogTitle>
 						</DialogHeader>
