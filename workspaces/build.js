@@ -6,6 +6,8 @@ import { argv } from "node:process";
 const optionalArgs = (a) => (process.argv.includes(a) ? a : "");
 function buildImage(image) {
 	return new Promise((resolve, reject) => {
+		console.log(`✨ Stardust: Building ${image}...`);
+		console.log(`Arguments: ${argv}`);
 		const multiPlatformBuild = argv.includes("--multi-platform");
 		const platforms = x64Only.includes(image) ? "linux/amd64" : "linux/amd64,linux/arm64";
 		const process = spawn(
