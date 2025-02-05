@@ -13,6 +13,8 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "sonner";
+import { deleteWorkspace } from "./actions";
 import { NodeDialog, UpdateDialog } from "./components";
 
 export const columns: ColumnDef<SelectWorkspaceRelation & { nodes: string[] }>[] = [
@@ -59,6 +61,17 @@ export const columns: ColumnDef<SelectWorkspaceRelation & { nodes: string[] }>[]
 							<DropdownMenuLabel>Actions</DropdownMenuLabel>
 							<DropdownMenuItem onClick={() => setUpdateDialogOpen(true)}>Edit metadata</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => setNodeDialogOpen(true)}>Edit nodes</DropdownMenuItem>
+							<DropdownMenuItem
+								onClick={() =>
+									toast.promise(() => deleteWorkspace(workspace), {
+										loading: "Deleting workspace...",
+										success: "Workspace deleted",
+										error: "Failed to delete workspace",
+									})
+								}
+							>
+								Delete workspace
+							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</>

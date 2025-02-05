@@ -1,15 +1,17 @@
 "use server";
 
 import { check } from "@/lib/admin-check";
+import { deleteSession } from "@/lib/session/manage";
 import { stardustConnector } from "@stardust/common/daemon/client";
 import { getConfig } from "@stardust/config";
-import db, { type SelectWorkspace, workspace } from "@stardust/db";
+import db, { type SelectWorkspace, session, workspace } from "@stardust/db";
+import { eq } from "@stardust/db/utils";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function updateWorkspace(data: FormData) {
 	await check();
 	const fields = {
-		dockerImage: data.get("dockerImage")?.toString() as string,
 		friendlyName: data.get("friendlyName")?.toString() as string,
 		category:
 			data
@@ -20,17 +22,27 @@ export async function updateWorkspace(data: FormData) {
 		icon: data.get("icon")?.toString() as string,
 	};
 	await db
-		.insert(workspace)
-		.values(fields)
-		.onConflictDoUpdate({
-			target: workspace.dockerImage,
-			set: {
-				category: fields.category,
-				friendlyName: fields.friendlyName,
-				icon: fields.icon,
-			},
-		});
+		.update(workspace)
+		.set(fields)
+		.where(eq(workspace.dockerImage, data.get("dockerImage")?.toString() as string));
 	redirect("/admin/workspaces");
+}
+export async function deleteWorkspace(w: SelectWorkspace) {
+	await check();
+	await db.transaction(async (tx) => {
+		const sessions = await tx.select().from(session).where(eq(session.dockerImage, w.dockerImage));
+		await Promise.all(
+			sessions.map((s) =>
+				deleteSession({
+					id: s.id,
+					admin: true,
+					dbClient: tx,
+				}),
+			),
+		);
+		await tx.delete(workspace).where(eq(workspace.dockerImage, w.dockerImage));
+	});
+	revalidatePath("/admin/workspaces");
 }
 export async function pullOnNode(workspace: SelectWorkspace, nId: string) {
 	await check();
