@@ -9,6 +9,7 @@ import turnstileCheck from "@/lib/turnstile";
 import auth from "@stardust/common/auth";
 import { getConfig } from "@stardust/config";
 import db, { user } from "@stardust/db";
+import { eq } from "@stardust/db/utils";
 import { Info } from "lucide-react";
 import { headers } from "next/headers";
 import { redirect, unstable_rethrow } from "next/navigation";
@@ -48,9 +49,12 @@ export default async function Page(props: {
 						if (!(await turnstileCheck(data))) {
 							redirect("/auth/signup?error=Failed%captcha");
 						}
-						const userCheck = await db.query.user.findFirst({
-							where: (user, { eq }) => eq(user.email, data.get("email")?.toString() || ""),
-						});
+						const { userCheck, usersLength } = await db.transaction(async (tx) => ({
+							userCheck: await tx.query.user.findFirst({
+								where: (user, { eq }) => eq(user.email, data.get("email")?.toString() || ""),
+							}),
+							usersLength: await tx.$count(user),
+						}));
 						if (userCheck) redirect("/auth/login?error=Email%20already%20in%20use");
 						const email = data.get("email")?.toString() || "";
 						const name = data.get("name")?.toString() || "";
@@ -76,6 +80,7 @@ export default async function Page(props: {
 									.digest("hex")}?d=404&s=128`,
 							},
 						});
+						if (usersLength === 0) await db.update(user).set({ role: "admin" }).where(eq(user.email, email));
 						redirect("/auth/signin?message=Account%20created%20successfully");
 					} catch (e) {
 						unstable_rethrow(e);
