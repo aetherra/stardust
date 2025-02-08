@@ -19,12 +19,14 @@ export function CreateForm({ workspace, nodeIds }: { workspace: SelectWorkspace;
 	return (
 		<DialogContent className="flex md:flex-col flex-row justify-center gap-3">
 			<form
-				action={async (data) => {
-					const session = await createSession(workspace.dockerImage, data.get("node_id")?.toString()).catch(() => {
-						toast.error("Error creating session");
-					});
-					if (!session) return;
-					router.push(`/view/${session[0].id}`);
+				action={async (form) => {
+					const { error, data } = (await createSession(workspace.dockerImage, form.get("node_id")?.toString())) || {};
+					if (error || !data) {
+						toast.error(error || "Failed to create session");
+					} else {
+						toast.success("Session created successfully!");
+						router.push(`/view/${data.id}`);
+					}
 				}}
 			>
 				<DialogHeader>

@@ -15,7 +15,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 	});
 	if (session?.user?.role !== "admin") forbidden();
 	return (
-		<div className="flex flex-row gap-4">
+		<div className="flex flex-row gap-4 p-4">
 			<AdminSidebar />
 			<div className="h-full w-full px-4 mb-2">{children}</div>
 		</div>

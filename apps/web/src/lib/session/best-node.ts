@@ -19,7 +19,7 @@ export async function getBestNode(workspace: string) {
 			}),
 		)
 	).filter((n) => n.workspaces.includes(workspace));
-	if (nodeMetadata.length <= 0) throw new Error("no node with the selected workspace found");
+	if (nodeMetadata.length <= 0) throw new Error("No node with the selected workspace found");
 	await Promise.all(
 		configNodes.map(async (n: NodeConfig, i) => {
 			const { data } = await stardustConnector(n).healthcheck.get();

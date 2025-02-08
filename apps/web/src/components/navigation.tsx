@@ -123,7 +123,12 @@ export default function Navigation({
 							</section>
 							<section>
 								Stardust is licensed under the{" "}
-								<a href="https://www.gnu.org/licenses/agpl-3.0.txt" target="_blank" rel="noreferrer noopener">
+								<a
+									href="https://www.gnu.org/licenses/agpl-3.0.txt"
+									target="_blank"
+									rel="noreferrer noopener"
+									className="inline font-medium text-primary underline-offset-4 hover:underline"
+								>
 									GNU Affero General Public License v3.0 (AGPL-3.0)
 								</a>
 								. Copyleft 2024 Spaceness.

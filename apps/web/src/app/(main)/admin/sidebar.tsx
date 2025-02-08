@@ -7,7 +7,6 @@ import type { LucideIcon } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { refresh } from "./action";
 
 export function AdminSidebar() {
 	const pathname = usePathname();
@@ -24,8 +23,8 @@ export function AdminSidebar() {
 		{ href: "/admin/config", label: "Config Viewer", Icon: Cog },
 	];
 	return (
-		<nav className="grid gap-x-4 text-sm text-muted-foreground justify-between h-full">
-			<section className="p-4 items-start flex flex-col gap-2 flex-grow">
+		<nav className="grid gap-x-4 text-sm text-muted-foreground justify-between h-full w-64">
+			<section className="p-0 items-start flex flex-col gap-2 flex-grow w-64">
 				{links.map(({ href, label, Icon }) => (
 					<Button
 						asChild
@@ -43,9 +42,6 @@ export function AdminSidebar() {
 					</Button>
 				))}
 			</section>
-			<form action={refresh.bind(null, pathname)} className="p-4 items-start flex flex-col gap-2">
-				<SubmitButton>Refresh</SubmitButton>
-			</form>
 		</nav>
 	);
 }
