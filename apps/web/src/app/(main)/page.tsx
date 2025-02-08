@@ -19,14 +19,14 @@ export default async function Dashboard() {
 						workspaces.map((workspace) => (
 							<Dialog key={workspace.dockerImage}>
 								<DialogTrigger>
-									<div className="relative w-64 aspect-[5/3] rounded-lg overflow-hidden shadow-lg bg-accent/40 group">
+									<div className="relative w-64 aspect-5/3 rounded-lg overflow-hidden shadow-lg bg-accent/40 group">
 										<Image
 											src={workspace.icon}
 											alt={workspace.friendlyName}
 											fill
 											className="object-scale-down group-hover:scale-105 duration-200"
 										/>
-										<div className="absolute inset-0 bg-gradient-to-t from-accent/90 to-transparent" />
+										<div className="absolute inset-0 bg-linear-to-t from-accent/90 to-transparent" />
 										<div className="absolute bottom-2 left-3 text-foreground flex flex-col">
 											<h3 className="text-lg font-bold">{workspace.friendlyName}</h3>
 											<p className="text-left text-sm text-muted-foreground">{workspace.category}</p>
@@ -36,8 +36,9 @@ export default async function Dashboard() {
 								<CreateForm
 									workspace={workspace}
 									nodeIds={nodeMetadata
-										.filter(({ workspaces }) => workspaces.map((w) => w.image).includes(workspace.dockerImage))
-										.map((w) => w.id)}
+										.filter((data) => data?.workspaces.map((w) => w.image).includes(workspace.dockerImage))
+										.map((w) => w?.id)
+										.filter((id) => typeof id !== "undefined")}
 								/>
 							</Dialog>
 						))

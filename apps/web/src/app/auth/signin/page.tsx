@@ -130,7 +130,7 @@ export default async function Login(props: {
 								}}
 							>
 								<SubmitButton variant={config.auth.credentials ? "secondary" : "default"} size="lg" className="w-32">
-									<IdCard className="size-4 mr-2 flex-shrink-0" />
+									<IdCard className="size-4 mr-2 shrink-0" />
 									{provider.charAt(0).toLocaleUpperCase() + provider.slice(1)}
 								</SubmitButton>
 							</form>

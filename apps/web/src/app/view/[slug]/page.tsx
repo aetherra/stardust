@@ -183,7 +183,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 								router.push("/");
 							}}
 						>
-							<ScreenShareOff className="mr-2 size-5 flex-shrink-0" />
+							<ScreenShareOff className="mr-2 size-5 shrink-0" />
 							Disconnect
 						</Button>
 						<Button
@@ -202,7 +202,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 								)
 							}
 						>
-							<Pause className="mr-2 size-5 flex-shrink-0" />
+							<Pause className="mr-2 size-5 shrink-0" />
 							Pause Session
 						</Button>
 
@@ -216,7 +216,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 								})
 							}
 						>
-							<RotateCw className="mr-2 size-5 flex-shrink-0" />
+							<RotateCw className="mr-2 size-5 shrink-0" />
 							Restart Session
 						</Button>
 						<Button
@@ -235,13 +235,13 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 								)
 							}
 						>
-							<Square className="mr-2 size-5 flex-shrink-0" />
+							<Square className="mr-2 size-5 shrink-0" />
 							Stop Session
 						</Button>
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<Button variant="destructive" className="w-full">
-									<TrashIcon className="mr-2 size-5 flex-shrink-0" />
+									<TrashIcon className="mr-2 size-5 shrink-0" />
 									Delete Session
 								</Button>
 							</AlertDialogTrigger>
@@ -278,7 +278,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 						</AlertDialog>
 						<Button className="w-[98%]" variant="secondary" asChild>
 							<Link href="/auth/signout">
-								<LogOut className="mr-2 size-5 flex-shrink-0" />
+								<LogOut className="mr-2 size-5 shrink-0" />
 								Log Out
 							</Link>
 						</Button>
@@ -292,7 +292,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 							</AccordionTrigger>
 							<AccordionContent className="space-y-4">
 								<Textarea
-									className="h-48 w-full resize-none outline-none"
+									className="h-48 w-full resize-none outline-hidden"
 									tabIndex={-20}
 									spellCheck={false}
 									autoCorrect="off"
@@ -355,7 +355,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 																}}
 															>
 																<Card className="flex justify-start items-center p-4 h-12 w-full gap-2 hover:bg-muted duration-150">
-																	<File className="size-5 flex-shrink-0" />
+																	<File className="size-5 shrink-0" />
 																	<span className="text-sm truncate overflow-x-scroll">{file}</span>
 																</Card>
 															</Link>

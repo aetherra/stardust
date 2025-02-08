@@ -116,7 +116,7 @@ export default async function Dashboard() {
 													sizes="6.5rem 13rem"
 													alt=""
 													fill
-													className="object-fill outline-none rounded-none md:h-[6.5rem] md:w-[13rem] h-[3.25rem] w-[6.5rem]"
+													className="object-fill outline-hidden rounded-none md:h-[6.5rem] md:w-[13rem] h-[3.25rem] w-[6.5rem]"
 												/>
 											) : (
 												<div className="flex items-center justify-center rounded-sm bg-muted h-36 w-full">

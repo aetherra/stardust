@@ -64,7 +64,7 @@ export function UpdateDialog({ workspace, open, setOpen }: Props) {
 }
 export function NodeDialog({ workspace, open, setOpen }: Props) {
 	const { data: nodeWorkspaces } = useSWR<Awaited<ReturnType<typeof getNodeWorkspaces>>>(
-		"/api/admin/workspaces/node-workspaces",
+		"/api/workspaces/node-workspaces",
 		fetcher,
 		{ refreshInterval: 1000 },
 	);

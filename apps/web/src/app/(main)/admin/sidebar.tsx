@@ -24,7 +24,7 @@ export function AdminSidebar() {
 	];
 	return (
 		<nav className="grid gap-x-4 text-sm text-muted-foreground justify-between h-full w-64">
-			<section className="p-0 items-start flex flex-col gap-2 flex-grow w-64">
+			<section className="p-0 items-start flex flex-col gap-2 grow w-64">
 				{links.map(({ href, label, Icon }) => (
 					<Button
 						asChild
