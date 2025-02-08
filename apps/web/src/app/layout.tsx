@@ -1,5 +1,3 @@
-import "./globals.css";
-
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { getConfig } from "@stardust/config";
@@ -7,8 +5,9 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { headers } from "next/headers";
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
+import "./globals.css";
+const inter = Inter({ subsets: ["latin"], variable: "--sans" });
+const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--mono" });
 export async function generateMetadata(): Promise<Metadata> {
 	const config = getConfig();
 	const headersList = await headers();
@@ -27,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 					title: "Stardust",
 					description: "Stardust is the platform for streaming isolated desktop containers.",
 					type: "website",
-					url: "https://stardust.spaceness.team",
+					url: "https://stardust-docs.vercel.app",
 				}
 			: undefined,
 	};

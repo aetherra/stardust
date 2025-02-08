@@ -4,7 +4,6 @@
 		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 		"jsx": "preserve",
-		"allowJs": false,
 		"plugins": [
 			{
 				"name": "next"
