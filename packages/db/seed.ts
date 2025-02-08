@@ -13,6 +13,18 @@ const workspaces = [
 		category: ["Browser"],
 		icon: "https://www.chromium.org/_assets/icon-chromium-96.png",
 	},
+	{
+		dockerImage: "ghcr.io/spaceness/zen",
+		friendlyName: "Zen",
+		category: ["Browser"],
+		icon: "https://raw.githubusercontent.com/zen-browser/.github/refs/heads/main/profile/logo-black.png",
+	},
+	{
+		dockerImage: "ghcr.io/spaceness/firefox",
+		friendlyName: "Firefox",
+		category: ["Browser"],
+		icon: "https://www.mozilla.org/media/protocol/img/logos/firefox/browser/logo.eb1324e44442.svg",
+	},
 ];
 const insertion = await db.insert(workspace).values(workspaces).onConflictDoNothing().returning();
 console.log(`✨Stardust: Seeded ${insertion.map((i) => i.dockerImage).join(", ") || "no images"}`);

@@ -1,0 +1,11 @@
+#!/bin/bash
+xrdb $HOME/.Xresources
+export DISPLAY=":1"
+startxfce4 &
+sleep 1
+echo "while :
+do
+firefox --no-sandbox
+sleep 2
+done
+" | bash

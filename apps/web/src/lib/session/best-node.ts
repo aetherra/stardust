@@ -7,7 +7,7 @@ import type { NodeConfig } from "@stardust/config/config";
 export async function getBestNode(workspace: string) {
 	const { nodes: configNodes } = getConfig();
 	const nodes: Record<number, number> = {};
-	const nodeMetadata = (
+	const availableNodes = (
 		await Promise.all(
 			configNodes.map(async (n) => {
 				const { data } = await stardustConnector(n).workspaces.index.get();
@@ -18,14 +18,19 @@ export async function getBestNode(workspace: string) {
 				};
 			}),
 		)
-	).filter((n) => n.workspaces.includes(workspace));
-	if (nodeMetadata.length <= 0) throw new Error("No node with the selected workspace found");
+	)
+		.filter((n) => n.workspaces.includes(workspace))
+		.map((d) => d.id);
+	if (availableNodes.length <= 0) throw new Error("No node with the selected workspace found");
 	await Promise.all(
-		configNodes.map(async (n: NodeConfig, i) => {
-			const { data } = await stardustConnector(n).healthcheck.get();
-			nodes[i] = Number(data?.cpu);
-		}),
+		configNodes
+			.filter(({ id }) => availableNodes.includes(id))
+			.map(async (n: NodeConfig, i) => {
+				const { data } = await stardustConnector(n).healthcheck.get();
+				nodes[i] = Number(data?.cpu);
+			}),
 	);
+	console.log(nodes);
 	return Object.keys(nodes)
 		.map(Number)
 		.find((key) => nodes[key] === Math.min(...Object.values(nodes))) as number; // shoot me

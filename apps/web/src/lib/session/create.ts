@@ -60,6 +60,7 @@ export async function createSession(workspace: string, nodeId?: string) {
 			});
 		return { data: dbEntry[0] };
 	} catch (e) {
+		console.log(e);
 		return { error: (e as Error).message, data: null };
 	}
 }

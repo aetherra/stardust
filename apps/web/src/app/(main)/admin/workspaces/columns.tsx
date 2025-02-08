@@ -70,7 +70,7 @@ export const columns: ColumnDef<SelectWorkspaceRelation & { nodes: string[] }>[]
 									})
 								}
 							>
-								Delete workspace
+								Delete from database
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

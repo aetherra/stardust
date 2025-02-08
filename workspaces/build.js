@@ -1,5 +1,5 @@
-const images = ["chromium", "debian"];
-const x64Only = ["pinball"];
+const images = ["chromium", "debian", "zen", "firefox"];
+const x64Only = [];
 
 import { spawn } from "node:child_process";
 import { argv } from "node:process";
