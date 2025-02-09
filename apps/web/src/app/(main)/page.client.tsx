@@ -14,7 +14,7 @@ import { createSession } from "@/lib/session/create";
 import type { SelectWorkspace } from "@stardust/db";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-export function CreateForm({ workspace, nodeIds }: { workspace: SelectWorkspace; nodeIds: string[] }) {
+export function CreateForm({ workspace }: { workspace: SelectWorkspace & { nodes: string[] } }) {
 	const router = useRouter();
 	return (
 		<DialogContent className="flex md:flex-col flex-row justify-center gap-3">
@@ -41,7 +41,7 @@ export function CreateForm({ workspace, nodeIds }: { workspace: SelectWorkspace;
 						</SelectTrigger>
 						<SelectContent>
 							<SelectItem value="autoselect">Select best node</SelectItem>
-							{nodeIds.map((id) => (
+							{workspace.nodes.map((id) => (
 								<SelectItem key={id} value={id}>
 									{id}
 								</SelectItem>

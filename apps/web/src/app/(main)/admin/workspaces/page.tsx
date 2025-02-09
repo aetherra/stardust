@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { check } from "@/lib/admin-check";
-import { getNodeWorkspaces } from "@/lib/workspaces";
+import { getWorkspaces } from "@/lib/workspaces";
 import db, { workspace } from "@stardust/db";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
@@ -21,20 +21,7 @@ export const metadata: Metadata = {
 	title: "Workspaces",
 };
 export default async function AdminPage() {
-	const dbData = await db.query.workspace.findMany({
-		with: {
-			session: true,
-		},
-	});
-	const nodeMetadata = await getNodeWorkspaces();
-	const data = await Promise.all(
-		dbData.map(async (d) => ({
-			nodes: nodeMetadata
-				.filter(({ workspaces }) => workspaces.map((w) => w.image).includes(d.dockerImage))
-				.map(({ id }) => id),
-			...d,
-		})),
-	);
+	const data = await getWorkspaces();
 	return (
 		<div className="flex h-full flex-col">
 			<h1 className="py-6 text-3xl font-bold">Workspaces</h1>

@@ -60,14 +60,13 @@ export default new Elysia({ prefix: "/workspaces" })
 			if (imagePromises.has(body.image)) {
 				return { success: false, error: "Image pull already in progress" };
 			}
-			const pullStatus = pullImage(`${body.image}:latest`);
 			imagePromises.set(body.image, { status: "in-progress" });
 
-			pullStatus
+			pullImage(`${body.image}:latest`)
 				.then(() => imagePromises.set(body.image, { status: "pulled" }))
 				.catch(() => imagePromises.set(body.image, { status: "failed" }));
 
-			return { success: true, status: "in-progress" };
+			return { success: true };
 		},
 		{
 			body: t.Object({
@@ -88,7 +87,7 @@ export default new Elysia({ prefix: "/workspaces" })
 			if (image.status === "pulled" || image.status === "failed") {
 				imagePromises.delete(query.image);
 			}
-			return { success: true, status: image.status };
+			return { success: image.status === "pulled", status: image.status };
 		},
 		{
 			query: t.Object({

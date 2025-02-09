@@ -1,15 +1,14 @@
 import { CardTitle } from "@/components/ui/card";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { getNodeWorkspaces } from "@/lib/workspaces";
-import db, { workspace } from "@stardust/db";
+import { getWorkspaces } from "@/lib/workspaces";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
 import { CreateForm } from "./page.client";
 
 export default async function Dashboard() {
-	const workspaces = await db.select().from(workspace);
-	const nodeMetadata = await getNodeWorkspaces();
+	const workspaces = await getWorkspaces();
+
 	return (
 		<div className="m-auto flex w-full flex-col p-4">
 			<h1 className="text-3xl font-bold mb-6">Workspaces</h1>
@@ -33,12 +32,7 @@ export default async function Dashboard() {
 										</div>
 									</div>
 								</DialogTrigger>
-								<CreateForm
-									workspace={workspace}
-									nodeIds={nodeMetadata
-										.filter(({ workspaces }) => workspaces.map((w) => w.image).includes(workspace.dockerImage))
-										.map((w) => w.id)}
-								/>
+								<CreateForm workspace={workspace} />
 							</Dialog>
 						))
 					) : (

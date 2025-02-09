@@ -7,8 +7,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getNodeWorkspaces } from "@/lib/workspaces";
-import type { SelectWorkspaceRelation } from "@stardust/db/relational-types";
+import type { SelectWorkspace } from "@stardust/db";
 import type { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
@@ -17,7 +16,7 @@ import { toast } from "sonner";
 import { deleteWorkspace } from "./actions";
 import { NodeDialog, UpdateDialog } from "./components";
 
-export const columns: ColumnDef<SelectWorkspaceRelation & { nodes: string[] }>[] = [
+export const columns: ColumnDef<SelectWorkspace & { nodes: string[] }>[] = [
 	{
 		accessorKey: "friendlyName",
 		header: "Name",
@@ -38,7 +37,7 @@ export const columns: ColumnDef<SelectWorkspaceRelation & { nodes: string[] }>[]
 		accessorKey: "icon",
 		header: "Icon",
 		cell: ({ row }) => (
-			<Image className="h-12 w-12" alt={row.original.friendlyName} src={row.original.icon} width={48} height={48} />
+			<Image className="size-12" alt={row.original.friendlyName} src={row.original.icon} width={48} height={48} />
 		),
 	},
 	{
