@@ -1,8 +1,9 @@
+import { spawn } from "node:child_process";
+import { argv } from "node:process";
+
 const images = ["chromium", "debian", "zen", "firefox"];
 const x64Only = [];
 
-import { spawn } from "node:child_process";
-import { argv } from "node:process";
 const optionalArgs = (a) => (process.argv.includes(a) ? a : "");
 function buildImage(image) {
 	return new Promise((resolve, reject) => {
