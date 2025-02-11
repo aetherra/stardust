@@ -19,6 +19,42 @@ function getFlagContents(flag, replacement) {
 	return replacement;
 }
 
+function buildBase() {
+	console.log("✨ Stardust: Building debian base...");
+	const multiPlatformBuild = flags.includes("--multi-platform");
+	return new Promise((resolve, reject) => {
+		const baseProcess = spawn(
+			"docker",
+			[
+				"buildx",
+				"build",
+				".",
+				"-f",
+				"base.Dockerfile",
+				`--progress=${argv.includes("--quiet") ? "quiet" : "plain"}`,
+				optionalFlag("--push"),
+				multiPlatformBuild ? "--platform" : "",
+				multiPlatformBuild ? "linux/amd64,linux/arm64" : "",
+				"--tag",
+				"ghcr.io/spaceness/debian-base",
+			],
+			{ stdio: "inherit", shell: true },
+		);
+		baseProcess.on("close", (code) => {
+			if (code === 0) {
+				resolve(0);
+			} else {
+				console.error(`✨ Stardust: Failed to build debian base with code ${code}`);
+				reject(new Error("Build failed for debian base"));
+			}
+		});
+		baseProcess.on("error", (err) => {
+			console.error(`✨ Stardust: Error while building debian base: ${err.message}`);
+			reject(err);
+		});
+	});
+}
+
 function buildImage(image) {
 	return new Promise((resolve, reject) => {
 		console.log(`✨ Stardust: Building ${image}...`);
@@ -73,6 +109,9 @@ try {
 		images = images.split(",");
 	} else {
 		images = defaultImages;
+	}
+	if (argv.includes("--build-base")) {
+		await buildBase();
 	}
 
 	await Promise.all(images.map(buildImage));

@@ -26,4 +26,4 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Build the Docker image
-        run: npm run --prefix ./workspaces build -- --multi-platform --quiet --push
+        run: npm run --prefix ./workspaces build -- --build-base --multi-platform --push

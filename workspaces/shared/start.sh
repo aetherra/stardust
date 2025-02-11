@@ -13,7 +13,7 @@ sleep 1
 # files
 echo "while :
 do
-node /opt/stardust/scripts/files.mjs --pass $PASS
+node /opt/stardust/shared/files.mjs --pass $PASS
 sleep 5
 done
 " | bash &
