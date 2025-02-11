@@ -14,3 +14,5 @@ pnpm build
 `--push`: Push the images to docker registry. This only exists for the GitHub workflow and for devs and serves no purpose to others.
 
 `--quiet`: Suppress logs in the console.
+
+`--images`: Comma separated list of images to build with no spaces e.g. `--images chromium,firefox,zen`
