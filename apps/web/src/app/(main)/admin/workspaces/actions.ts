@@ -68,5 +68,6 @@ export async function deleteImageFromNode(workspace: SelectWorkspace, nId: strin
 	const connector = stardustConnector(node);
 	const { data, error } = await connector.workspaces.info.delete(undefined, { query: { id: workspace.dockerImage } });
 	if (error) throw new Error(error.value.message);
+	revalidatePath("/admin/workspaces");
 	return data;
 }

@@ -25,6 +25,12 @@ const workspaces = [
 		category: ["Browser"],
 		icon: "https://www.mozilla.org/media/protocol/img/logos/firefox/browser/logo.eb1324e44442.svg",
 	},
+	{
+		dockerImage: "ghcr.io/spaceness/vscode",
+		friendlyName: "VSCode",
+		category: ["Development"],
+		icon: "https://code.visualstudio.com/assets/apple-touch-icon.png",
+	},
 ];
 const insertion = await db.insert(workspace).values(workspaces).onConflictDoNothing().returning();
 console.log(`✨Stardust: Seeded ${insertion.map((i) => i.dockerImage).join(", ") || "no images"}`);

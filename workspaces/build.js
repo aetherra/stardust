@@ -10,14 +10,13 @@ const flags = args.filter((value) => value.startsWith("--"));
 
 const optionalFlag = (flag) => (flags.includes(flag) ? flag : "");
 
-function getFlagContents (flag, replacement) {
-	const indexOf = flags.indexOf(flag)
-	const nextArg = args[indexOf + 1]
-	if (indexOf != -1 && nextArg) {
-		return nextArg
-	} else {
-		return replacement
+function getFlagContents(flag, replacement) {
+	const indexOf = flags.indexOf(flag);
+	const nextArg = args[indexOf + 1];
+	if (indexOf !== -1 && nextArg) {
+		return nextArg;
 	}
+	return replacement;
 }
 
 function buildImage(image) {
@@ -34,15 +33,23 @@ function buildImage(image) {
 				".",
 				"-f",
 				`${image}/Dockerfile`,
-				optionalFlag("--quiet"),
+				`--progress=${argv.includes("--quiet") ? "quiet" : "plain"}`,
 				optionalFlag("--push"),
 				multiPlatformBuild ? "--platform" : "",
 				multiPlatformBuild ? platforms : "",
 				"--tag",
 				`ghcr.io/spaceness/${image}`,
 			],
-			{ stdio: "inherit", shell: true },
+			{ stdio: ["inherit", "pipe", "pipe"], shell: true },
 		);
+
+		process.stdout.on("data", (data) => {
+			globalThis.process.stdout.write(`${image}: ${data}`);
+		});
+
+		process.stderr.on("data", (data) => {
+			globalThis.process.stderr.write(`${image}: ${data}`);
+		});
 		process.on("close", (code) => {
 			if (code === 0) {
 				resolve(0);
@@ -60,12 +67,12 @@ function buildImage(image) {
 }
 
 try {
-	let images = getFlagContents("--images", undefined)
+	let images = getFlagContents("--images", undefined);
 
 	if (images) {
-		images = images.split(',')
+		images = images.split(",");
 	} else {
-		images = defaultImages
+		images = defaultImages;
 	}
 
 	await Promise.all(images.map(buildImage));

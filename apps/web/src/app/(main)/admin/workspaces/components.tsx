@@ -94,11 +94,18 @@ export function NodeDialog({ workspace, open, setOpen }: Props) {
 										<Button
 											variant="destructive"
 											onClick={() =>
-												toast.promise(() => deleteImageFromNode(workspace, nodeWorkspace.id), {
-													loading: "Removing from node",
-													success: "Removed from node",
-													error: "Failed to remove from node",
-												})
+												toast.promise(
+													async () => {
+														const promise = await deleteImageFromNode(workspace, nodeWorkspace.id);
+														mutate();
+														return promise;
+													},
+													{
+														loading: "Removing from node",
+														success: "Removed from node",
+														error: "Failed to remove from node",
+													},
+												)
 											}
 										>
 											Remove from node
