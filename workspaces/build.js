@@ -1,15 +1,30 @@
 import { spawn } from "node:child_process";
 import { argv } from "node:process";
 
-const images = ["chromium", "debian", "zen", "firefox"];
+const defaultImages = ["chromium", "debian", "zen", "firefox"];
 const x64Only = [];
 
-const optionalArgs = (a) => (process.argv.includes(a) ? a : "");
+const args = argv.slice(2);
+
+const flags = args.filter((value) => value.startsWith("--"));
+
+const optionalFlag = (flag) => (flags.includes(flag) ? flag : "");
+
+function getFlagContents (flag, replacement) {
+	const indexOf = flags.indexOf(flag)
+	const nextArg = args[indexOf + 1]
+	if (indexOf != -1 && nextArg) {
+		return nextArg
+	} else {
+		return replacement
+	}
+}
+
 function buildImage(image) {
 	return new Promise((resolve, reject) => {
 		console.log(`✨ Stardust: Building ${image}...`);
 		console.log(`Arguments: ${argv}`);
-		const multiPlatformBuild = argv.includes("--multi-platform");
+		const multiPlatformBuild = flags.includes("--multi-platform");
 		const platforms = x64Only.includes(image) ? "linux/amd64" : "linux/amd64,linux/arm64";
 		const process = spawn(
 			"docker",
@@ -19,8 +34,8 @@ function buildImage(image) {
 				".",
 				"-f",
 				`${image}/Dockerfile`,
-				optionalArgs("--quiet"),
-				optionalArgs("--push"),
+				optionalFlag("--quiet"),
+				optionalFlag("--push"),
 				multiPlatformBuild ? "--platform" : "",
 				multiPlatformBuild ? platforms : "",
 				"--tag",
@@ -45,6 +60,14 @@ function buildImage(image) {
 }
 
 try {
+	let images = getFlagContents("--images", undefined)
+
+	if (images) {
+		images = images.split(',')
+	} else {
+		images = defaultImages
+	}
+
 	await Promise.all(images.map(buildImage));
 	console.log("✨ Stardust: All images built successfully!");
 } catch (err) {
