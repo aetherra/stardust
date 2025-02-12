@@ -31,6 +31,4 @@ do
 vncserver :1 -passwd /home/stardust/.vnc/passwd -fg -localhost no
 sleep 5
 done
-" | bash &
-# wallpaper
-DISPLAY=:1 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVNC-0/workspace0/last-image -s /opt/stardust/wallpaper.png
+" | bash
