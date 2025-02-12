@@ -1,4 +1,4 @@
-FROM ghcr.io/spaceness/debian-base as base
+FROM ghcr.io/spaceness/debian-base AS base
 RUN sudo apt-get update \
   && sudo apt-get install --no-install-recommends -y \
     x11vnc \

@@ -1,4 +1,4 @@
-FROM ghcr.io/spaceness/debian-base as base
+FROM ghcr.io/spaceness/debian-base AS base
 COPY ./zen/install.sh /opt/stardust/scripts/zen-install.sh
 USER stardust
 RUN bash /opt/stardust/scripts/zen-install.sh
