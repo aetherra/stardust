@@ -1,8 +1,8 @@
 #!/bin/bash
 xrdb $HOME/.Xresources
 export DISPLAY=":1"
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVNC-0/workspace0/last-image -s /opt/stardust/wallpaper.png
 startxfce4 &
+sudo service dbus start
 sleep 1
 echo "while :
 do
