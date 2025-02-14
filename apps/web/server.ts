@@ -12,17 +12,15 @@ if (!validateConfig(config)) {
 const dev = process.env.NODE_ENV !== "production";
 const port = config.port || 3000;
 const hostname = config.hostname || "0.0.0.0";
-console.log(
-	`✨ Stardust: Starting ${dev ? "development" : "production"} server ${process.argv.includes("--turbo") ? "with turbopack" : ""}...`,
-);
+console.log(`✨ Stardust: Starting ${dev ? "development" : "production"} server...`);
 const httpServer = createServer();
 const app = next({
 	dev,
 	port,
 	httpServer,
-	customServer: true,
 	hostname: process.env.HOSTNAME,
-	turbopack: process.argv.includes("--turbo"),
+	turbopack: true,
+	customServer: true,
 });
 await app.prepare();
 scheduleAutoDelete();

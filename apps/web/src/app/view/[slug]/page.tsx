@@ -505,7 +505,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 							className="absolute z-20 h-screen w-screen overflow-clip"
 						/>
 					) : (
-						<ConnectionAlert text="Container not running" />
+						<ConnectionAlert error text="Session not found" />
 					)
 				) : (
 					<Loading text="Authenticating" />
