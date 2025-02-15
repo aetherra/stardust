@@ -1,5 +1,5 @@
 > [!CAUTION]
-> This is a new rewrite branch of stardust. If you're looking to host it, go to [`v0.9`](https://github.com/spaceness/stardust/tree/v0.9), this branch does not have as much images and is still in development
+> This branch contains the Stardust rewrite. If you're looking host Stardust right now, go to [`v0.9`](https://github.com/spaceness/stardust/tree/v0.9), this branch doesn't have many container images and is still in development.
 
 <img alt="Stardust banner" src="media/banner.png">
 <h3 align="center">An open-source <a href="https://kasmweb.com">Kasm Workspaces</a> alternative.<br></h3>
