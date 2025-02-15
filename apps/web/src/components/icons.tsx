@@ -30,12 +30,12 @@ export const StardustIcon = ({ className, ...props }: Props) => (
 		<path d="M40 14.5H34" stroke="#CBA6F7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
 		<path d="M13 32.5V35.5" stroke="#CBA6F7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
 		<path d="M14.5 34H11.5" stroke="#CBA6F7" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-		<defs>
+		{/* <defs>
 			<linearGradient id="paint0_linear_1_39" x1="0" y1="25" x2="50" y2="25" gradientUnits="userSpaceOnUse">
 				<stop stopColor="#1E1E2E" />
 				<stop offset="0.5" stopColor="#181825" />
 				<stop offset="1" stopColor="#11111B" />
 			</linearGradient>
-		</defs>
+		</defs> */}
 	</svg>
 );
