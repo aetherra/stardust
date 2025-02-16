@@ -8,7 +8,6 @@ import { CreateForm } from "./page.client";
 
 export default async function Dashboard() {
 	const workspaces = await getWorkspaces();
-
 	return (
 		<div className="m-auto flex w-full flex-col p-4">
 			<h1 className="text-3xl font-bold mb-6">Workspaces</h1>
