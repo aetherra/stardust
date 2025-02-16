@@ -1,7 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import auth from "@stardust/common/auth";
+import { stardustConnector } from "@stardust/common/daemon/client";
+import { getConfig } from "@stardust/config";
 import db, { workspace, user } from "@stardust/db";
-import { Container, Layers, Users } from "lucide-react";
+import { Boxes, Container, Layers, Users } from "lucide-react";
 import { headers } from "next/headers";
 function mode<T>(arr: Array<T>) {
 	return arr.sort((a, b) => arr.filter((v) => v === a).length - arr.filter((v) => v === b).length).pop();
@@ -18,6 +20,16 @@ export default async function AdminPage() {
 		const workspaces = await tx.select().from(workspace);
 		return { users, sessions, workspaces };
 	});
+	const nodes = await Promise.all(
+		getConfig().nodes.map(async (n) => {
+			const node = stardustConnector(n);
+			return {
+				...n,
+				health: (await node.healthcheck.get()).data,
+			};
+		}),
+	);
+	const averageCpuUsage = nodes.reduce((acc, node) => acc + Number(node.health?.cpu), 0) / nodes.length;
 	const activeUsers = [...new Set(sessions.map((s) => s.userId))];
 	const admins = users.filter((u) => u.role === "admin");
 	return (
@@ -58,6 +70,16 @@ export default async function AdminPage() {
 						<p className="text-xs text-muted-foreground">
 							{admins.length} admin{admins.length > 1 ? "s" : ""}
 						</p>
+					</CardContent>
+				</Card>
+				<Card className="w-64">
+					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+						<CardTitle className="text-sm font-medium">Nodes</CardTitle>
+						<Boxes className="h-4 w-4 text-muted-foreground" />
+					</CardHeader>
+					<CardContent>
+						<div className="text-2xl font-bold">{nodes.length}</div>
+						<p className="text-xs text-muted-foreground">Average CPU usage is {averageCpuUsage.toFixed(2)}%</p>
 					</CardContent>
 				</Card>
 			</section>

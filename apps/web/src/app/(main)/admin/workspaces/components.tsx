@@ -31,7 +31,16 @@ export function UpdateDialog({ workspace, open, setOpen }: Props) {
 						Edit {workspace.friendlyName} ({workspace.dockerImage})
 					</DialogTitle>
 				</DialogHeader>
-				<form action={updateWorkspace} className="flex flex-col gap-2 w-full">
+				<form
+					action={(data) =>
+						toast.promise(() => updateWorkspace(data), {
+							success: "Workspace updated successfully",
+							error: "Failed to update workspace",
+							finally: () => setOpen(false),
+						})
+					}
+					className="flex flex-col gap-2 w-full"
+				>
 					<input hidden readOnly value={workspace?.dockerImage} name="dockerImage" />
 					<Label htmlFor="name">Name</Label>
 					<Input

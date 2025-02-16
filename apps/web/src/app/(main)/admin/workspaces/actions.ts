@@ -7,7 +7,6 @@ import { getConfig } from "@stardust/config";
 import db, { type SelectWorkspace, session, workspace } from "@stardust/db";
 import { eq } from "@stardust/db/utils";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function updateWorkspace(data: FormData) {
 	await check();
@@ -25,7 +24,7 @@ export async function updateWorkspace(data: FormData) {
 		.update(workspace)
 		.set(fields)
 		.where(eq(workspace.dockerImage, data.get("dockerImage")?.toString() as string));
-	redirect("/admin/workspaces");
+	revalidatePath("/admin/workspaces");
 }
 export async function deleteWorkspace(w: SelectWorkspace) {
 	await check();

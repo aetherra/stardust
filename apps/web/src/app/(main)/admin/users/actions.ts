@@ -3,7 +3,7 @@ import { check } from "@/lib/admin-check";
 import { deleteSession } from "@/lib/session/manage";
 import auth from "@stardust/common/auth";
 import { hashPassword } from "@stardust/common/auth/lib";
-import db, { account, session } from "@stardust/db";
+import db, { account, session, user } from "@stardust/db";
 import { and, eq } from "@stardust/db/utils";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
@@ -70,6 +70,35 @@ export async function resetPassword(id: string, data: FormData) {
 				password: await hashPassword(newPassword),
 			})
 			.where(where);
+	} catch (e) {
+		return { error: (e as Error).message };
+	}
+}
+export async function updateUser(id: string, data: FormData) {
+	await check();
+	try {
+		const where = eq(user.id, id);
+		const [dbEntry] = await db.select().from(user).where(where);
+		if (!dbEntry) throw new Error("no user found");
+		const name = data.get("name")?.toString();
+		const email = data.get("email")?.toString();
+		const image = data.get("image")?.toString();
+		const role = data.get("role")?.toString();
+		const res = await db
+			.update(user)
+			.set({
+				name,
+				email,
+				image,
+				role,
+			})
+			.where(where)
+			.returning();
+		revalidateHandler();
+		return {
+			error: undefined,
+			...res[0],
+		};
 	} catch (e) {
 		return { error: (e as Error).message };
 	}

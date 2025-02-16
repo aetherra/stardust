@@ -11,13 +11,13 @@ export default async function Dashboard() {
 	return (
 		<div className="m-auto flex w-full flex-col p-4">
 			<h1 className="text-3xl font-bold mb-6">Workspaces</h1>
-			<section className="flex flex-wrap gap-2">
+			<section className="flex flex-wrap gap-4 justify-between">
 				<Suspense fallback={<Loader2 size={64} className="animate-spin" />}>
 					{workspaces.length ? (
 						workspaces.map((workspace) => (
 							<Dialog key={workspace.dockerImage}>
 								<DialogTrigger>
-									<div className="relative w-64 aspect-[5/3] rounded-lg overflow-hidden shadow-lg bg-accent/40 group">
+									<div className="relative w-56 h-32 rounded-lg overflow-hidden shadow-lg bg-accent/40 group">
 										<Image
 											src={workspace.icon}
 											alt={workspace.friendlyName}

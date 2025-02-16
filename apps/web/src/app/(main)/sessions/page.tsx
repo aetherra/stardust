@@ -57,7 +57,7 @@ export default async function Dashboard() {
 	return (
 		<div className="m-auto flex w-full flex-col p-4">
 			<h1 className="text-3xl font-bold mb-6">Sessions</h1>
-			<section className="flex flex-wrap gap-1">
+			<section className="flex flex-wrap gap-4">
 				<Suspense fallback={<Loader2 size={64} className="animate-spin" />}>
 					{sessions.length ? (
 						sessions.map((session, key) => {
