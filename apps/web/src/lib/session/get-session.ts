@@ -7,7 +7,7 @@ export default async function getSession(
 	id: string,
 	admin?: boolean,
 	dbClient: DrizzleClient = db,
-): Promise<SelectSession> {
+): Promise<SelectSession | undefined> {
 	const userSession = await auth.api.getSession({ headers: await headers() });
 	const res = await dbClient.query.session.findFirst({
 		where: (session, { and, eq }) => {
@@ -18,6 +18,5 @@ export default async function getSession(
 			return and(base, eq(session.userId, userSession?.user.id || ""));
 		},
 	});
-	if (!res) throw new Error("session does not exist or is not tied to the current user");
 	return res;
 }

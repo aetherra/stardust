@@ -11,7 +11,7 @@ export default async function Dashboard() {
 	return (
 		<div className="m-auto flex w-full flex-col p-4">
 			<h1 className="text-3xl font-bold mb-6">Workspaces</h1>
-			<section className="flex flex-wrap gap-4 justify-between">
+			<section className="flex flex-wrap gap-4">
 				<Suspense fallback={<Loader2 size={64} className="animate-spin" />}>
 					{workspaces.length ? (
 						workspaces.map((workspace) => (

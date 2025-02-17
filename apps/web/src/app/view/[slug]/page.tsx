@@ -18,10 +18,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
 	AlertCircle,
 	Camera,
@@ -40,8 +40,9 @@ import {
 	ScreenShareOff,
 	Settings,
 	Square,
-	SquareArrowOutUpRight,
 	TrashIcon,
+	Volume2,
+	VolumeX,
 } from "lucide-react";
 import { ConnectionAlert, Loading } from "./components";
 
@@ -72,6 +73,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 	const vncRef = useRef<VncViewerHandle>(null);
 	const audioRef = useRef<VncAudio | null>(null);
 	const [connected, setConnected] = useState(false);
+	const [audioEnabled, setAudioEnabled] = useLocalStorage("stardust_audio", true);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const { clipboard, setClipboard, workingClipboard, setWorkingClipboard } = useVncClipboard(vncRef.current?.rfb);
 	// noVNC options start
@@ -100,28 +102,46 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 	const {
 		data: filesList,
 		error: filesError,
-		isLoading: filesLoading,
 		mutate: filesMutate,
 	} = useSWR<string[]>(`/api/session/${params.slug}/files`, fetcher, {
 		refreshInterval: 10000,
 	});
 	useEffect(() => {
-		if (session)
+		if (session) {
 			audioRef.current = new VncAudio(
 				`${window.location.protocol.replace("http", "ws")}//${window.location.host}/audio/${params.slug}`,
 			);
+		}
+
 		return () => {
 			audioRef.current = null;
 		};
 	}, [session, params.slug]);
+
 	useEffect(() => {
 		const listener = () => {
-			if (connected) audioRef.current?.start();
+			if (connected && audioEnabled) {
+				audioRef.current?.start();
+			}
 		};
-		const elm = document.querySelector("canvas");
-		elm?.addEventListener("keydown", listener);
-		return () => elm?.removeEventListener("keydown", listener);
-	}, [connected]);
+
+		const canvas = document.querySelector("canvas");
+		canvas?.addEventListener("keydown", listener);
+
+		return () => {
+			canvas?.removeEventListener("keydown", listener);
+		};
+	}, [connected, audioEnabled]);
+
+	const toggleAudio = () => {
+		if (audioEnabled) {
+			audioRef.current?.stop();
+		} else {
+			audioRef.current?.start();
+		}
+		setAudioEnabled(!audioEnabled);
+	};
+
 	useEffect(() => {
 		if (connected && vncRef.current?.rfb) {
 			vncRef.current.rfb.viewOnly = viewOnly;
@@ -135,32 +155,60 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 	return (
 		<div className="h-screen w-screen justify-center items-center flex">
 			{connected ? (
-				<section className="flex flex-col gap-2 z-40 absolute -translate-y-1/2 -left-7 hover:left-0 duration-150 top-1/2 rounded-r-md bg-background/80 p-[0.25rem] text-xs backdrop-blur-lg w-12">
-					<Button
-						variant="ghost"
-						size="icon"
-						onClick={() => {
-							setSidebarOpen(false);
-							router.push("/");
-						}}
-					>
-						<ScreenShareOff />
-					</Button>
-					<Button variant="ghost" size="icon" onClick={() => setFullScreen(!fullScreen)}>
-						{fullScreen ? <Minimize /> : <Maximize />}
-					</Button>
-					<Button variant="ghost" size="icon" hidden={sidebarOpen} onClick={() => setSidebarOpen((prev) => !prev)}>
-						<Settings />
-					</Button>
-					<Button asChild size="icon" variant="ghost">
-						<Link
-							href={`/api/session/${params.slug}/preview`}
-							download={`stardust-${params.slug.slice(0, 6)}-${new Date().toLocaleDateString("en-us")}`}
-							target="_blank"
-						>
-							<Camera />
-						</Link>
-					</Button>
+				<section className="flex flex-row gap-2 z-40 absolute -translate-x-1/2 -top-10 hover:top-0 left-1/2 duration-150 rounded-b-md bg-background/80 p-[0.25rem] text-xs backdrop-blur-lg h-12">
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<Button
+								variant="ghost"
+								size="icon"
+								onClick={() => {
+									setSidebarOpen(false);
+									router.push("/");
+								}}
+							>
+								<ScreenShareOff />
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>Disconnect</TooltipContent>
+					</Tooltip>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<Button variant="ghost" size="icon" onClick={() => setFullScreen(!fullScreen)}>
+								{fullScreen ? <Minimize /> : <Maximize />}
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>Enter full screen</TooltipContent>
+					</Tooltip>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<Button variant="ghost" size="icon" onClick={() => setSidebarOpen((prev) => !prev)}>
+								<Settings />
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>Open settings</TooltipContent>
+					</Tooltip>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<Button variant="ghost" size="icon" onClick={toggleAudio}>
+								{audioEnabled ? <Volume2 /> : <VolumeX />}
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>Turn audio {audioEnabled ? "off" : "on (press a key after to activate)"}</TooltipContent>
+					</Tooltip>
+					<Tooltip>
+						<TooltipTrigger asChild>
+							<Button asChild size="icon" variant="ghost">
+								<Link
+									href={`/api/session/${params.slug}/preview`}
+									download={`stardust-${params.slug.slice(0, 6)}-${new Date().toLocaleDateString("en-us")}`}
+									target="_blank"
+								>
+									<Camera />
+								</Link>
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>Download screenshot</TooltipContent>
+					</Tooltip>
 				</section>
 			) : null}
 			<Sheet
@@ -342,31 +390,27 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 										</CardHeader>
 										<CardContent className="flex flex-col gap-2">
 											{!filesError ? (
-												!filesLoading ? (
-													filesList && filesList?.length > 0 ? (
-														filesList.map((file) => (
-															<Link
-																key={file}
-																download={file}
-																target="_blank"
-																href={{
-																	pathname: `/api/session/${params.slug}/files`,
-																	query: { name: file },
-																}}
-															>
-																<Card className="flex justify-start items-center p-4 h-12 w-full gap-2 hover:bg-muted duration-150">
-																	<File className="size-5 flex-shrink-0" />
-																	<span className="text-sm truncate overflow-x-scroll">{file}</span>
-																</Card>
-															</Link>
-														))
-													) : (
-														<p className="text-muted-foreground">
-															Add files to the Downloads folder to download them here
-														</p>
-													)
+												filesList && filesList?.length > 0 ? (
+													filesList.map((file) => (
+														<Link
+															key={file}
+															download={file}
+															target="_blank"
+															href={{
+																pathname: `/api/session/${params.slug}/files`,
+																query: { name: file },
+															}}
+														>
+															<Card className="flex justify-start items-center p-4 h-12 w-full gap-2 hover:bg-muted duration-150">
+																<File className="size-5 flex-shrink-0" />
+																<span className="text-sm truncate overflow-x-scroll">{file}</span>
+															</Card>
+														</Link>
+													))
 												) : (
-													<Skeleton className="h-16 w-full" />
+													<p className="text-muted-foreground">
+														Add files to the Downloads folder to download them here
+													</p>
 												)
 											) : (
 												<Alert variant="destructive">

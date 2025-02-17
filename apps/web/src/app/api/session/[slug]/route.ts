@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 
 export async function GET(_req: NextRequest, props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;
-	const session = await getSession(params.slug).catch(() => {});
+	const session = await getSession(params.slug);
 	if (!session) {
 		return Response.json({ exists: false, error: "Container not found" }, { status: 404 });
 	}

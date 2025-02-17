@@ -2,11 +2,10 @@
 import { check } from "@/lib/admin-check";
 import { deleteSession } from "@/lib/session/manage";
 import auth from "@stardust/common/auth";
-import { hashPassword } from "@stardust/common/auth/lib";
 import db, { account, session, user } from "@stardust/db";
 import { and, eq } from "@stardust/db/utils";
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
+import { headers as getHeaders } from "next/headers";
 export const revalidateHandler = async () => revalidatePath("/admin/users");
 export async function deleteUserSessions(id: string) {
 	await db.transaction(async (tx) => {
@@ -41,7 +40,7 @@ export async function safeDeleteUser(id: string) {
 		body: {
 			userId: id,
 		},
-		headers: await headers(),
+		headers: await getHeaders(),
 	});
 	if (res.success) {
 		revalidateHandler();
@@ -49,8 +48,8 @@ export async function safeDeleteUser(id: string) {
 	}
 }
 export async function resetPassword(id: string, data: FormData) {
-	await check();
 	try {
+		const headers = await getHeaders();
 		const where = and(eq(account.userId, id), eq(account.providerId, "credential"));
 		const [dbEntry] = await db.select().from(account).where(where);
 		if (!dbEntry) throw new Error("credentials signin not enabled for user");
@@ -61,15 +60,16 @@ export async function resetPassword(id: string, data: FormData) {
 				body: {
 					userId: id,
 				},
-				headers: await headers(),
+				headers,
 			});
 		}
-		await db
-			.update(account)
-			.set({
-				password: await hashPassword(newPassword),
-			})
-			.where(where);
+		await auth.api.setUserPassword({
+			body: {
+				newPassword,
+				userId: id,
+			},
+			headers,
+		});
 	} catch (e) {
 		return { error: (e as Error).message };
 	}

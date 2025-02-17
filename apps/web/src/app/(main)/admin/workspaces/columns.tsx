@@ -1,4 +1,14 @@
 "use client";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -45,10 +55,35 @@ export const columns: ColumnDef<SelectWorkspace & { nodes: string[] }>[] = [
 		cell: ({ row: { original: workspace } }) => {
 			const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
 			const [nodeDialogOpen, setNodeDialogOpen] = useState(false);
+			const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 			return (
 				<>
 					<UpdateDialog workspace={workspace} open={updateDialogOpen} setOpen={setUpdateDialogOpen} />
 					<NodeDialog workspace={workspace} open={nodeDialogOpen} setOpen={setNodeDialogOpen} />
+					<AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>Delete Workspace</AlertDialogTitle>
+								<AlertDialogDescription>
+									Are you sure you want to delete {workspace.friendlyName}?
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel>Nevermind</AlertDialogCancel>
+								<AlertDialogAction
+									onClick={() =>
+										toast.promise(() => deleteWorkspace(workspace), {
+											loading: "Deleting workspace...",
+											success: "Workspace deleted",
+											error: "Failed to delete workspace",
+										})
+									}
+								>
+									Yes, delete
+								</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="ghost" className="h-8 w-8 p-0">
@@ -60,17 +95,7 @@ export const columns: ColumnDef<SelectWorkspace & { nodes: string[] }>[] = [
 							<DropdownMenuLabel>Actions</DropdownMenuLabel>
 							<DropdownMenuItem onClick={() => setUpdateDialogOpen(true)}>Edit metadata</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => setNodeDialogOpen(true)}>Edit nodes</DropdownMenuItem>
-							<DropdownMenuItem
-								onClick={() =>
-									toast.promise(() => deleteWorkspace(workspace), {
-										loading: "Deleting workspace...",
-										success: "Workspace deleted",
-										error: "Failed to delete workspace",
-									})
-								}
-							>
-								Delete from database
-							</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => setDeleteDialogOpen(true)}>Delete from database</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</>

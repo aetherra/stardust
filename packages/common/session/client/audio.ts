@@ -59,6 +59,12 @@ export default class WebAudio {
 		this.audio.play();
 	}
 
+	stop() {
+		if (!this.connected) return;
+		this.audio?.pause();
+		this.socket?.close();
+	}
+
 	wsConnect() {
 		if (this.socket) this.socket.close();
 
