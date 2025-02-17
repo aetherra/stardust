@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import { parseArgs } from "node:util";
 import type { BunFile } from "bun";
 
@@ -25,13 +26,13 @@ export default async function getConfigFile() {
 		strict: true,
 		allowPositionals: true,
 	});
-
+	const repoRoot = execSync("git rev-parse --show-toplevel", { encoding: "utf-8" }).trim();
 	const configLocations = [
 		cmdConfig,
-		`${process.cwd()}/config.yaml`,
-		`${process.cwd()}/config.yml`,
-		`${Bun.env.XDG_CONFIG_HOME || Bun.env.HOME}/.config/stardustd.yaml`,
-		`${Bun.env.XDG_CONFIG_HOME || Bun.env.HOME}/.config/stardustd.yml`,
+		`${repoRoot}/daemon-config.yaml`,
+		`${repoRoot}/daemon-config.yml`,
+		`${Bun.env.HOME}/.config/stardustd.yaml`,
+		`${Bun.env.HOME}/.config/stardustd.yml`,
 	];
 
 	const file = await iteratePaths(configLocations);

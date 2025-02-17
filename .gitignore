@@ -42,3 +42,7 @@ std*.log
 # Sensitive configuration
 config.yml
 config.yaml
+app-config.yml
+app-config.yaml
+daemon-config.yml
+daemon-config.yaml

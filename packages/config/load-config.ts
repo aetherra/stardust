@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { readFileSync } from "node:fs";
 import { parseArgs } from "node:util";
@@ -13,10 +14,11 @@ const {
 	strict: true,
 	allowPositionals: true,
 });
+const repoRoot = execSync("git rev-parse --show-toplevel", { encoding: "utf-8" }).trim();
 const configLocations = [
 	cmdConfig,
-	`${process.cwd()}/config.yaml`,
-	`${process.cwd()}/config.yml`,
+	`${repoRoot}/app-config.yaml`,
+	`${repoRoot}/app-config.yml`,
 	`${process.env.HOME}/.config/stardust.yaml`,
 	`${process.env.HOME}/.config/stardust.yml`,
 ];
