@@ -39,11 +39,11 @@ prompts() {
     install_path=${install_path:-/opt/stardust}
     systemd=${systemd:-Y}
     install_st $install_path
-    if [[ $systemd == "Y" ]]; then
+    if [ $systemd == "Y" ]; then
         install_service
         read -p "✨ Start the Stardust service now? [Y/n]: " now
         now=${now:-Y}
-        if [[ $now == "Y"]]; then
+        if [ $now == "Y"]; then
             systemctl enable stardustd --now
     else
         touch $install_path/apps/daemon/NOSERVICE
