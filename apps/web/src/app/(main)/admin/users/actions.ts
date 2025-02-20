@@ -2,6 +2,7 @@
 import { check } from "@/lib/admin-check";
 import { deleteSession } from "@/lib/session/manage";
 import auth from "@stardust/common/auth";
+import { fromEmail } from "@stardust/common/auth/gravatar";
 import db, { account, session, user } from "@stardust/db";
 import { and, eq } from "@stardust/db/utils";
 import { revalidatePath } from "next/cache";
@@ -82,8 +83,11 @@ export async function updateUser(id: string, data: FormData) {
 		if (!dbEntry) throw new Error("no user found");
 		const name = data.get("name")?.toString();
 		const email = data.get("email")?.toString();
-		const image = data.get("image")?.toString();
+		let image = data.get("image")?.toString();
 		const role = data.get("role")?.toString();
+		if (image === "gravatar") {
+			image = fromEmail(email || dbEntry.email);
+		}
 		const res = await db
 			.update(user)
 			.set({

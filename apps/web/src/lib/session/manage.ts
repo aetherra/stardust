@@ -14,7 +14,8 @@ export async function manageSession({
 	const session = await getSession(id, admin, dbClient);
 	if (!session) throw new Error("session not found");
 	const node = getNode(session);
-	await node.sessions({ id: session.id }).patch({ action });
+	const res = await node.sessions({ id: session.id }).patch({ action });
+	if (res.error || !res.data.success) throw res.error || new Error("session update failed");
 	if (revalidate) revalidatePath(revalidate);
 }
 

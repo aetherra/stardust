@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { SubmitButton } from "@/components/submit-button";
 import Turnstile from "@/components/turnstile";
 import { Alert, AlertTitle } from "@/components/ui/alert";
@@ -7,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import turnstileCheck from "@/lib/turnstile";
 import auth from "@stardust/common/auth";
+import { fromEmail } from "@stardust/common/auth/gravatar";
 import { getConfig } from "@stardust/config";
 import db, { user } from "@stardust/db";
 import { eq } from "@stardust/db/utils";
@@ -75,9 +75,7 @@ export default async function Page(props: {
 								email,
 								name,
 								password,
-								image: `https://gravatar.com/avatar/${createHash("sha256")
-									.update(email || "")
-									.digest("hex")}?d=404&s=128`,
+								image: fromEmail(email),
 							},
 						});
 						if (usersLength === 0) await db.update(user).set({ role: "admin" }).where(eq(user.email, email));

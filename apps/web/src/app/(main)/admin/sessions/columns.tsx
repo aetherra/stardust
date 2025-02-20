@@ -16,7 +16,8 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
 import { massDelete, massManage } from "./actions";
-export const columns: ColumnDef<SelectSessionRelation>[] = [
+
+export const columns: ColumnDef<SelectSessionRelation & { status: string }>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -38,7 +39,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 	},
 	{
 		accessorKey: "id",
-		header: "Container ID",
+		header: "ID",
 		cell: ({ row }) => row.original.id.slice(0, 7),
 	},
 	{
@@ -59,6 +60,10 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 		cell: ({ row }) => new Date(row.original.expiresAt).toLocaleString(),
 	},
 	{
+		accessorKey: "status",
+		header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+	},
+	{
 		id: "actions",
 		header: ({ table }) =>
 			table.getFilteredSelectedRowModel().rows.length > 0 ? (
@@ -77,7 +82,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 								toast.promise(() => massManage(table.getFilteredSelectedRowModel().rows, "pause"), {
 									loading: "Pausing containers...",
 									success: "Sessions paused",
-									error: (error) => `Failed to pause container: ${error}`,
+									error: "Failed to pause a container",
 								})
 							}
 						>
@@ -89,7 +94,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 								toast.promise(() => massManage(table.getFilteredSelectedRowModel().rows, "stop"), {
 									loading: "Stopping containers...",
 									success: "Sessions stopped",
-									error: (error) => `Failed to stop container: ${error}`,
+									error: "Failed to stop a container",
 								})
 							}
 						>
@@ -101,7 +106,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 								toast.promise(() => massDelete(table.getFilteredSelectedRowModel().rows), {
 									loading: "Deleting containers...",
 									success: "Sessions deleted",
-									error: (error) => `Failed to delete container: ${error}`,
+									error: "Failed to delete a session",
 								})
 							}
 						>
@@ -130,7 +135,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 								{
 									loading: "Pausing container...",
 									success: "Session paused",
-									error: (error) => `Failed to pause container: ${error}`,
+									error: "Failed to pause container",
 								},
 							)
 						}
@@ -144,7 +149,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 								{
 									loading: "Stopping container...",
 									success: "Session stopped",
-									error: (error) => `Failed to stop container: ${error}`,
+									error: "Failed to stop container",
 								},
 							)
 						}
@@ -156,7 +161,7 @@ export const columns: ColumnDef<SelectSessionRelation>[] = [
 							toast.promise(() => deleteSession({ id: session.id, admin: true, revalidate: "/admin/sessions" }), {
 								loading: "Deleting session...",
 								success: "Session deleted",
-								error: (error) => `Failed to delete container: ${error}`,
+								error: "Failed to delete container",
 							})
 						}
 					>

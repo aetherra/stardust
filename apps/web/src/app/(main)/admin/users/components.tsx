@@ -89,7 +89,13 @@ export function UpdateUserDialog({ user, open, setOpen }: Props) {
 					<Label htmlFor="email">Email</Label>
 					<Input id="email" type="email" name="email" defaultValue={user.email} required />
 					<Label htmlFor="image">Image</Label>
-					<Input id="image" type="url" name="image" defaultValue={user.image || undefined} />
+					<Input
+						id="image"
+						type="text"
+						name="image"
+						defaultValue={user.image || undefined}
+						placeholder="type `gravatar` to set based on user email"
+					/>
 					<Label htmlFor="role">Role</Label>
 					<Select required name="role" defaultValue={user.role}>
 						<SelectTrigger id="role">

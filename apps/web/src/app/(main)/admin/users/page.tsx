@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import auth from "@stardust/common/auth";
+import { fromEmail } from "@stardust/common/auth/gravatar";
 import db from "@stardust/db";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
@@ -48,13 +49,18 @@ export default async function AdminPage() {
 								"use server";
 								const email = data.get("email")?.toString();
 								const name = data.get("name")?.toString();
+								let image = data.get("image")?.toString();
 								const password = data.get("password")?.toString();
 								const role = data.get("role")?.toString() || "user";
 								if (!email || !name || !password) throw new Error("Email, password, and name are required");
+								if (image === "gravatar") {
+									image = fromEmail(email);
+								}
 								await auth.api.createUser({
 									body: {
 										email,
 										name,
+										image,
 										password,
 										role,
 									},
@@ -65,11 +71,13 @@ export default async function AdminPage() {
 							className="flex flex-col gap-2 w-full"
 						>
 							<Label htmlFor="name">Name</Label>
-							<Input id="name" type="text" name="name" placeholder="Name" required />
+							<Input id="name" type="text" name="name" required />
 							<Label htmlFor="email">Email</Label>
-							<Input id="email" type="email" name="email" placeholder="Email" required />
+							<Input id="email" type="email" name="email" required />
+							<Label htmlFor="image">Image</Label>
+							<Input id="image" type="text" name="image" placeholder="type `gravatar` to set based on user email" />
 							<Label htmlFor="password">Password</Label>
-							<Input minLength={8} id="password" type="password" name="password" placeholder="Password" required />
+							<Input minLength={8} id="password" type="password" name="password" required />
 							<Label htmlFor="role">Role</Label>
 							<Select required name="role" defaultValue="user">
 								<SelectTrigger id="role">
