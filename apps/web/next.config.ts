@@ -23,7 +23,6 @@ const nextConfig: NextConfig = {
 		webpackBuildWorker: true,
 		reactCompiler: true,
 		authInterrupts: true,
-		newDevOverlay: true,
 		nodeMiddleware: true,
 		serverActions: {
 			allowedOrigins: ["localhost:3000", "*.use.devtunnels.ms"],
