@@ -239,8 +239,8 @@ importers:
         specifier: workspace:*
         version: link:../db
       better-auth:
-        specifier: ^1.1.18
-        version: 1.1.18
+        specifier: ^1.2.4
+        version: 1.2.4(typescript@5.5.4)
       better-call:
         specifier: ^0.3.3
         version: 0.3.3
@@ -293,7 +293,7 @@ importers:
         version: link:../config
       drizzle-orm:
         specifier: ^0.38.2
-        version: 0.38.4(@types/react@18.3.1)(bun-types@1.2.2)(kysely@0.27.5)(postgres@3.4.5)
+        version: 0.38.4(@types/react@18.3.1)(bun-types@1.2.2)(kysely@0.27.6)(postgres@3.4.5)
       postgres:
         specifier: ^3.4.5
         version: 3.4.5
@@ -440,11 +440,11 @@ packages:
   '@better-auth/utils@0.2.3':
     resolution: {integrity: sha512-Ap1GaSmo6JYhJhxJOpUB0HobkKPTNzfta+bLV89HfpyCAHN7p8ntCrmNFHNAVD0F6v0mywFVEUg1FUhNCc81Rw==}
 
-  '@better-fetch/fetch@1.1.12':
-    resolution: {integrity: sha512-B3bfloI/2UBQWIATRN6qmlORrvx3Mp0kkNjmXLv0b+DtbtR+pP4/I5kQA/rDUv+OReLywCCldf6co4LdDmh8JA==}
-
   '@better-fetch/fetch@1.1.13':
     resolution: {integrity: sha512-C1NtueyCx6tqVITOoxScEEQyFn0R0dpqQBHsuDBhRACa+sl7rY9oirCNpRWNnYu7FmVwTAY9BHbeRdvqSJI5Og==}
+
+  '@better-fetch/fetch@1.1.17':
+    resolution: {integrity: sha512-MQonMalbmEshb+amuLtCkVjYliyyWrYXZkiMnHLgFjNEBsNBbZSY3+lYsFK1/VxePSupVkUW6xinqhqB3uHE1g==}
 
   '@biomejs/biome@1.9.4':
     resolution: {integrity: sha512-1rkd7G70+o9KkTn5KLmDYXihGoTaIGO9PIIN2ZB7UJxFrWw04CZHPYiMRjYsaDvVV7hP1dYNRLxSANLaBFGpog==}
@@ -1824,6 +1824,9 @@ packages:
   '@types/node@20.17.19':
     resolution: {integrity: sha512-LEwC7o1ifqg/6r2gn9Dns0f1rhK+fPFDoMiceTJ6kWmVk6bgXBI/9IOWfVan4WiAavK9pIVWdX0/e3J+eEUh5A==}
 
+  '@types/node@20.17.25':
+    resolution: {integrity: sha512-bT+r2haIlplJUYtlZrEanFHdPIZTeiMeh/fSOEbOOfWf9uTn+lg8g0KU6Q3iMgjd9FLuuMAgfCNSkjUbxL6E3Q==}
+
   '@types/novnc__novnc@1.5.0':
     resolution: {integrity: sha512-9DrDJK1hUT6Cbp4t03IsU/DsR6ndnIrDgZVrzITvspldHQ7n81F3wUDfq89zmPM3wg4GErH11IQa0QuTgLMf+w==}
 
@@ -1902,6 +1905,11 @@ packages:
 
   acorn@8.14.0:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  acorn@8.14.1:
+    resolution: {integrity: sha512-OvQ/2pUDKmgfCg++xsTX1wGxfTaszcHVcTctW4UJB4hibJx2HXxxO5UmVgyjMa+ZDsiaf5wWLXYpRWMmBI0QHg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -1988,11 +1996,14 @@ packages:
   bcrypt-pbkdf@1.0.2:
     resolution: {integrity: sha512-qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==}
 
-  better-auth@1.1.18:
-    resolution: {integrity: sha512-cU/u7/qlSiR/OO1O53gh/bHvxyB53DE+5ZOw9DtpDI8IyIQUBqDnQ06MOwNtj8JwjXHcMFNSNd5u/W8DED0bJw==}
+  better-auth@1.2.4:
+    resolution: {integrity: sha512-/ZK2jbUjm8JwdeCLFrUWUBmexPyI9PkaLVXWLWtN60sMDHTY8B5G72wcHglo1QMFBaw4G0qFkP5ayl9k6XfDaA==}
 
   better-call@0.3.3:
     resolution: {integrity: sha512-N4lDVm0NGmFfDJ0XMQ4O83Zm/3dPlvIQdxvwvgSLSkjFX5PM4GUYSVAuxNzXN27QZMHDkrJTWUqxBrm4tPC3eA==}
+
+  better-call@1.0.5:
+    resolution: {integrity: sha512-rAT73GWIJ8LbSP8Y3BdJnY1hwAiQPRRmUJ4R3YVhcVGS927l3eTXG5o5TD6Bv6je6ygjdx6iVq3/BU49eGUCHg==}
 
   big.js@5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
@@ -2669,8 +2680,8 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
-  kysely@0.27.5:
-    resolution: {integrity: sha512-s7hZHcQeSNKpzCkHRm8yA+0JPLjncSWnjb+2TIElwS2JAqYr+Kv3Ess+9KFfJS0C1xcQ1i9NkNHpWwCYpHMWsA==}
+  kysely@0.27.6:
+    resolution: {integrity: sha512-FIyV/64EkKhJmjgC0g2hygpBv5RNWVPyNCqSAD7eTCv6eFWNIi4PN1UvdSJGicN/o35bnevgis4Y0UDC0qi8jQ==}
     engines: {node: '>=14.0.0'}
 
   lilconfig@3.1.3:
@@ -3144,6 +3155,9 @@ packages:
   serialize-javascript@6.0.2:
     resolution: {integrity: sha512-Saa1xPByTTq2gdeFZYLLo+RFE35NHZkAbqZeWNd3BpzppeVisAqpDjcp8dyf6uIvEqJRd46jemmyA4iFIeVk8g==}
 
+  set-cookie-parser@2.7.1:
+    resolution: {integrity: sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==}
+
   sh-syntax@0.4.2:
     resolution: {integrity: sha512-/l2UZ5fhGZLVZa16XQM9/Vq/hezGGbdHeVEA01uWjOL1+7Ek/gt6FquW0iKKws4a9AYPYvlz6RyVvjh3JxOteg==}
     engines: {node: '>=16.0.0'}
@@ -3302,8 +3316,8 @@ packages:
     resolution: {integrity: sha512-ujeqbceABgwMZxEJnk2HDY2DlnUZ+9oEcb1KzTVfYHio0UE6dG71n60d8D2I4qNvleWrrXpmjpt7vZeF1LnMZQ==}
     engines: {node: '>=6'}
 
-  terser-webpack-plugin@5.3.11:
-    resolution: {integrity: sha512-RVCsMfuD0+cTt3EwX8hSl2Ks56EbFHWmhluwcqoPKtBnfjiT6olaq7PRIRfhyU8nnC2MrnDrBLfrD/RGE+cVXQ==}
+  terser-webpack-plugin@5.3.14:
+    resolution: {integrity: sha512-vkZjpUjb6OMS7dhV+tILUW6BhpDR7P2L/aQSAv+Uwk+m8KATX9EccViHTJR2qDtACKPIYndLGCyl3FMo+r2LMw==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       '@swc/core': '*'
@@ -3461,6 +3475,14 @@ packages:
   uuid@10.0.0:
     resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
     hasBin: true
+
+  valibot@1.0.0-beta.15:
+    resolution: {integrity: sha512-BKy8XosZkDHWmYC+cJG74LBzP++Gfntwi33pP3D3RKztz2XV9jmFWnkOi21GoqARP8wAWARwhV6eTr1JcWzjGw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   watchpack@2.4.2:
     resolution: {integrity: sha512-TnbFSbcOCcDgjZ4piURLCbJ3nJhznVh9kw6F6iokjiFPl8ONxe9A6nMDVXDiNbrSfLILs6vB07F7wLBrwPYzJw==}
@@ -3723,9 +3745,9 @@ snapshots:
     dependencies:
       uncrypto: 0.1.3
 
-  '@better-fetch/fetch@1.1.12': {}
-
   '@better-fetch/fetch@1.1.13': {}
+
+  '@better-fetch/fetch@1.1.17': {}
 
   '@biomejs/biome@1.9.4':
     optionalDependencies:
@@ -4877,6 +4899,10 @@ snapshots:
     dependencies:
       undici-types: 6.19.8
 
+  '@types/node@20.17.25':
+    dependencies:
+      undici-types: 6.19.8
+
   '@types/novnc__novnc@1.5.0': {}
 
   '@types/prop-types@15.7.14': {}
@@ -4989,6 +5015,8 @@ snapshots:
 
   acorn@8.14.0: {}
 
+  acorn@8.14.1: {}
+
   agent-base@7.1.3: {}
 
   ajv-formats@2.1.1(ajv@8.17.1):
@@ -5068,20 +5096,23 @@ snapshots:
     dependencies:
       tweetnacl: 0.14.5
 
-  better-auth@1.1.18:
+  better-auth@1.2.4(typescript@5.5.4):
     dependencies:
       '@better-auth/utils': 0.2.3
-      '@better-fetch/fetch': 1.1.12
+      '@better-fetch/fetch': 1.1.17
       '@noble/ciphers': 0.6.0
       '@noble/hashes': 1.7.1
       '@simplewebauthn/browser': 13.1.0
       '@simplewebauthn/server': 13.1.1
-      better-call: 0.3.3
+      better-call: 1.0.5
       defu: 6.1.4
       jose: 5.10.0
-      kysely: 0.27.5
+      kysely: 0.27.6
       nanostores: 0.11.4
+      valibot: 1.0.0-beta.15(typescript@5.5.4)
       zod: 3.24.2
+    transitivePeerDependencies:
+      - typescript
 
   better-call@0.3.3:
     dependencies:
@@ -5089,6 +5120,13 @@ snapshots:
       rou3: 0.5.1
       uncrypto: 0.1.3
       zod: 3.24.2
+
+  better-call@1.0.5:
+    dependencies:
+      '@better-fetch/fetch': 1.1.17
+      rou3: 0.5.1
+      set-cookie-parser: 2.7.1
+      uncrypto: 0.1.3
 
   big.js@5.2.2: {}
 
@@ -5309,11 +5347,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.38.4(@types/react@18.3.1)(bun-types@1.2.2)(kysely@0.27.5)(postgres@3.4.5):
+  drizzle-orm@0.38.4(@types/react@18.3.1)(bun-types@1.2.2)(kysely@0.27.6)(postgres@3.4.5):
     optionalDependencies:
       '@types/react': 18.3.1
       bun-types: 1.2.2
-      kysely: 0.27.5
+      kysely: 0.27.6
       postgres: 3.4.5
 
   duplexer@0.1.2: {}
@@ -5663,7 +5701,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.17.19
+      '@types/node': 20.17.25
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -5695,7 +5733,7 @@ snapshots:
 
   kleur@4.1.5: {}
 
-  kysely@0.27.5: {}
+  kysely@0.27.6: {}
 
   lilconfig@3.1.3: {}
 
@@ -6122,6 +6160,8 @@ snapshots:
     dependencies:
       randombytes: 2.1.0
 
+  set-cookie-parser@2.7.1: {}
+
   sh-syntax@0.4.2:
     dependencies:
       tslib: 2.8.1
@@ -6350,7 +6390,7 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
-  terser-webpack-plugin@5.3.11(webpack@5.98.0):
+  terser-webpack-plugin@5.3.14(webpack@5.98.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -6362,7 +6402,7 @@ snapshots:
   terser@5.39.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6
-      acorn: 8.14.0
+      acorn: 8.14.1
       commander: 2.20.3
       source-map-support: 0.5.21
 
@@ -6487,6 +6527,10 @@ snapshots:
 
   uuid@10.0.0: {}
 
+  valibot@1.0.0-beta.15(typescript@5.5.4):
+    optionalDependencies:
+      typescript: 5.5.4
+
   watchpack@2.4.2:
     dependencies:
       glob-to-regexp: 0.4.1
@@ -6526,7 +6570,7 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@webassemblyjs/wasm-edit': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
-      acorn: 8.14.0
+      acorn: 8.14.1
       browserslist: 4.24.4
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.18.1
@@ -6541,7 +6585,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.11(webpack@5.98.0)
+      terser-webpack-plugin: 5.3.14(webpack@5.98.0)
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     transitivePeerDependencies:
