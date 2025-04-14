@@ -20,7 +20,6 @@ const nextConfig: NextConfig = {
 	},
 	experimental: {
 		typedRoutes: true,
-		webpackBuildWorker: true,
 		reactCompiler: true,
 		authInterrupts: true,
 		nodeMiddleware: true,

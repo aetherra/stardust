@@ -22,7 +22,7 @@ export default function Page() {
 					const revokeOtherSessions = Boolean(data.get("revoke-others"));
 					if (!oldPassword || !newPassword || !confirmPassword) throw new Error("All fields are required");
 					if (newPassword !== confirmPassword) throw new Error("Passwords do not match");
-					return authClient.changePassword(
+					authClient.changePassword(
 						{
 							revokeOtherSessions,
 							newPassword,

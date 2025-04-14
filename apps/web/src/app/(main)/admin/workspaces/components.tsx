@@ -33,7 +33,7 @@ export function UpdateDialog({ workspace, open, setOpen }: Props) {
 				</DialogHeader>
 				<form
 					action={(data) =>
-						toast.promise(() => updateWorkspace(data), {
+						void toast.promise(() => updateWorkspace(data), {
 							success: "Workspace updated successfully",
 							error: "Failed to update workspace",
 							finally: () => setOpen(false),

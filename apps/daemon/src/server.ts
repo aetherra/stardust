@@ -16,7 +16,8 @@ const config = getConfig();
 if (typeof config.service !== "boolean" || config.service === true) {
 	checkSystemService();
 }
-const srv = Bun.serve<{ socket: Socket; path: string }>({
+// biome-ignore lint: no
+const srv = Bun.serve<{ socket: Socket; path: string }, {}>({
 	async fetch(req, server) {
 		const path = new URL(req.url).pathname;
 		const portMap: Record<string, number> = {

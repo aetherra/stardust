@@ -4,7 +4,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import authClient from "@/lib/auth-client";
 import type { SelectUser } from "@stardust/db";
 import { toast } from "sonner";
 import { resetPassword, updateUser } from "./actions";
@@ -23,7 +22,7 @@ export function ResetPasswordDialog({ user, open, setOpen }: Props) {
 				</DialogHeader>
 				<form
 					action={(data) =>
-						toast.promise(
+						void toast.promise(
 							async () => {
 								const res = await resetPassword(user.id, data);
 								if (res?.error) throw new Error(res.error);
@@ -67,7 +66,7 @@ export function UpdateUserDialog({ user, open, setOpen }: Props) {
 				</DialogHeader>
 				<form
 					action={(data) =>
-						toast.promise(
+						void toast.promise(
 							async () => {
 								const res = await updateUser(user.id, data);
 								if (res.error) {

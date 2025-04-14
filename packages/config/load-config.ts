@@ -11,12 +11,12 @@ const {
 			type: "string",
 		},
 	},
-	strict: true,
+	strict: false,
 	allowPositionals: true,
 });
 const repoRoot = execSync("git rev-parse --show-toplevel", { encoding: "utf-8" }).trim();
 const configLocations = [
-	cmdConfig,
+	cmdConfig as string,
 	`${repoRoot}/app-config.yaml`,
 	`${repoRoot}/app-config.yml`,
 	`${process.env.HOME}/.config/stardust.yaml`,
