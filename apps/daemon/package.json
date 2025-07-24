@@ -1,0 +1,33 @@
+{
+	"name": "daemon",
+	"type": "module",
+	"version": "1.0.0",
+	"scripts": {
+		"start": "./stardustd",
+		"build:debug": "bun build src/server.ts --compile --sourcemap --outfile stardustd",
+		"build": "bun build src/server.ts --compile --minify --outfile stardustd",
+		"dev": "bun run --watch src/server.ts",
+		"check-types": "tsc --noEmit",
+		"config-schema": "ts-json-schema-generator --tsconfig ./tsconfig.json --path ./src/lib/config/types.d.ts --type Config > ./schema.json",
+		"postinstall": "pnpm config-schema"
+	},
+	"imports": {
+		"~/*": "./src/*"
+	},
+	"dependencies": {
+		"ajv": "^8.17.1",
+		"dockerode": "^4.0.4",
+		"elysia": "latest",
+		"js-yaml": "^4.1.0",
+		"@elysiajs/swagger": "^1.2.0"
+	},
+	"devDependencies": {
+		"@stardust/tsconfig": "workspace:*",
+		"@stardust/theme": "workspace:*",
+		"@types/dockerode": "^3.3.32",
+		"@types/js-yaml": "^4.0.9",
+		"bun-types": "latest",
+		"ts-json-schema-generator": "^2.3.0"
+	},
+	"module": "src/index.ts"
+}

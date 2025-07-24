@@ -1,0 +1,24 @@
+{
+	"name": "@stardust/config",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"scripts": {
+		"check-types": "tsc --noEmit",
+		"config-schema": "ts-json-schema-generator --tsconfig ./tsconfig.json --path ./config.d.ts --type Config > ./schema.json",
+		"postinstall": "pnpm config-schema"
+	},
+	"devDependencies": {
+		"@stardust/tsconfig": "workspace:*",
+		"@types/js-yaml": "^4.0.9",
+		"@types/node": "^20",
+		"ts-json-schema-generator": "^2.3.0"
+	},
+	"dependencies": {
+		"ajv": "^8.17.1",
+		"js-yaml": "^4.1.0"
+	}
+}

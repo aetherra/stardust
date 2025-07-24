@@ -1,0 +1,27 @@
+{
+	"name": "@stardust/common",
+	"type": "module",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"check-types": "tsc --noEmit"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@elysiajs/eden": "^1.2.0",
+		"@stardust/config": "workspace:*",
+		"@stardust/db": "workspace:*",
+		"better-auth": "^1.2.4",
+		"better-call": "^0.3.3",
+		"dockerode": "^4.0.2",
+		"http-proxy-middleware": "^3.0.3"
+	},
+	"devDependencies": {
+		"@stardust/tsconfig": "workspace:*",
+		"@types/dockerode": "^3.3.32",
+		"daemon": "workspace:*",
+		"elysia": "latest"
+	}
+}

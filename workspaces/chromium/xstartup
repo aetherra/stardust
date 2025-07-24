@@ -1,0 +1,14 @@
+#!/bin/bash
+xrdb $HOME/.Xresources
+export DISPLAY=":1"
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVNC-0/workspace0/last-image -s /opt/stardust/wallpaper.png
+startxfce4 &
+sleep 1
+echo "while :
+do
+chromium --no-sandbox --disable-dev-shm-usage --start-maximized --test-type --restore-last-session
+window_ids=$(wmctrl -l | cut -f1 -d " ")
+wmctrl -i -r $window_id -b add,fullscreen
+sleep 2
+done
+" | bash

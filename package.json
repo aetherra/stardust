@@ -1,0 +1,28 @@
+{
+	"name": "stardust",
+	"private": true,
+	"scripts": {
+		"build": "turbo build",
+		"dev": "turbo dev",
+		"check-types": "turbo check-types",
+		"check": "biome check . --write",
+		"add-admin": "pnpm --dir apps/web run add-admin",
+		"db:seed": "pnpm --dir packages/db run seed",
+		"workspaces:build": "pnpm --dir workspaces run build",
+		"workspaces:format": "prettier --write \"./workspaces/**/*.sh\" \"./workspaces/**/Dockerfile*\"  \"./workspaces/**/xstartup\""
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9",
+		"@types/bun": "^1.1.15",
+		"@types/node": "^20",
+		"prettier": "^3.4.2",
+		"prettier-plugin-sh": "^0.14.0",
+		"tsx": "^4.19.2",
+		"turbo": "^2.3.0",
+		"typescript": "5.5.4"
+	},
+	"packageManager": "pnpm@9.0.0",
+	"engines": {
+		"node": ">=18"
+	}
+}

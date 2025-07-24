@@ -1,0 +1,12 @@
+#!/bin/bash
+xrdb $HOME/.Xresources
+export DISPLAY=":1"
+startxfce4 &
+sleep 1
+sudo service dbus start
+echo "while :
+do
+/home/stardust/.local/bin/zen --no-sandbox
+sleep 2
+done
+" | bash

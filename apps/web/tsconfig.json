@@ -1,0 +1,19 @@
+{
+	"extends": "@stardust/tsconfig/base.json",
+	"compilerOptions": {
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"jsx": "preserve",
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"paths": {
+			"@/*": ["./src/*"],
+			"~/*": ["../daemon/src/*"]
+		}
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/types/**/*.d.ts"],
+	"exclude": ["node_modules"]
+}

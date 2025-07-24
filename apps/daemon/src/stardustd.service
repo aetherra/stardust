@@ -1,0 +1,15 @@
+[Unit]
+Description=Stardust Daemon
+After=docker.service
+
+[Service]
+WorkingDirectory=/opt/stardust/apps/daemon/
+ExecStart=stardustd
+Restart=on-failure
+RestartSec=5
+
+# Change if you want
+User=root
+
+[Install]
+WantedBy=multi-user.target
