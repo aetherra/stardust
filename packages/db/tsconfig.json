@@ -1,8 +1,0 @@
-{
-	"extends": "@stardust/tsconfig/base.json",
-	"compilerOptions": {
-		"module": "Preserve"
-	},
-	"exclude": ["node_modules"],
-	"include": ["./**/*.ts"]
-}
