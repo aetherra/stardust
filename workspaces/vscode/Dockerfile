@@ -1,5 +1,5 @@
 # broken currently
-FROM ghcr.io/spaceness/debian-base AS base
+FROM ghcr.io/aetherra/debian-base AS base
 USER root
 COPY ./vscode/install.sh /opt/stardust/scripts/vscode-install.sh
 USER stardust

@@ -50,7 +50,7 @@ prompts() {
 }
 
 main() {
-    echo "✨ Welcome to Stardust by spaceness"
+    echo "✨ Welcome to Stardust by aetherra"
     root_check
     darwin_check
     prompts

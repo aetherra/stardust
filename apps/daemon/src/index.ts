@@ -14,7 +14,7 @@ export const app = new Elysia()
 	.get("/", async (c) => {
 		return {
 			message:
-				"✨ Stardust daemon by spaceness. \nSource tree: https://github.com/spaceness/stardust/tree/rewrite/apps/daemon",
+				"✨ Stardust daemon by aetherra. \nSource tree: https://github.com/aetherra/stardust/tree/rewrite/apps/daemon",
 			success: true,
 			authenticated: (await authCheck(c))?.success !== false,
 		};
@@ -33,7 +33,9 @@ export const app = new Elysia()
 		mem: (((os.totalmem() - os.freemem()) / os.totalmem()) * 100).toFixed(2),
 		os: `${os.type()} ${os.release()}`,
 		version: pkgJson.version,
-		sessions: (await docker.listContainers()).filter((s) => s.HostConfig.NetworkMode === config.docker.network).length,
+		sessions: (await docker.listContainers()).filter(
+			(s) => s.HostConfig.NetworkMode === config.docker.network,
+		).length,
 	}))
 	.use(sessionHandler)
 	.use(workspaceHandler)

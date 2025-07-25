@@ -1,4 +1,4 @@
-FROM ghcr.io/spaceness/debian-base AS base
+FROM ghcr.io/aetherra/debian-base AS base
 RUN sudo apt-get update \
   && sudo apt-get install --no-install-recommends -y firefox-esr
 USER stardust

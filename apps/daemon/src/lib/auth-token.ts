@@ -18,7 +18,7 @@ export default async function generateToken() {
 	} satisfies Config);
 	writer.write(`${newConfig}\n`);
 	writer.write(
-		"# yaml-language-server: $schema=https://raw.githubusercontent.com/spaceness/stardust/refs/heads/rewrite/apps/daemon/schema.json",
+		"# yaml-language-server: $schema=https://raw.githubusercontent.com/aetherra/stardust/refs/heads/rewrite/apps/daemon/schema.json",
 	);
 	writer.end();
 	console.log("✨ Stardust: Token generated: %s", token);

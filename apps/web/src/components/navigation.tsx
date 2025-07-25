@@ -2,7 +2,13 @@
 import packageJson from "@/../package.json";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -24,10 +30,24 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { SessionSchema } from "@stardust/common/auth";
-import { Book, ComputerIcon, Globe, Info, Key, LogOut, Monitor, Settings, SwatchBook } from "lucide-react";
+import {
+	Book,
+	ComputerIcon,
+	Globe,
+	Info,
+	Key,
+	LogOut,
+	Monitor,
+	Settings,
+	SwatchBook,
+} from "lucide-react";
 import type { Route } from "next";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -67,14 +87,21 @@ export default function Navigation({
 		<nav className="flex h-16 min-w-full items-center justify-between px-4 border-b">
 			<div className="flex items-center gap-2">
 				<StardustIcon className="size-8" />
-				<span className="text-2xl font-bold md:block hidden mr-2">Stardust</span>
+				<span className="text-2xl font-bold md:block hidden mr-2">
+					Stardust
+				</span>
 			</div>
 			<div className="flex justify-end gap-2">
 				<NavigationMenu>
 					<NavigationMenuList>
 						<NavigationMenuItem>
 							<Link href="/" legacyBehavior passHref>
-								<NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname === "/" && "bg-muted")}>
+								<NavigationMenuLink
+									className={cn(
+										navigationMenuTriggerStyle(),
+										pathname === "/" && "bg-muted",
+									)}
+								>
 									<span className="mr-2 flex size-4 items-center justify-center">
 										<ComputerIcon />
 									</span>{" "}
@@ -88,9 +115,15 @@ export default function Navigation({
 									<NavigationMenuItem key={item.href}>
 										<Link href={item.href} legacyBehavior passHref>
 											<NavigationMenuLink
-												className={cn(navigationMenuTriggerStyle(), pathname.startsWith(item.href) && "bg-muted")}
+												className={cn(
+													navigationMenuTriggerStyle(),
+													pathname.startsWith(item.href) && "bg-muted",
+												)}
 											>
-												<span className="mr-2 flex size-4 items-center justify-center">{item.icon}</span> {item.label}
+												<span className="mr-2 flex size-4 items-center justify-center">
+													{item.icon}
+												</span>{" "}
+												{item.label}
 											</NavigationMenuLink>
 										</Link>
 									</NavigationMenuItem>
@@ -108,18 +141,20 @@ export default function Navigation({
 							</DialogTitle>
 						</DialogHeader>
 						<div className="flex flex-col items-start justify-start gap-2 text-foreground text-sm">
-							Stardust is the platform for streaming isolated desktop containers.
+							Stardust is the platform for streaming isolated desktop
+							containers.
 							<section>
 								This version of Stardust is from commit{" "}
 								<a
-									href={`https://github.com/spaceness/stardust/commit/${process.env.GIT_COMMIT}`}
+									href={`https://github.com/aetherra/stardust/commit/${process.env.GIT_COMMIT}`}
 									className="inline font-medium text-primary underline-offset-4 hover:underline"
 									target="_blank"
 									rel="noreferrer noopener"
 								>
 									{process.env.GIT_COMMIT?.slice(0, 7)}
 								</a>
-								, built on {new Date(Number(process.env.BUILD_DATE)).toLocaleString()}
+								, built on{" "}
+								{new Date(Number(process.env.BUILD_DATE)).toLocaleString()}
 							</section>
 							<section>
 								Stardust is licensed under the{" "}
@@ -131,13 +166,17 @@ export default function Navigation({
 								>
 									GNU Affero General Public License v3.0 (AGPL-3.0)
 								</a>
-								. Copyleft 2024 Spaceness.
+								. Copyleft 2024 aetherra.
 							</section>
 							<DialogFooter>
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<Button asChild variant="outline" size="icon">
-											<a href="https://github.com/spaceness/stardust" target="_blank" rel="noreferrer noopener">
+											<a
+												href="https://github.com/aetherra/stardust"
+												target="_blank"
+												rel="noreferrer noopener"
+											>
 												<GitHubIcon className="size-5" />
 											</a>
 										</Button>
@@ -147,7 +186,11 @@ export default function Navigation({
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<Button variant="outline" size="icon" asChild>
-											<a href="https://stardust.spaceness.team/docs" target="_blank" rel="noreferrer noopener">
+											<a
+												href="https://stardust.aetherra.team/docs"
+												target="_blank"
+												rel="noreferrer noopener"
+											>
 												<Book className="size-5" />
 											</a>
 										</Button>
@@ -157,12 +200,16 @@ export default function Navigation({
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<Button variant="outline" size="icon" asChild>
-											<a href="https://spaceness.team/" target="_blank" rel="noreferrer noopener">
+											<a
+												href="https://aetherra.team/"
+												target="_blank"
+												rel="noreferrer noopener"
+											>
 												<Globe className="size-5" />
 											</a>
 										</Button>
 									</TooltipTrigger>
-									<TooltipContent>Spaceness</TooltipContent>
+									<TooltipContent>aetherra</TooltipContent>
 								</Tooltip>
 							</DialogFooter>
 						</div>
@@ -171,8 +218,13 @@ export default function Navigation({
 				<DropdownMenu>
 					<DropdownMenuTrigger>
 						<Avatar>
-							<AvatarImage src={image || ""} alt={name || email || "Profile Picture"} />
-							<AvatarFallback>{name ? name?.charAt(0) + name?.charAt(1) : email?.charAt(0)}</AvatarFallback>
+							<AvatarImage
+								src={image || ""}
+								alt={name || email || "Profile Picture"}
+							/>
+							<AvatarFallback>
+								{name ? name?.charAt(0) + name?.charAt(1) : email?.charAt(0)}
+							</AvatarFallback>
 						</Avatar>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent className="mr-4 mt-4 w-48">
@@ -185,7 +237,9 @@ export default function Navigation({
 									</span>
 								) : null}
 							</span>
-							<p className="text-xs font-light text-muted-foreground">{email}</p>
+							<p className="text-xs font-light text-muted-foreground">
+								{email}
+							</p>
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuSub>
@@ -195,7 +249,10 @@ export default function Navigation({
 							</DropdownMenuSubTrigger>
 							<DropdownMenuPortal>
 								<DropdownMenuSubContent>
-									<DropdownMenuRadioGroup value={currentTheme} onValueChange={setTheme}>
+									<DropdownMenuRadioGroup
+										value={currentTheme}
+										onValueChange={setTheme}
+									>
 										{themes.map((theme) => (
 											<DropdownMenuRadioItem key={theme} value={theme}>
 												{theme.charAt(0).toUpperCase() + theme.slice(1)}

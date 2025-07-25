@@ -3,7 +3,7 @@
 <plist version="1.0">
     <dict>
         <key>Label</key>
-        <string>org.spaceness.stardustd.plist</string>
+        <string>org.aetherra.stardustd.plist</string>
         <key>RunAtLoad</key>
         <false/>
         <key>KeepAlive</key>

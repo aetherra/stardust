@@ -36,7 +36,7 @@ function buildBase() {
 				multiPlatformBuild ? "--platform" : "",
 				multiPlatformBuild ? "linux/amd64,linux/arm64" : "",
 				"--tag",
-				"ghcr.io/spaceness/debian-base",
+				"ghcr.io/aetherra/debian-base",
 			],
 			{ stdio: "inherit", shell: true },
 		);
@@ -44,12 +44,16 @@ function buildBase() {
 			if (code === 0) {
 				resolve(0);
 			} else {
-				console.error(`✨ Stardust: Failed to build debian base with code ${code}`);
+				console.error(
+					`✨ Stardust: Failed to build debian base with code ${code}`,
+				);
 				reject(new Error("Build failed for debian base"));
 			}
 		});
 		baseProcess.on("error", (err) => {
-			console.error(`✨ Stardust: Error while building debian base: ${err.message}`);
+			console.error(
+				`✨ Stardust: Error while building debian base: ${err.message}`,
+			);
 			reject(err);
 		});
 	});
@@ -60,7 +64,9 @@ function buildImage(image) {
 		console.log(`✨ Stardust: Building ${image}...`);
 		console.log(`Arguments: ${argv}`);
 		const multiPlatformBuild = flags.includes("--multi-platform");
-		const platforms = x64Only.includes(image) ? "linux/amd64" : "linux/amd64,linux/arm64";
+		const platforms = x64Only.includes(image)
+			? "linux/amd64"
+			: "linux/amd64,linux/arm64";
 		const process = spawn(
 			"docker",
 			[
@@ -74,7 +80,7 @@ function buildImage(image) {
 				multiPlatformBuild ? "--platform" : "",
 				multiPlatformBuild ? platforms : "",
 				"--tag",
-				`ghcr.io/spaceness/${image}`,
+				`ghcr.io/aetherra/${image}`,
 			],
 			{ stdio: ["inherit", "pipe", "pipe"], shell: true },
 		);
@@ -90,13 +96,17 @@ function buildImage(image) {
 			if (code === 0) {
 				resolve(0);
 			} else {
-				console.error(`✨ Stardust: Failed to build ${image} with code ${code}`);
+				console.error(
+					`✨ Stardust: Failed to build ${image} with code ${code}`,
+				);
 				reject(new Error(`Build failed for ${image}`));
 			}
 		});
 
 		process.on("error", (err) => {
-			console.error(`✨ Stardust: Error while building ${image}: ${err.message}`);
+			console.error(
+				`✨ Stardust: Error while building ${image}: ${err.message}`,
+			);
 			reject(err);
 		});
 	});

@@ -1,4 +1,4 @@
-FROM ghcr.io/spaceness/debian-base AS base
+FROM ghcr.io/aetherra/debian-base AS base
 USER root
 RUN apt-get update && apt-get install --no-install-recommends -y \
   neofetch \

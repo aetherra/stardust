@@ -1,5 +1,5 @@
 FROM debian:bookworm
-LABEL org.opencontainers.image.source=https://github.com/spaceness/stardust
+LABEL org.opencontainers.image.source=https://github.com/aetherra/stardust
 WORKDIR /opt/stardust
 ENV USER=stardust
 ENV PNPM_HOME="/home/stardust/.local/share/pnpm"
