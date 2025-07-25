@@ -1,4 +1,3 @@
-<img alt="Stardust banner" src="media/banner.png">
 <h3 align="center">An open-source <a href="https://kasmweb.com">Kasm Workspaces</a> alternative.<br></h3>
 
 <p align="center">
