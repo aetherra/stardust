@@ -32,12 +32,6 @@ const workspaces = [
 	// 	icon: "https://code.visualstudio.com/assets/apple-touch-icon.png",
 	// },
 ];
-const insertion = await db
-	.insert(workspace)
-	.values(workspaces)
-	.onConflictDoNothing()
-	.returning();
-console.log(
-	`✨Stardust: Seeded ${insertion.map((i) => i.dockerImage).join(", ") || "no images"}`,
-);
+const insertion = await db.insert(workspace).values(workspaces).onConflictDoNothing().returning();
+console.log(`✨Stardust: Seeded ${insertion.map((i) => i.dockerImage).join(", ") || "no images"}`);
 process.exit(0);

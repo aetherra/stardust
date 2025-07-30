@@ -1,8 +1,4 @@
-if (
-	process.argv.includes("--help") ||
-	process.argv.includes("-h") ||
-	process.argv.includes("help")
-) {
+if (process.argv.includes("--help") || process.argv.includes("-h") || process.argv.includes("help")) {
 	console.log(`
 ✨ Stardust daemon by aetherra
 Options

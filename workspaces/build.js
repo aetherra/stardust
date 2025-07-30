@@ -44,16 +44,12 @@ function buildBase() {
 			if (code === 0) {
 				resolve(0);
 			} else {
-				console.error(
-					`✨ Stardust: Failed to build debian base with code ${code}`,
-				);
+				console.error(`✨ Stardust: Failed to build debian base with code ${code}`);
 				reject(new Error("Build failed for debian base"));
 			}
 		});
 		baseProcess.on("error", (err) => {
-			console.error(
-				`✨ Stardust: Error while building debian base: ${err.message}`,
-			);
+			console.error(`✨ Stardust: Error while building debian base: ${err.message}`);
 			reject(err);
 		});
 	});
@@ -64,9 +60,7 @@ function buildImage(image) {
 		console.log(`✨ Stardust: Building ${image}...`);
 		console.log(`Arguments: ${argv}`);
 		const multiPlatformBuild = flags.includes("--multi-platform");
-		const platforms = x64Only.includes(image)
-			? "linux/amd64"
-			: "linux/amd64,linux/arm64";
+		const platforms = x64Only.includes(image) ? "linux/amd64" : "linux/amd64,linux/arm64";
 		const process = spawn(
 			"docker",
 			[
@@ -96,17 +90,13 @@ function buildImage(image) {
 			if (code === 0) {
 				resolve(0);
 			} else {
-				console.error(
-					`✨ Stardust: Failed to build ${image} with code ${code}`,
-				);
+				console.error(`✨ Stardust: Failed to build ${image} with code ${code}`);
 				reject(new Error(`Build failed for ${image}`));
 			}
 		});
 
 		process.on("error", (err) => {
-			console.error(
-				`✨ Stardust: Error while building ${image}: ${err.message}`,
-			);
+			console.error(`✨ Stardust: Error while building ${image}: ${err.message}`);
 			reject(err);
 		});
 	});

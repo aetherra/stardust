@@ -19,10 +19,9 @@ const nextConfig: NextConfig = {
 		BUILD_DATE: Date.now().toString(),
 	},
 	experimental: {
-		typedRoutes: true,
+		// typedRoutes: true,
 		reactCompiler: true,
 		authInterrupts: true,
-		nodeMiddleware: true,
 		serverActions: {
 			allowedOrigins: ["localhost:3000", "*.use.devtunnels.ms"],
 		},

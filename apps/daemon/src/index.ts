@@ -33,9 +33,7 @@ export const app = new Elysia()
 		mem: (((os.totalmem() - os.freemem()) / os.totalmem()) * 100).toFixed(2),
 		os: `${os.type()} ${os.release()}`,
 		version: pkgJson.version,
-		sessions: (await docker.listContainers()).filter(
-			(s) => s.HostConfig.NetworkMode === config.docker.network,
-		).length,
+		sessions: (await docker.listContainers()).filter((s) => s.HostConfig.NetworkMode === config.docker.network).length,
 	}))
 	.use(sessionHandler)
 	.use(workspaceHandler)

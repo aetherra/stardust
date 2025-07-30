@@ -1,7 +1,6 @@
-import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
 import { vncBaseFlags } from "./create";
-
+// todo
 export default async function addScreen(id: string) {
 	const container = docker.getContainer(id);
 	console.log(`hi${id}`);

@@ -2,4 +2,4 @@
 
 These are the Docker images that are used for Stardust Workspaces. They have a VNC server running, along with a PulseAudio server for audio, and a simple HTTP server for file transfers.
 
-More info in the [Stardust Workspaces Documentation](https://stardust.aetherra.team/docs/development/workspaces)
+More info in the [Stardust Workspaces Documentation](https://stardust.aetherra.org/docs/development/workspaces)
