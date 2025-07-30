@@ -2,6 +2,7 @@
 import Editor, { type Monaco } from "@monaco-editor/react";
 import { github_dark, latte, mocha } from "@stardust/theme/monaco";
 import { useTheme } from "next-themes";
+
 type MonacoTheme = Parameters<Monaco["editor"]["defineTheme"]>[1];
 export default function ConfigEditor({ current }: { current: string }) {
 	const { resolvedTheme } = useTheme();

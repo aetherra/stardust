@@ -1,12 +1,11 @@
 "use client";
-import { SubmitButton } from "@/components/submit-button";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { Boxes, Cog, Container, Layers, LayoutDashboard, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { Boxes, Cog, Container, Layers, LayoutDashboard, Users } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function AdminSidebar() {
 	const pathname = usePathname();

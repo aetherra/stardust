@@ -1,6 +1,7 @@
 import { Elysia, type Static, t } from "elysia";
 import { docker } from "~/lib/docker";
 import { pullImage } from "./pull";
+
 const statuses = t.Union([
 	t.Literal("pulled"),
 	t.Literal("in-progress"),

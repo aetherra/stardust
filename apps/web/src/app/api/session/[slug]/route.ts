@@ -1,6 +1,6 @@
+import type { NextRequest } from "next/server";
 import { getNode } from "@/lib/session/client";
 import getSession from "@/lib/session/get-session";
-import type { NextRequest } from "next/server";
 
 export async function GET(_req: NextRequest, props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;

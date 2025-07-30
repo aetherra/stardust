@@ -55,9 +55,8 @@ export interface AuthConfig {
 	trustedOrigins?: string[];
 	/**
 	 * The JWT secret used to sign tokens.
-	 * @default `sigmasigmaonthewall`
 	 **/
-	secret?: string;
+	secret: string;
 	/**
 	 * Cloudflare turnstile configuration. Leave `undefined` to disable turnstile.
 	 **/
@@ -86,22 +85,32 @@ export interface AuthConfig {
 		 **/
 		providers: {
 			/**
-			 * the provider name
+			 * the provider name.
+			 * Compatible providers:
+			 * Apple
+			 * Discord
+			 * Facebook
+			 * GitHub
+			 * Google
+			 * Hugging Face
+			 * Kick
+			 * Microsoft
+			 * Slack
+			 * Notion
+			 * Tiktok
+			 * Twitch
+			 * Twitter (X)
+			 * Dropbox
+			 * Linear
+			 * LinkedIn
+			 * GitLab
+			 * Reddit
+			 * Roblox
+			 * Spotify
+			 * VK
+			 * Zoom
 			 **/
-			[key in
-				| "github"
-				| "apple"
-				| "discord"
-				| "facebook"
-				| "microsoft"
-				| "google"
-				| "spotify"
-				| "twitch"
-				| "twitter"
-				| "dropbox"
-				| "linkedin"
-				| "gitlab"
-				| "reddit"]?: {
+			[key: string]: {
 				/**
 				 * The client ID for the OAuth provider.
 				 **/
@@ -111,11 +120,16 @@ export interface AuthConfig {
 				 **/
 				clientSecret: string;
 				/**
+				 * The OAuth provider's client key, if applicable.
+				 */
+				clientKey?: string;
+				/**
 				 * The OAuth provider's issuer, if applicable.
 				 **/
 				issuer?: string;
 			};
 		};
+		customProviders?: CustomAuthConfig[];
 	};
 }
 
@@ -148,4 +162,110 @@ export interface TurnstileConfig {
 	 * The Turnstile site key, used by the frontend
 	 */
 	siteKey: string;
+}
+
+export interface CustomAuthConfig {
+	/** Unique identifier for the OAuth provider */
+	providerId: string;
+	/**
+	 * URL to fetch OAuth 2.0 configuration.
+	 * If provided, the authorization and token endpoints will be fetched from this URL.
+	 */
+	discoveryUrl?: string;
+	/**
+	 * URL for the authorization endpoint.
+	 * Optional if using discoveryUrl.
+	 */
+	authorizationUrl?: string;
+	/**
+	 * URL for the token endpoint.
+	 * Optional if using discoveryUrl.
+	 */
+	tokenUrl?: string;
+	/**
+	 * URL for the user info endpoint.
+	 * Optional if using discoveryUrl.
+	 */
+	userInfoUrl?: string;
+	/** OAuth client ID */
+	clientId: string;
+	/** OAuth client secret */
+	clientSecret: string;
+	/**
+	 * Array of OAuth scopes to request.
+	 * @default []
+	 */
+	scopes?: string[];
+	/**
+	 * Custom redirect URI.
+	 * If not provided, a default URI will be constructed.
+	 */
+	redirectURI?: string;
+	/**
+	 * OAuth response type.
+	 * @default "code"
+	 */
+	responseType?: string;
+	/**
+   * The response mode to use for the authorization code request.
+
+   */
+	responseMode?: "query" | "form_post";
+	/**
+	 * Prompt parameter for the authorization request.
+	 * Controls the authentication experience for the user.
+	 */
+	prompt?: "none" | "login" | "consent" | "select_account";
+	/**
+	 * Whether to use PKCE (Proof Key for Code Exchange)
+	 * @default false
+	 */
+	pkce?: boolean;
+	/**
+	 * Access type for the authorization request.
+	 * Use "offline" to request a refresh token.
+	 */
+	accessType?: string;
+	/**
+	 * Additional search-params to add to the authorizationUrl.
+	 * Warning: Search-params added here overwrite any default params.
+	 */
+	authorizationUrlParams?: { [key: string]: string };
+	/**
+	 * Additional search-params to add to the tokenUrl.
+	 * Warning: Search-params added here overwrite any default params.
+	 */
+	tokenUrlParams?: { [key: string]: string };
+	/**
+	 * Disable implicit sign up for new users. When set to true for the provider,
+	 * sign-in need to be called with with requestSignUp as true to create new users.
+	 */
+	disableImplicitSignUp?: boolean;
+	/**
+	 * Disable sign up for new users.
+	 */
+	disableSignUp?: boolean;
+	/**
+	 * Authentication method for token requests.
+	 * @default "post"
+	 */
+	authentication?: "basic" | "post";
+	/**
+	 * Custom headers to include in the discovery request.
+	 * Useful for providers like Epic that require specific headers (e.g., Epic-Client-ID).
+	 */
+	discoveryHeaders?: { [key: string]: string };
+	/**
+	 * Custom headers to include in the authorization request.
+	 * Useful for providers like Qonto that require specific headers (e.g., X-Qonto-Staging-Token for local development).
+	 */
+	authorizationHeaders?: { [key: string]: string };
+	/**
+	 * Override user info with the provider info.
+	 *
+	 * This will update the user info with the provider info,
+	 * when the user signs in with the provider.
+	 * @default false
+	 */
+	overrideUserInfo?: boolean;
 }

@@ -1,7 +1,8 @@
 import { getConfig } from "@stardust/config";
-import { type PostgresJsDatabase, drizzle } from "drizzle-orm/postgres-js";
+import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
+
 const client = postgres(getConfig().databaseUrl);
 // biome-ignore lint: shadowing is intentional
 declare const globalThis: {

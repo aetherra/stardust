@@ -1,16 +1,19 @@
 #!/usr/bin/env bun
 import "./help-message";
 import { getConfig, validateConfig } from "~/lib/config";
+
 if (!validateConfig(getConfig())) {
 	console.error("Invalid configuration");
 	process.exit(1);
 }
-import { type Socket, connect } from "node:net";
+
+import { connect, type Socket } from "node:net";
 import generateToken from "~/lib/auth-token";
 import { docker } from "~/lib/docker";
 import checkDockerNetwork from "~/lib/network-check";
 import checkSystemService from "~/lib/service-check";
 import { app } from ".";
+
 await checkDockerNetwork();
 const config = getConfig();
 if (typeof config.service !== "boolean" || config.service === true) {

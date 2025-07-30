@@ -1,5 +1,5 @@
 "use server";
-import db, { session as sessionSchema, type DrizzleClient } from "@stardust/db";
+import db, { type DrizzleClient, session as sessionSchema } from "@stardust/db";
 import { eq } from "@stardust/db/utils";
 import { revalidatePath } from "next/cache";
 import { getNode } from "./client";
@@ -10,7 +10,13 @@ export async function manageSession({
 	admin,
 	revalidate,
 	dbClient = db,
-}: { id: string; action: SessionAction; admin?: boolean; revalidate?: string; dbClient?: DrizzleClient }) {
+}: {
+	id: string;
+	action: SessionAction;
+	admin?: boolean;
+	revalidate?: string;
+	dbClient?: DrizzleClient;
+}) {
 	const session = await getSession(id, admin, dbClient);
 	if (!session) throw new Error("session not found");
 	const node = getNode(session);
@@ -24,7 +30,12 @@ export async function deleteSession({
 	admin,
 	revalidate,
 	dbClient = db,
-}: { id: string; admin?: boolean; revalidate?: string; dbClient?: DrizzleClient }) {
+}: {
+	id: string;
+	admin?: boolean;
+	revalidate?: string;
+	dbClient?: DrizzleClient;
+}) {
 	const session = await getSession(id, admin, dbClient);
 	if (!session) throw new Error("session not found");
 	const node = getNode(session);

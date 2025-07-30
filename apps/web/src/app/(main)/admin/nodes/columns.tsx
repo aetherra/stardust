@@ -1,6 +1,9 @@
 "use client";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-
+import type { stardustConnector } from "@stardust/common/daemon/client";
+import type { NodeConfig } from "@stardust/config/config";
+import type { ColumnDef } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 import { DataTableColumnHeader } from "@/components/data-table/column-header";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,11 +13,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { stardustConnector } from "@stardust/common/daemon/client";
-import type { NodeConfig } from "@stardust/config/config";
-import type { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-import Link from "next/link";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 export const columns: ColumnDef<
 	NodeConfig & {
 		health: Awaited<ReturnType<ReturnType<typeof stardustConnector>["healthcheck"]["get"]>>["data"];

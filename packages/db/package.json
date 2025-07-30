@@ -11,7 +11,10 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"workspaces": ["packages/*", "apps/*"],
+	"workspaces": [
+		"packages/*",
+		"apps/*"
+	],
 	"dependencies": {
 		"@stardust/config": "workspace:*",
 		"drizzle-orm": "^0.38.2",

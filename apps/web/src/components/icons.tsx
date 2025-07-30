@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils";
 import type { SVGProps } from "react";
+import { cn } from "@/lib/utils";
+
 type Props = SVGProps<SVGSVGElement>;
 export const GitHubIcon = (props: Props) => (
 	<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" {...props}>

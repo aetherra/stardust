@@ -2,6 +2,7 @@ import auth from "@stardust/common/auth";
 import { getConfig } from "@stardust/config";
 import { forbidden } from "next/navigation";
 import type { NextRequest } from "next/server";
+
 async function handler(req: NextRequest, { params }: { params: Promise<{ id: string; path?: string[] }> }) {
 	const session = await auth.api.getSession({
 		headers: req.headers,

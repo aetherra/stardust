@@ -1,14 +1,16 @@
 "use client";
+import { getConfig } from "@stardust/config";
+import { redirect, useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { SubmitButton } from "@/components/submit-button";
 import { CardContent, CardDescription } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import authClient from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 
 export default function Page() {
+	if (!getConfig().auth.credentials?.enabled) redirect("/");
 	const router = useRouter();
 	return (
 		<CardContent className="m-1 w-full flex-col flex justify-center items-center">

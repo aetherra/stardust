@@ -1,9 +1,10 @@
 import "@stardust/config/load-config";
 import { createServer } from "node:http";
-import scheduleAutoDelete from "@/lib/session/auto-delete";
 import { shouldRoute, stardustdUpgrade } from "@stardust/common/session/ws";
 import { getConfig, validateConfig } from "@stardust/config";
 import next from "next";
+import scheduleAutoDelete from "@/lib/session/auto-delete";
+
 const config = getConfig();
 if (!validateConfig(config)) {
 	console.error("✨ Stardust: Config file schema invalid");

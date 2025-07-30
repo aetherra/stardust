@@ -1,4 +1,10 @@
 "use client";
+import type { SelectWorkspace } from "@stardust/db";
+import type { ColumnDef } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import { toast } from "sonner";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -17,12 +23,6 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { SelectWorkspace } from "@stardust/db";
-import type { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
-import { toast } from "sonner";
 import { deleteWorkspace } from "./actions";
 import { NodeDialog, UpdateDialog } from "./components";
 

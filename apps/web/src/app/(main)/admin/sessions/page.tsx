@@ -1,7 +1,7 @@
-import { DataTable } from "@/components/ui/data-table";
-import { getNode } from "@/lib/session/client";
 import db from "@stardust/db";
 import type { Metadata } from "next";
+import { DataTable } from "@/components/ui/data-table";
+import { getNode } from "@/lib/session/client";
 import { columns } from "./columns";
 export const metadata: Metadata = {
 	title: "Sessions",

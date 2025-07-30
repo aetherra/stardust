@@ -1,3 +1,10 @@
+import auth from "@stardust/common/auth";
+import type { BetterAuthOptions } from "@stardust/common/auth/lib";
+import { getConfig } from "@stardust/config";
+import { AlertCircle, IdCard, Info } from "lucide-react";
+import { headers } from "next/headers";
+import Link from "next/link";
+import { redirect, unstable_rethrow } from "next/navigation";
 import { SubmitButton } from "@/components/submit-button";
 import Turnstile from "@/components/turnstile";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -6,14 +13,6 @@ import { CardContent, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import turnstileCheck from "@/lib/turnstile";
-import auth from "@stardust/common/auth";
-import type { BetterAuthOptions } from "@stardust/common/auth/lib";
-import { getConfig } from "@stardust/config";
-import { AlertCircle, IdCard, Info } from "lucide-react";
-import { headers } from "next/headers";
-import Link from "next/link";
-import { unstable_rethrow } from "next/navigation";
-import { redirect } from "next/navigation";
 
 export default async function Login(props: {
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -52,6 +51,9 @@ export default async function Login(props: {
 										email: data.get("email")?.toString() as string,
 										password: data.get("password")?.toString() as string,
 										callbackURL: "/",
+									},
+									headers: {
+										"x-captcha-response": data.get("cf-turnstile-response")?.toString() || "",
 									},
 								});
 								if (res.url) redirect(res.url);
@@ -96,7 +98,7 @@ export default async function Login(props: {
 			{config.auth.credentials && config.auth.oauth ? (
 				<span className="text-center text-sm text-muted-foreground">Or sign in/sign up with:</span>
 			) : null}
-			{config.auth.oauth ? (
+			{config.auth.oauth?.providers ? (
 				<div className="mx-auto mt-4 flex w-full flex-row items-center justify-center gap-2 flex-wrap">
 					{Object.keys(config.auth.oauth.providers).map((provider) => {
 						return (
@@ -108,23 +110,20 @@ export default async function Login(props: {
 										const res = await auth.api.signInSocial({
 											body: {
 												provider: provider as keyof BetterAuthOptions["socialProviders"],
+												callbackURL: "/",
 											},
 										});
 										if (!res.url) throw new Error("No URL returned");
 										const url = new URL(res.url);
 										const { get } = await headers();
-										const proto = get("x-forwarded-proto");
-										const host = get("x-forwarded-host");
-										const redirect_uri = new URL(url.searchParams.get("redirect_uri") as string);
-										if (proto && host) {
-											redirect_uri.protocol = proto;
-											redirect_uri.host = host;
-											redirect_uri.port = ""; // normally when those headers exist it's from behind a reverse proxy that goes to 443 or wtv the default port is
-										}
-										url.searchParams.set("redirect_uri", redirect_uri.href);
+										const proto = get("x-forwarded-proto") || "http";
+										const host = get("x-forwarded-host") || get("host");
+										// why is this needed? god knows
+										url.searchParams.set("redirect_uri", `${proto}://${host}/api/auth/callback/${provider}`);
 										redirect(url.href);
 									} catch (error) {
 										unstable_rethrow(error);
+										console.error(error);
 										redirect(`/auth/signin?error=${(error as Error).message}`);
 									}
 								}}
@@ -138,6 +137,39 @@ export default async function Login(props: {
 					})}
 				</div>
 			) : null}
+			{config.auth.oauth?.customProviders
+				? config.auth.oauth.customProviders.map(({ providerId }) => (
+						<form
+							key={providerId}
+							action={async () => {
+								try {
+									const res = await auth.api.signInWithOAuth2({
+										body: {
+											providerId,
+										},
+									});
+									if (!res.url) throw new Error("No URL returned");
+									const url = new URL(res.url);
+									const { get } = await headers();
+									const proto = get("x-forwarded-proto") || "http";
+									const host = get("x-forwarded-host") || get("host");
+									// why is this needed? god knows
+									url.searchParams.set("redirect_uri", `${proto}://${host}/api/auth/oauth2/callback/${providerId}`);
+									redirect(url.href);
+								} catch (error) {
+									unstable_rethrow(error);
+									console.error(error);
+									redirect(`/auth/signin?error=${(error as Error).message}`);
+								}
+							}}
+						>
+							<SubmitButton variant={config.auth.credentials ? "secondary" : "default"} size="lg" className="w-32">
+								<IdCard className="size-4 mr-2 flex-shrink-0" />
+								{providerId.charAt(0).toLocaleUpperCase() + providerId.slice(1)}
+							</SubmitButton>
+						</form>
+					))
+				: null}
 		</CardContent>
 	);
 }

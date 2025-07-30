@@ -1,4 +1,8 @@
 "use client";
+import type { SelectSessionRelation } from "@stardust/db/relational-types";
+import type { ColumnDef } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
+import { toast } from "sonner";
 import { DataTableColumnHeader } from "@/components/data-table/column-header";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,10 +15,6 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { deleteSession, manageSession } from "@/lib/session/manage";
-import type { SelectSessionRelation } from "@stardust/db/relational-types";
-import type { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-import { toast } from "sonner";
 import { massDelete, massManage } from "./actions";
 
 export const columns: ColumnDef<SelectSessionRelation & { status: string }>[] = [

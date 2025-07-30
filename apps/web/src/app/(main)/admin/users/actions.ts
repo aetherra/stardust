@@ -1,12 +1,12 @@
 "use server";
-import { check } from "@/lib/admin-check";
-import { deleteSession } from "@/lib/session/manage";
 import auth from "@stardust/common/auth";
 import { fromEmail } from "@stardust/common/auth/gravatar";
 import db, { account, session, user } from "@stardust/db";
 import { and, eq } from "@stardust/db/utils";
 import { revalidatePath } from "next/cache";
 import { headers as getHeaders } from "next/headers";
+import { check } from "@/lib/admin-check";
+import { deleteSession } from "@/lib/session/manage";
 export const revalidateHandler = async () => revalidatePath("/admin/users");
 export async function deleteUserSessions(id: string) {
 	await db.transaction(async (tx) => {

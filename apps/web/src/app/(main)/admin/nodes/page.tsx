@@ -1,7 +1,7 @@
-import { DataTable } from "@/components/ui/data-table";
 import { stardustConnector } from "@stardust/common/daemon/client";
 import { getConfig } from "@stardust/config";
 import type { Metadata } from "next";
+import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
 export const metadata: Metadata = {
 	title: "Nodes",

@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { StardustIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export default function Forbidden() {
 	return (

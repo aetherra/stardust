@@ -1,8 +1,8 @@
-import { getNode } from "@/lib/session/client";
-import getSession from "@/lib/session/get-session";
 import { getConfig } from "@stardust/config";
 import { notFound } from "next/navigation";
 import type { NextRequest } from "next/server";
+import { getNode } from "@/lib/session/client";
+import getSession from "@/lib/session/get-session";
 
 export async function GET(req: NextRequest, props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;

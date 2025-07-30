@@ -1,7 +1,7 @@
 import { execSync } from "node:child_process";
-import { existsSync } from "node:fs";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { parseArgs } from "node:util";
+
 const {
 	values: { config: cmdConfig = "" },
 } = parseArgs({

@@ -1,6 +1,6 @@
 "use client";
-import { useHydration } from "@/hooks/use-hydration";
 import { Suspense } from "react";
+import { useHydration } from "@/hooks/use-hydration";
 
 export function SessionDate({ expiresAt }: { expiresAt: Date }) {
 	const hydrated = useHydration();

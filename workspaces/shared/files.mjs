@@ -4,6 +4,7 @@ import http from "node:http";
 import { homedir } from "node:os";
 import path from "node:path";
 import { parseArgs } from "node:util";
+
 const {
 	values: { pass },
 } = parseArgs({

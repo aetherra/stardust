@@ -3,7 +3,9 @@ import { BackButton } from "./page.client";
 
 export default async function AuthError({
 	searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+}: {
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
 	const { error } = await searchParams;
 	return (
 		<>

@@ -1,8 +1,8 @@
-import { getNode } from "@/lib/session/client";
-import getSession from "@/lib/session/get-session";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SWRConfig } from "swr";
+import { getNode } from "@/lib/session/client";
+import getSession from "@/lib/session/get-session";
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
 	const params = await props.params;
 	const session = await getSession(params.slug);

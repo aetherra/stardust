@@ -1,10 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import auth from "@stardust/common/auth";
 import { stardustConnector } from "@stardust/common/daemon/client";
 import { getConfig } from "@stardust/config";
-import db, { workspace, user } from "@stardust/db";
+import db, { user, workspace } from "@stardust/db";
 import { Boxes, Container, Layers, Users } from "lucide-react";
 import { headers } from "next/headers";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 function mode<T>(arr: Array<T>) {
 	return arr.sort((a, b) => arr.filter((v) => v === a).length - arr.filter((v) => v === b).length).pop();
 }

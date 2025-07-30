@@ -1,12 +1,13 @@
 import "./globals.css";
 
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { getConfig } from "@stardust/config";
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { headers } from "next/headers";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 const inter = Inter({ subsets: ["latin"], variable: "--sans" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--mono" });
 export async function generateMetadata(): Promise<Metadata> {

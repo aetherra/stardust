@@ -26,15 +26,11 @@ export type VncViewerProps = {
 	onConnect?: (rfb?: RFB) => void;
 	onDisconnect?: (rfb?: RFB) => void;
 	onCredentialsRequired?: (rfb?: RFB) => void;
-	onSecurityFailure?: (e?: {
-		detail: { status: number; reason: string };
-	}) => void;
+	onSecurityFailure?: (e?: { detail: { status: number; reason: string } }) => void;
 	onClipboard?: (e?: { detail: { text: string } }) => void;
 	onBell?: () => void;
 	onDesktopName?: (e?: { detail: { name: string } }) => void;
-	onCapabilities?: (e?: {
-		detail: { capabilities: RFB["capabilities"] };
-	}) => void;
+	onCapabilities?: (e?: { detail: { capabilities: RFB["capabilities"] } }) => void;
 };
 
 export type VncViewerHandle = {
@@ -58,7 +54,7 @@ export type EventListeners = {
 	// biome-ignore lint: lint/suspicious/noExplicitAny
 	-readonly [key in keyof typeof Events]?: (e?: any) => void;
 };
-// biome-ignore lint: whar
+
 export enum Events {
 	connect,
 	disconnect,
@@ -193,7 +189,7 @@ const VncScreen = ({
 				}
 				try {
 					rfb.disconnect();
-				} catch (e) {
+				} catch {
 					console.info("disconnect error, this is normally not an issue.");
 				}
 				rfb = null;
@@ -358,6 +354,7 @@ const VncScreen = ({
 					onMouseEnter={handleMouseEnter}
 					onMouseLeave={handleMouseLeave}
 					id="stardust-vnc-screen"
+					role="application"
 				/>
 			) : null}
 		</>

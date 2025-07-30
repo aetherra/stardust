@@ -50,7 +50,7 @@ export default class WebAudio {
 		this.queue = null;
 
 		this.mediaSource = new MediaSource();
-		this.mediaSource.addEventListener("sourceopen", (e) => this.onSourceOpen());
+		this.mediaSource.addEventListener("sourceopen", () => this.onSourceOpen());
 		//first we need a media source - and an audio object that contains it.
 		this.audio = document.createElement("audio");
 		this.audio.src = window.URL.createObjectURL(this.mediaSource);

@@ -1,3 +1,6 @@
+import db, { workspace } from "@stardust/db";
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { SubmitButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
@@ -13,9 +16,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { check } from "@/lib/admin-check";
 import { getWorkspaces } from "@/lib/workspaces";
-import db, { workspace } from "@stardust/db";
-import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { columns } from "./columns";
 export const metadata: Metadata = {
 	title: "Workspaces",

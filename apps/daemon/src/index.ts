@@ -9,6 +9,7 @@ import { docker } from "~/lib/docker";
 import sessionHandler from "~/session";
 import workspaceHandler from "~/workspace";
 import generateToken from "./lib/auth-token";
+
 const config = getConfig();
 export const app = new Elysia()
 	.get("/", async (c) => {

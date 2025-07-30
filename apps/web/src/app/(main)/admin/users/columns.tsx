@@ -1,4 +1,11 @@
 "use client";
+import type { ErrorContext } from "@stardust/common/auth/lib";
+import type { SelectUserRelation } from "@stardust/db/relational-types";
+import type { ColumnDef } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import { toast } from "sonner";
 import { DataTableColumnHeader } from "@/components/data-table/column-header";
 import {
 	AlertDialog,
@@ -20,15 +27,9 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import authClient from "@/lib/auth-client";
-import type { ErrorContext } from "@stardust/common/auth/lib";
-import type { SelectUserRelation } from "@stardust/db/relational-types";
-import type { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
-import { toast } from "sonner";
 import { deleteUserSessions, revalidateHandler, safeDeleteUser } from "./actions";
 import { ResetPasswordDialog, UpdateUserDialog } from "./components";
+
 const clientOptions = {
 	onSuccess() {
 		revalidateHandler();
@@ -55,7 +56,7 @@ export const columns: ColumnDef<SelectUserRelation>[] = [
 					height={48}
 				/>
 			) : (
-				<>None</>
+				"None"
 			),
 	},
 	{

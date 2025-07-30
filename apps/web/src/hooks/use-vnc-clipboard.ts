@@ -14,6 +14,7 @@ export default function useVncClipboard(rfb?: RFB | null) {
 				}
 			} catch (error) {
 				setWorkingClipboard(false);
+				console.error(error);
 			}
 		};
 		requestClipboardPermissions();

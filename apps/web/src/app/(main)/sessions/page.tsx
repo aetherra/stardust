@@ -1,10 +1,3 @@
-import { SubmitButton } from "@/components/submit-button";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Button } from "@/components/ui/button";
-import { CardTitle } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { inspectSession } from "@/lib/session/inspect";
-import { type SessionAction, deleteSession, manageSession } from "@/lib/session/manage";
 import auth from "@stardust/common/auth";
 import db, { type SelectSession } from "@stardust/db";
 import { Container, Loader2, PauseCircle, PlayCircle, ScreenShare, Square, Trash2 } from "lucide-react";
@@ -14,7 +7,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { SubmitButton } from "@/components/submit-button";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@/components/ui/button";
+import { CardTitle } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { inspectSession } from "@/lib/session/inspect";
+import { deleteSession, manageSession, type SessionAction } from "@/lib/session/manage";
 import { SessionDate } from "./session-date";
+
 const ManageSessionButton = ({
 	session: { id },
 	action,

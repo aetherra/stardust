@@ -1,5 +1,6 @@
 import auth from "@stardust/common/auth";
 import { type NextRequest, NextResponse } from "next/server";
+
 const allowedPaths = ["/auth/signin", "/auth/error", "/auth/verify", "/auth/signup"];
 export default async function middleware(req: NextRequest) {
 	const session = await auth.api.getSession({ headers: req.headers });

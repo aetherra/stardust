@@ -1,14 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
-export default function ErrorPage({
-	error,
-	reset,
-}: {
-	error: Error & { digest?: string };
-	reset: () => void;
-}) {
+import { Button } from "@/components/ui/button";
+export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
 	return (
 		<div className="flex h-full flex-col items-center justify-center">
 			<div className="flex h-[32rem] w-96 flex-col items-center justify-center gap-4">

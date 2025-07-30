@@ -15,7 +15,7 @@ export default new Elysia({ prefix: "/sessions" })
 			return {
 				success: true,
 				id: session.Id,
-				created: new Date().getTime(),
+				created: Date.now(),
 			};
 		},
 		{

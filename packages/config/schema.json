@@ -26,297 +26,41 @@
           "additionalProperties": false,
           "description": "OAuth configuration. Leave `undefined` to disable OAuth signups.",
           "properties": {
-            "providers": {
-              "additionalProperties": false,
-              "description": "The OAuth providers to enable.",
-              "properties": {
-                "apple": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "discord": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "dropbox": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "facebook": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "github": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "gitlab": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "google": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "linkedin": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "microsoft": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "reddit": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "spotify": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "twitch": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                },
-                "twitter": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "clientId": {
-                      "description": "The client ID for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "clientSecret": {
-                      "description": "The client secret for the OAuth provider.",
-                      "type": "string"
-                    },
-                    "issuer": {
-                      "description": "The OAuth provider's issuer, if applicable.",
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "clientId",
-                    "clientSecret"
-                  ],
-                  "type": "object"
-                }
+            "customProviders": {
+              "items": {
+                "$ref": "#/definitions/CustomAuthConfig"
               },
+              "type": "array"
+            },
+            "providers": {
+              "additionalProperties": {
+                "additionalProperties": false,
+                "description": "the provider name. Compatible providers: Apple Discord Facebook GitHub Google Hugging Face Kick Microsoft Slack Notion Tiktok Twitch Twitter (X) Dropbox Linear LinkedIn GitLab Reddit Roblox Spotify VK Zoom",
+                "properties": {
+                  "clientId": {
+                    "description": "The client ID for the OAuth provider.",
+                    "type": "string"
+                  },
+                  "clientKey": {
+                    "description": "The OAuth provider's client key, if applicable.",
+                    "type": "string"
+                  },
+                  "clientSecret": {
+                    "description": "The client secret for the OAuth provider.",
+                    "type": "string"
+                  },
+                  "issuer": {
+                    "description": "The OAuth provider's issuer, if applicable.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "clientId",
+                  "clientSecret"
+                ],
+                "type": "object"
+              },
+              "description": "The OAuth providers to enable.",
               "type": "object"
             }
           },
@@ -326,7 +70,6 @@
           "type": "object"
         },
         "secret": {
-          "default": "`sigmasigmaonthewall`",
           "description": "The JWT secret used to sign tokens.",
           "type": "string"
         },
@@ -342,6 +85,9 @@
           "description": "Cloudflare turnstile configuration. Leave `undefined` to disable turnstile."
         }
       },
+      "required": [
+        "secret"
+      ],
       "type": "object"
     },
     "Config": {
@@ -382,6 +128,139 @@
         "databaseUrl",
         "nodes",
         "auth"
+      ],
+      "type": "object"
+    },
+    "CustomAuthConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "accessType": {
+          "description": "Access type for the authorization request. Use \"offline\" to request a refresh token.",
+          "type": "string"
+        },
+        "authentication": {
+          "default": "post",
+          "description": "Authentication method for token requests.",
+          "enum": [
+            "basic",
+            "post"
+          ],
+          "type": "string"
+        },
+        "authorizationHeaders": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Custom headers to include in the authorization request. Useful for providers like Qonto that require specific headers (e.g., X-Qonto-Staging-Token for local development).",
+          "type": "object"
+        },
+        "authorizationUrl": {
+          "description": "URL for the authorization endpoint. Optional if using discoveryUrl.",
+          "type": "string"
+        },
+        "authorizationUrlParams": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional search-params to add to the authorizationUrl. Warning: Search-params added here overwrite any default params.",
+          "type": "object"
+        },
+        "clientId": {
+          "description": "OAuth client ID",
+          "type": "string"
+        },
+        "clientSecret": {
+          "description": "OAuth client secret",
+          "type": "string"
+        },
+        "disableImplicitSignUp": {
+          "description": "Disable implicit sign up for new users. When set to true for the provider, sign-in need to be called with with requestSignUp as true to create new users.",
+          "type": "boolean"
+        },
+        "disableSignUp": {
+          "description": "Disable sign up for new users.",
+          "type": "boolean"
+        },
+        "discoveryHeaders": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Custom headers to include in the discovery request. Useful for providers like Epic that require specific headers (e.g., Epic-Client-ID).",
+          "type": "object"
+        },
+        "discoveryUrl": {
+          "description": "URL to fetch OAuth 2.0 configuration. If provided, the authorization and token endpoints will be fetched from this URL.",
+          "type": "string"
+        },
+        "overrideUserInfo": {
+          "default": false,
+          "description": "Override user info with the provider info.\n\nThis will update the user info with the provider info, when the user signs in with the provider.",
+          "type": "boolean"
+        },
+        "pkce": {
+          "default": false,
+          "description": "Whether to use PKCE (Proof Key for Code Exchange)",
+          "type": "boolean"
+        },
+        "prompt": {
+          "description": "Prompt parameter for the authorization request. Controls the authentication experience for the user.",
+          "enum": [
+            "none",
+            "login",
+            "consent",
+            "select_account"
+          ],
+          "type": "string"
+        },
+        "providerId": {
+          "description": "Unique identifier for the OAuth provider",
+          "type": "string"
+        },
+        "redirectURI": {
+          "description": "Custom redirect URI. If not provided, a default URI will be constructed.",
+          "type": "string"
+        },
+        "responseMode": {
+          "description": "The response mode to use for the authorization code request.",
+          "enum": [
+            "query",
+            "form_post"
+          ],
+          "type": "string"
+        },
+        "responseType": {
+          "default": "code",
+          "description": "OAuth response type.",
+          "type": "string"
+        },
+        "scopes": {
+          "default": [],
+          "description": "Array of OAuth scopes to request.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tokenUrl": {
+          "description": "URL for the token endpoint. Optional if using discoveryUrl.",
+          "type": "string"
+        },
+        "tokenUrlParams": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional search-params to add to the tokenUrl. Warning: Search-params added here overwrite any default params.",
+          "type": "object"
+        },
+        "userInfoUrl": {
+          "description": "URL for the user info endpoint. Optional if using discoveryUrl.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "providerId",
+        "clientId",
+        "clientSecret"
       ],
       "type": "object"
     },

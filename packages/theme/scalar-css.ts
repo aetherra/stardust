@@ -1,5 +1,7 @@
 const css = String.raw;
+
 import { type CatppuccinColors, flavors } from "@catppuccin/palette";
+
 function generate(flavor: CatppuccinColors, className: "dark" | "light") {
 	return css`
       .${className}-mode {

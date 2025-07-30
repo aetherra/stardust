@@ -11,7 +11,7 @@ export type QueryConfig<TableName extends keyof TSchema> = DBQueryConfig<
 >;
 export type InferQueryModel<
 	TableName extends keyof TSchema,
-	// biome-ignore lint:
+	// biome-ignore lint: this is some drizzle thing
 	QBConfig extends QueryConfig<TableName> = {},
 > = BuildQueryResult<TSchema, TSchema[TableName], QBConfig>;
 export type SelectSessionRelation = InferQueryModel<

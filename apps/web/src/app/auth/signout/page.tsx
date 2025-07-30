@@ -1,11 +1,11 @@
-import { SubmitButton } from "@/components/submit-button";
-import { Button } from "@/components/ui/button";
-import { CardContent } from "@/components/ui/card";
 import auth from "@stardust/common/auth";
 import { ChevronLeft, LogOut } from "lucide-react";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { SubmitButton } from "@/components/submit-button";
+import { Button } from "@/components/ui/button";
+import { CardContent } from "@/components/ui/card";
 
 export default function SignOut() {
 	return (

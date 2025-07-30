@@ -1,9 +1,9 @@
-import { CardTitle } from "@/components/ui/card";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { getWorkspaces } from "@/lib/workspaces";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { Suspense } from "react";
+import { CardTitle } from "@/components/ui/card";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { getWorkspaces } from "@/lib/workspaces";
 import { CreateForm } from "./page.client";
 
 export default async function Dashboard() {

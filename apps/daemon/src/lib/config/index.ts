@@ -3,6 +3,7 @@ import { load } from "js-yaml";
 import defaultSchema from "~/../schema.json";
 import getConfigFile from "./location";
 import type { Config } from "./types";
+
 let loadedConfig: unknown;
 try {
 	loadedConfig = load(await (await getConfigFile()).text());

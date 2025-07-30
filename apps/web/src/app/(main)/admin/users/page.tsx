@@ -1,3 +1,9 @@
+import auth from "@stardust/common/auth";
+import { fromEmail } from "@stardust/common/auth/gravatar";
+import db from "@stardust/db";
+import type { Metadata } from "next";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { SubmitButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
@@ -12,12 +18,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import auth from "@stardust/common/auth";
-import { fromEmail } from "@stardust/common/auth/gravatar";
-import db from "@stardust/db";
-import type { Metadata } from "next";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import { columns } from "./columns";
 export const metadata: Metadata = {
 	title: "Users",
@@ -60,9 +60,10 @@ export default async function AdminPage() {
 									body: {
 										email,
 										name,
+										// @ts-expect-error ???
 										image,
 										password,
-										role,
+										role: role as "user" | "admin",
 									},
 									headers: await headers(),
 								});

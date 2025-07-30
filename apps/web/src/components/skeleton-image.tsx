@@ -1,6 +1,6 @@
 "use client";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 export function SkeletionImage({ className, ...props }: React.ComponentProps<typeof Image>) {
 	return (
 		<Image

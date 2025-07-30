@@ -2,6 +2,7 @@ import "@stardust/config/load-config";
 import { execSync } from "node:child_process";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
+
 const nextConfig: NextConfig = {
 	transpilePackages: ["@stardust/common"],
 	images: {

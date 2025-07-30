@@ -1,4 +1,11 @@
 "use client";
+import type { SessionSchema } from "@stardust/common/auth";
+import { Book, ComputerIcon, Globe, Info, Key, LogOut, Monitor, Settings, SwatchBook } from "lucide-react";
+import type { Route } from "next";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
+import { Fragment, useState } from "react";
 import packageJson from "@/../package.json";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -26,20 +33,9 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import type { SessionSchema } from "@stardust/common/auth";
-import { Book, ComputerIcon, Globe, Info, Key, LogOut, Monitor, Settings, SwatchBook } from "lucide-react";
-import type { Route } from "next";
-import { useTheme } from "next-themes";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Fragment, useState } from "react";
 import { GitHubIcon, StardustIcon } from "./icons";
 
-export default function Navigation({
-	session,
-}: {
-	session: SessionSchema | null;
-}) {
+export default function Navigation({ session, credentials }: { session: SessionSchema | null; credentials?: boolean }) {
 	const { name, email, image } = session?.user || {};
 	const isAdmin = session?.user.role === "admin";
 	const [open, setDialogOpen] = useState(false);
@@ -191,7 +187,7 @@ export default function Navigation({
 						<DropdownMenuSeparator />
 						<DropdownMenuSub>
 							<DropdownMenuSubTrigger>
-								<SwatchBook className="size-4 mr-2" />
+								<SwatchBook className="size-4 mr-4" />
 								<span>Theme</span>
 							</DropdownMenuSubTrigger>
 							<DropdownMenuPortal>
@@ -210,12 +206,14 @@ export default function Navigation({
 							<Info className="size-4 mr-2" />
 							<span>About Stardust</span>
 						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<Link href="/auth/reset-password">
-								<Key className="size-4 mr-2" />
-								<span>Reset Password</span>
-							</Link>
-						</DropdownMenuItem>
+						{credentials ? (
+							<DropdownMenuItem asChild>
+								<Link href="/auth/reset-password">
+									<Key className="size-4 mr-2" />
+									<span>Reset Password</span>
+								</Link>
+							</DropdownMenuItem>
+						) : null}
 						<DropdownMenuItem asChild>
 							<Link href="/auth/signout">
 								<LogOut className="size-4 mr-2" />

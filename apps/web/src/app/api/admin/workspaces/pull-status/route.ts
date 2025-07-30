@@ -1,7 +1,7 @@
-import { check } from "@/lib/admin-check";
 import { stardustConnector } from "@stardust/common/daemon/client";
 import { getConfig } from "@stardust/config";
 import type { NextRequest } from "next/server";
+import { check } from "@/lib/admin-check";
 export async function GET(req: NextRequest) {
 	await check();
 	const image = decodeURIComponent(req.nextUrl.searchParams.get("image") || "");

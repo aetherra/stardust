@@ -1,10 +1,3 @@
-import { SubmitButton } from "@/components/submit-button";
-import Turnstile from "@/components/turnstile";
-import { Alert, AlertTitle } from "@/components/ui/alert";
-import { CardContent, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import turnstileCheck from "@/lib/turnstile";
 import auth from "@stardust/common/auth";
 import { fromEmail } from "@stardust/common/auth/gravatar";
 import { getConfig } from "@stardust/config";
@@ -12,11 +5,18 @@ import db, { user } from "@stardust/db";
 import { eq } from "@stardust/db/utils";
 import { Info } from "lucide-react";
 import { headers } from "next/headers";
+import Link from "next/link";
 import { redirect, unstable_rethrow } from "next/navigation";
+import { SubmitButton } from "@/components/submit-button";
+import Turnstile from "@/components/turnstile";
+import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { CardContent, CardDescription } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import turnstileCheck from "@/lib/turnstile";
 
-export default async function Page(props: {
-	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+export default async function Page(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
 	const searchParams = await props.searchParams;
 	const session = await auth.api.getSession({
 		headers: await headers(),
@@ -46,6 +46,7 @@ export default async function Page(props: {
 				action={async (data) => {
 					"use server";
 					try {
+						// todo: fix this goofy logic
 						if (!(await turnstileCheck(data))) {
 							redirect("/auth/signup?error=Failed%captcha");
 						}
@@ -123,6 +124,9 @@ export default async function Page(props: {
 				<Turnstile />
 				<SubmitButton className="w-full">Sign up</SubmitButton>
 			</form>
+			<Button asChild variant="link">
+				<Link href="/auth/signin">Have an account? Sign in</Link>
+			</Button>
 		</CardContent>
 	);
 }

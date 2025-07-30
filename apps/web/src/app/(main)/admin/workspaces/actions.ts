@@ -1,12 +1,12 @@
 "use server";
 
-import { check } from "@/lib/admin-check";
-import { deleteSession } from "@/lib/session/manage";
 import { stardustConnector } from "@stardust/common/daemon/client";
 import { getConfig } from "@stardust/config";
 import db, { type SelectWorkspace, session, workspace } from "@stardust/db";
 import { eq } from "@stardust/db/utils";
 import { revalidatePath } from "next/cache";
+import { check } from "@/lib/admin-check";
+import { deleteSession } from "@/lib/session/manage";
 
 export async function updateWorkspace(data: FormData) {
 	await check();

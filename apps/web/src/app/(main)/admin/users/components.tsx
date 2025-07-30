@@ -1,11 +1,11 @@
+import type { SelectUser } from "@stardust/db";
+import { toast } from "sonner";
 import { SubmitButton } from "@/components/submit-button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import type { SelectUser } from "@stardust/db";
-import { toast } from "sonner";
 import { resetPassword, updateUser } from "./actions";
 
 export interface Props {
