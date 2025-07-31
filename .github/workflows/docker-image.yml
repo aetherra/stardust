@@ -3,6 +3,7 @@ name: Docker Image CI
 on:
   push:
     branches: ["rewrite"]
+    tags: ["v*"]
     paths:
       - "workspaces/**"
 
@@ -25,5 +26,18 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Build the Docker image
+      - name: Set IMAGE_TAG and LATEST_FLAG
+        run: |
+          SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+            echo "IMAGE_TAG=${TAG}" >> $GITHUB_ENV
+            echo "PUSH_LATEST=true" >> $GITHUB_ENV
+          else
+            echo "IMAGE_TAG=sha-${SHORT_SHA}" >> $GITHUB_ENV
+            echo "PUSH_LATEST=false" >> $GITHUB_ENV
+      - name: Build and push Docker image(s)
         run: npm run --prefix ./workspaces build -- --build-base --multi-platform --push
+        env:
+          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+          PUSH_LATEST: ${{ env.PUSH_LATEST }}

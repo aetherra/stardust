@@ -2,7 +2,6 @@
 xrdb $HOME/.Xresources
 export DISPLAY=":1"
 startxfce4 &
-sudo service dbus start
 sleep 1
 echo "while :
 do

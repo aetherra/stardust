@@ -69,7 +69,10 @@ export default function Navigation({ session, credentials }: { session: SessionS
 				<NavigationMenu>
 					<NavigationMenuList>
 						<NavigationMenuItem>
-							<NavigationMenuLink asChild className={cn(navigationMenuTriggerStyle(), pathname === "/" && "bg-muted")}>
+							<NavigationMenuLink
+								asChild
+								className={cn(navigationMenuTriggerStyle(), "inline-flex flex-row", pathname === "/" && "bg-muted")}
+							>
 								<Link href="/">
 									<span className="mr-2 flex size-4 items-center justify-center">
 										<ComputerIcon />
@@ -84,7 +87,11 @@ export default function Navigation({ session, credentials }: { session: SessionS
 									<NavigationMenuItem key={item.href}>
 										<NavigationMenuLink
 											asChild
-											className={cn(navigationMenuTriggerStyle(), pathname.startsWith(item.href) && "bg-muted")}
+											className={cn(
+												navigationMenuTriggerStyle(),
+												"inline-flex flex-row",
+												pathname.startsWith(item.href) && "bg-muted",
+											)}
 										>
 											<Link href={item.href}>
 												<span className="mr-2 flex size-4 items-center justify-center">{item.icon}</span> {item.label}
@@ -106,18 +113,22 @@ export default function Navigation({ session, credentials }: { session: SessionS
 						</DialogHeader>
 						<div className="flex flex-col items-start justify-start gap-2 text-foreground text-sm">
 							Stardust is the platform for streaming isolated desktop containers.
-							<section>
-								This version of Stardust is from commit{" "}
-								<a
-									href={`https://github.com/aetherra/stardust/commit/${process.env.GIT_COMMIT}`}
-									className="inline font-medium text-primary underline-offset-4 hover:underline"
-									target="_blank"
-									rel="noreferrer noopener"
-								>
-									{process.env.GIT_COMMIT?.slice(0, 7)}
-								</a>
-								, built on {new Date(Number(process.env.BUILD_DATE)).toLocaleString()}
-							</section>
+							{process.env.GIT_COMMIT !== "DEVELOP" ? (
+								<section>
+									This version of Stardust is from commit{" "}
+									<a
+										href={`https://github.com/aetherra/stardust/commit/${process.env.GIT_COMMIT}`}
+										className="inline font-medium text-primary underline-offset-4 hover:underline"
+										target="_blank"
+										rel="noreferrer noopener"
+									>
+										{process.env.GIT_COMMIT?.slice(0, 7)}
+									</a>
+									, built on {new Date(Number(process.env.BUILD_DATE)).toLocaleString()}
+								</section>
+							) : (
+								<p className="text-destructive font-bold">You are currently running Stardust in development mode.</p>
+							)}
 							<section>
 								Stardust is licensed under the{" "}
 								<a

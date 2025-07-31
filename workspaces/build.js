@@ -36,7 +36,9 @@ function buildBase() {
 				multiPlatformBuild ? "--platform" : "",
 				multiPlatformBuild ? "linux/amd64,linux/arm64" : "",
 				"--tag",
-				"ghcr.io/aetherra/debian-base",
+				`ghcr.io/aetherra/debian-base${process.env.IMAGE_TAG ? `:${process.env.IMAGE_TAG}` : ""}`,
+				process.env.PUSH_LATEST === "true" ? "--tag" : "",
+				process.env.PUSH_LATEST === "true" ? "ghcr.io/aetherra/debian-base:latest" : "",
 			],
 			{ stdio: "inherit", shell: true },
 		);
@@ -61,7 +63,7 @@ function buildImage(image) {
 		console.log(`Arguments: ${argv}`);
 		const multiPlatformBuild = flags.includes("--multi-platform");
 		const platforms = x64Only.includes(image) ? "linux/amd64" : "linux/amd64,linux/arm64";
-		const process = spawn(
+		const buildProcess = spawn(
 			"docker",
 			[
 				"buildx",
@@ -74,19 +76,21 @@ function buildImage(image) {
 				multiPlatformBuild ? "--platform" : "",
 				multiPlatformBuild ? platforms : "",
 				"--tag",
-				`ghcr.io/aetherra/${image}`,
+				`ghcr.io/aetherra/${image}${process.env.IMAGE_TAG ? `:${process.env.IMAGE_TAG}` : ""}`,
+				process.env.PUSH_LATEST === "true" ? "--tag" : "",
+				process.env.PUSH_LATEST === "true" ? `ghcr.io/aetherra/${image}:latest` : "",
 			],
 			{ stdio: ["inherit", "pipe", "pipe"], shell: true },
 		);
 
-		process.stdout.on("data", (data) => {
+		buildProcess.stdout.on("data", (data) => {
 			globalThis.process.stdout.write(`${image}: ${data}`);
 		});
 
-		process.stderr.on("data", (data) => {
+		buildProcess.stderr.on("data", (data) => {
 			globalThis.process.stderr.write(`${image}: ${data}`);
 		});
-		process.on("close", (code) => {
+		buildProcess.on("close", (code) => {
 			if (code === 0) {
 				resolve(0);
 			} else {
@@ -95,7 +99,7 @@ function buildImage(image) {
 			}
 		});
 
-		process.on("error", (err) => {
+		buildProcess.on("error", (err) => {
 			console.error(`✨ Stardust: Error while building ${image}: ${err.message}`);
 			reject(err);
 		});

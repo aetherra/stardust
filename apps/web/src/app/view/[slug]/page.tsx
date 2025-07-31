@@ -15,7 +15,6 @@ import {
 	MonitorUp,
 	Pause,
 	RotateCw,
-	ScreenShare,
 	ScreenShareOff,
 	Settings,
 	Square,
@@ -152,7 +151,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 	return (
 		<div className="h-screen w-screen justify-center items-center flex">
 			{connected ? (
-				<section className="flex flex-row gap-2 z-40 absolute -translate-x-1/2 -top-10 hover:top-0 left-1/2 duration-150 rounded-b-md bg-background/80 p-[0.25rem] text-xs backdrop-blur-lg h-12">
+				<section className="flex flex-row gap-2 z-40 absolute -translate-x-1/2 -top-10 hover:top-0 left-1/2 duration-150 rounded-b-md bg-background/80 p-[0.25rem] backdrop-blur-lg h-12">
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<Button
@@ -163,7 +162,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 									router.push("/");
 								}}
 							>
-								<ScreenShareOff />
+								<ScreenShareOff className="flex-shrink-0 size-5" />
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Disconnect</TooltipContent>
@@ -171,7 +170,11 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<Button variant="ghost" size="icon" onClick={() => setFullScreen(!fullScreen)}>
-								{fullScreen ? <Minimize /> : <Maximize />}
+								{fullScreen ? (
+									<Minimize className="flex-shrink-0 size-5" />
+								) : (
+									<Maximize className="flex-shrink-0 size-5" />
+								)}
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Enter full screen</TooltipContent>
@@ -179,7 +182,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<Button variant="ghost" size="icon" onClick={() => setSidebarOpen((prev) => !prev)}>
-								<Settings />
+								<Settings className="flex-shrink-0 size-5" />
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Open settings</TooltipContent>
@@ -187,7 +190,11 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<Button variant="ghost" size="icon" onClick={toggleAudio}>
-								{audioEnabled ? <Volume2 /> : <VolumeX />}
+								{audioEnabled ? (
+									<Volume2 className="flex-shrink-0 size-5" />
+								) : (
+									<VolumeX className="flex-shrink-0 size-5" />
+								)}
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>Turn audio {audioEnabled ? "off" : "on (press a key after to activate)"}</TooltipContent>
@@ -200,7 +207,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 									download={`stardust-${params.slug.slice(0, 6)}-${new Date().toLocaleDateString("en-us")}`}
 									target="_blank"
 								>
-									<Camera />
+									<Camera className="flex-shrink-0 size-5" />
 								</Link>
 							</Button>
 						</TooltipTrigger>
@@ -215,11 +222,11 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 					filesMutate();
 				}}
 			>
-				<SheetContent side="left" className="w-full overflow-y-auto bg-background/80 backdrop-blur-lg">
+				<SheetContent side="left" className="w-full overflow-y-auto px-4">
 					<SheetHeader>
 						<SheetTitle className="text-2xl">Control Panel</SheetTitle>
 					</SheetHeader>
-					<section className="grid grid-cols-2 gap-3 py-2">
+					<section className="grid grid-cols-2 gap-3 pb-2">
 						<Button
 							className="w-full"
 							onClick={() => {
@@ -501,14 +508,14 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 										</SelectContent>
 									</Select>
 								</div>
-								<Button
+								{/*<Button
 									type="button"
 									onClick={() => {
 										fetch(`/api/session/${params.slug}/addscreen`, { method: "POST" });
 									}}
 								>
 									<ScreenShare className="mr-2" /> Add screen
-								</Button>
+								</Button>*/}
 							</AccordionContent>
 						</AccordionItem>
 					</Accordion>

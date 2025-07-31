@@ -40,7 +40,7 @@ export default async function AdminPage() {
 				<Card className="w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Sessions</CardTitle>
-						<Container className="h-4 w-4 text-muted-foreground" />
+						<Container className="size-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{sessions.length}</div>
@@ -52,7 +52,7 @@ export default async function AdminPage() {
 				<Card className="w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Workspaces</CardTitle>
-						<Layers className="h-4 w-4 text-muted-foreground" />
+						<Layers className="size-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{workspaces.length}</div>
@@ -64,7 +64,7 @@ export default async function AdminPage() {
 				<Card className="w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Users</CardTitle>
-						<Users className="h-4 w-4 text-muted-foreground" />
+						<Users className="size-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{users.length}</div>
@@ -76,7 +76,7 @@ export default async function AdminPage() {
 				<Card className="w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Nodes</CardTitle>
-						<Boxes className="h-4 w-4 text-muted-foreground" />
+						<Boxes className="size-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-2xl font-bold">{nodes.length}</div>
