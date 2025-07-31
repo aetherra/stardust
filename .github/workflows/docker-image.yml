@@ -28,16 +28,19 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Set IMAGE_TAG and LATEST_FLAG
-        shell: bash
         run: |
           SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
-          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
-            TAG="${GITHUB_REF#refs/tags/}"
-            echo "IMAGE_TAG=${TAG}" >> $GITHUB_ENV
-            echo "PUSH_LATEST=true" >> $GITHUB_ENV
-          else
-            echo "IMAGE_TAG=sha-${SHORT_SHA}" >> $GITHUB_ENV
-            echo "PUSH_LATEST=false" >> $GITHUB_ENV
+          case "${GITHUB_REF}" in
+            refs/tags/v*)
+              TAG="${GITHUB_REF#refs/tags/}"
+              echo "IMAGE_TAG=${TAG}" >> $GITHUB_ENV
+              echo "PUSH_LATEST=true" >> $GITHUB_ENV
+              ;;
+            *)
+              echo "IMAGE_TAG=sha-${SHORT_SHA}" >> $GITHUB_ENV
+              echo "PUSH_LATEST=false" >> $GITHUB_ENV
+              ;;
+          esac
       - name: Build and push Docker image(s)
         run: npm run --prefix ./workspaces build -- --build-base --multi-platform --push
         env:
