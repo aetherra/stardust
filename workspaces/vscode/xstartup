@@ -3,6 +3,7 @@ xrdb $HOME/.Xresources
 export DISPLAY=":1"
 startxfce4 &
 sleep 1
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVNC-0/workspace0/last-image -s /opt/stardust/shared/wallpaper.png
 sudo service dbus start
 echo "while :
 do

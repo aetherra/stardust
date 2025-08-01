@@ -76,12 +76,12 @@ export default async function Dashboard() {
 													src={session.workspace.icon}
 													alt={session.workspace.friendlyName}
 												/>
-												<Link className="flex items-center gap-4" href={`/view/${session.id}`}>
+												<div className="flex items-center gap-4">
 													{session.workspace.friendlyName}{" "}
 													<span className="font-mono text-xs font-thin text-muted-foreground">
 														{session.id.slice(0, 6)}
 													</span>
-												</Link>
+												</div>
 											</TooltipTrigger>
 											<TooltipContent>
 												<SessionDate expiresAt={expiresAt} />
@@ -113,10 +113,11 @@ export default async function Dashboard() {
 										<AspectRatio ratio={16 / 9}>
 											{!State.Paused && State.Running ? (
 												<Image
-													src={`/api/session/${session.id}/preview`}
+													src={`/api/session/${session.id}/preview?optimize=true`}
 													sizes="6.5rem 13rem"
 													alt=""
 													fill
+													unoptimized={true} // nextjs stuff broke in a recent update??
 													className="object-fill outline-none rounded-none md:h-[6.5rem] md:w-[13rem] h-[3.25rem] w-[6.5rem]"
 												/>
 											) : (
@@ -133,7 +134,7 @@ export default async function Dashboard() {
 													<TooltipTrigger asChild>
 														<Button size="icon" variant="ghost" asChild>
 															<Link href={`/view/${session.id}`}>
-																<ScreenShare />
+																<ScreenShare className="size-6 shrink-0" />
 															</Link>
 														</Button>
 													</TooltipTrigger>
@@ -144,7 +145,13 @@ export default async function Dashboard() {
 												<ManageSessionButton
 													action={State.Paused ? "unpause" : "pause"}
 													redirectToView={State.Paused}
-													icon={State.Paused ? <PlayCircle /> : <PauseCircle />}
+													icon={
+														State.Paused ? (
+															<PlayCircle className="size-6 shrink-0" />
+														) : (
+															<PauseCircle className="size-6 shrink-0" />
+														)
+													}
 													session={session}
 												/>
 											</>
@@ -152,7 +159,13 @@ export default async function Dashboard() {
 										<ManageSessionButton
 											action={State.Running ? "stop" : "start"}
 											redirectToView={!State.Running}
-											icon={State.Running ? <Square className="text-destructive" /> : <PlayCircle />}
+											icon={
+												State.Running ? (
+													<Square className="text-destructive size-6 shrink-0" />
+												) : (
+													<PlayCircle className="size-6 shrink-0" />
+												)
+											}
 											session={session}
 										/>
 									</div>

@@ -5,7 +5,7 @@ startxfce4 &
 sleep 1
 echo "while :
 do
-firefox --no-sandbox
+firefox --no-sandbox --start-maximized
 sleep 2
 done
 " | bash

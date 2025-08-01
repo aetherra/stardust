@@ -6,7 +6,7 @@ export function SessionDate({ expiresAt }: { expiresAt: Date }) {
 	const hydrated = useHydration();
 	return (
 		<Suspense key={hydrated ? "hydrated" : "server"}>
-			<p className="text-xs text-muted-foreground">
+			<p>
 				Expires on {expiresAt.toLocaleString()}
 				{hydrated ? "" : " (Server TZ)"}
 			</p>

@@ -73,7 +73,11 @@ export default new Elysia({ prefix: "/sessions" })
 	})
 	.get("/:id/screenshot", async ({ params: { id } }) => {
 		const res = await screenshot(id);
-		return { success: true, encoded: res };
+		return new Response(res.body, {
+			headers: {
+				"Content-Type": "image/png",
+			},
+		});
 	})
 	.group("/:id/files", (app) =>
 		app

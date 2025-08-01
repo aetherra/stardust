@@ -10,6 +10,7 @@
 		"db:seed": "pnpm --dir packages/db run seed",
 		"db:migrate-workspace-name": "pnpm --dir packages/db run migrate-name",
 		"workspaces:build": "pnpm --dir workspaces run build",
+		"workspaces:build-dev": "docker image rmi $(docker images --format \"{{.Repository}}:{{.Tag}}\" | grep '^ghcr.io/aetherra/.*:latest$'); PUSH_LATEST=true IMAGE_TAG=$(date +\"%m%d%y%H%M%S\") pnpm workspaces:build --build-base",
 		"workspaces:format": "prettier --write \"./workspaces/**/*.sh\" \"./workspaces/**/Dockerfile*\"  \"./workspaces/**/xstartup\"",
 		"prepare": "husky"
 	},

@@ -6,7 +6,7 @@ sleep 1
 sudo service dbus start
 echo "while :
 do
-/home/stardust/.local/bin/zen --no-sandbox
+/home/stardust/.local/bin/zen --no-sandbox --start-maximized
 sleep 2
 done
 " | bash

@@ -1,7 +1,8 @@
 // @ts-check
+import { execSync } from "node:child_process";
 import fs from "node:fs";
 import http from "node:http";
-import { homedir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import path from "node:path";
 import { parseArgs } from "node:util";
 
@@ -26,12 +27,21 @@ http
 	.createServer(async (req, res) => {
 		console.log(`Received request: ${req.method} ${req.url}`);
 		const url = new URL(req.url || "/", `http://${req.headers.host}`);
-		const fileName = url.searchParams.get("name");
 		if (req.headers.authorization !== pass) {
 			res.writeHead(401);
 			return res.end();
 		}
+		const fileName = url.searchParams.get("name");
 		switch (url.pathname) {
+			case "/screenshot": {
+				fs.mkdirSync(`${tmpdir()}/screenshots`, { recursive: true });
+				const path = `${tmpdir()}/screenshots/window.png`;
+				execSync(`DISPLAY=:1 import -window root ${path}`);
+				const image = fs.readFileSync(path);
+				fs.unlinkSync(path);
+				res.appendHeader("Content-Type", "image/png");
+				return res.end(image);
+			}
 			case "/list": {
 				fs.mkdirSync(`${homedir()}/Downloads`, { recursive: true });
 				const files = fs.readdirSync(`${homedir()}/Downloads`);

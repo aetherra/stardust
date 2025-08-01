@@ -1,18 +1,12 @@
+import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
 export default async function screenshot(id: string) {
-	const exec = await docker.getContainer(id).exec({
-		Cmd: ["sh", "-c", "xwd -root -display :1 | convert xwd:- png:- | base64"],
-		AttachStdout: true,
-		AttachStderr: true,
+	const container = await docker.getContainer(id).inspect();
+	const authorization = container.Config.Env.find((e) => e.startsWith("VNCPASSWORD="))?.split("=")[1] as string;
+	const ip = container.NetworkSettings.Networks[getConfig().docker.network || "stardust"].IPAddress;
+	return fetch(`http://${ip}:6080/screenshot`, {
+		headers: {
+			authorization,
+		},
 	});
-
-	const stream = await exec.start({});
-	const encoded = await new Promise<string>((res, err) => {
-		const out: string[] = [];
-		stream
-			.on("error", err)
-			.on("data", (chunk) => out.push(chunk.toString()))
-			.on("end", () => res(out.join("")));
-	});
-	return encoded.replaceAll(/[^A-Za-z0-9+/=]/g, "");
 }
