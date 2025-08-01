@@ -18,34 +18,39 @@ export default async function checkDockerNetwork() {
 		});
 		console.log("✨ Stardust: Created network %s", config.network);
 	}
-	if (network && !config.enableCTHC) {
+	if (!config.enableCTHC) {
 		const inspect = await docker.getNetwork(config.network).inspect();
 		const subnet = inspect.IPAM.Config[0].Subnet;
-		Bun.spawnSync({
-			cmd: ["bash", "-c", `iptables -L DOCKER-USER -s ${subnet} -d $(hostname -I | awk '{print $1}') -j DROP`],
-		});
-		console.log("✨ Stardust: Initialized IPTables rules");
+		if (process.platform === "linux") {
+			// Linux: Use iptables
+			Bun.spawnSync({
+				cmd: ["bash", "-c", `iptables -L DOCKER-USER -s ${subnet} -d $(hostname -I | awk '{print $1}') -j DROP`],
+			});
+			console.log("✨ Stardust: Initialized IPTables rules");
+		} else if (process.platform === "darwin") {
+			console.warn("Stardust is not natively supported on MacOS. Go forward if you know what you are doing. ");
+		}
 	}
 	if (config.enableCTHC) {
-		console.log(`${RED}CAUTION: Container to host connectivity is enabled!`);
-		console.log(`Anybody using your instance of Stardust will be able to access sensitive information on your host.`);
-		console.log(
-			`If you don't know what this means, please CTRL+C to exit and consult the documentation at https://stardust.aethera.org/docs`,
+		console.warn(`${RED}CAUTION: Container to host connectivity is enabled!`);
+		console.warn(`Anybody using your instance of Stardust will be able to access sensitive information on your host.`);
+		console.warn(
+			`If you don't know what this means, please CTRL+C to exit and consult the documentation at https://stardust.aetherra.org/docs`,
 		);
-		console.log(`Please disable this option immediately if you are using Stardust commercially.`);
-		console.log(`Stardust will continue running in 5 seconds.${RESET}`);
+		console.warn(`Please disable this option immediately if you are using Stardust commercially.`);
+		console.warn(`Stardust will continue running in 5 seconds.${RESET}`);
 		await new Promise((res) => setTimeout(res, 5000));
 	}
 	if (config.enableIcc) {
-		console.log(`${RED}CAUTION: Inter-container connectivity is enabled!`);
-		console.log(
+		console.warn(`${RED}CAUTION: Inter-container connectivity is enabled!`);
+		console.warn(
 			`Anybody using your instance of Stardust will be able to access sensitive information on workspaces other than their own.`,
 		);
-		console.log(
-			`If you don't know what this means, please CTRL+C to exit and consult the documentation at https://stardust.aethera.org/docs`,
+		console.warn(
+			`If you don't know what this means, please CTRL+C to exit and consult the documentation at https://stardust.aetherra.org/docs`,
 		);
-		console.log(`Please disable this option immediately if you are using Stardust commercially.`);
-		console.log(`Stardust will continue running in 5 seconds.${RESET}`);
+		console.warn(`Please disable this option immediately if you are using Stardust commercially.`);
+		console.warn(`Stardust will continue running in 5 seconds.${RESET}`);
 		await new Promise((res) => setTimeout(res, 5000));
 	}
 }

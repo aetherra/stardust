@@ -1,6 +1,7 @@
 import "@stardust/config/load-config";
 import { execSync } from "node:child_process";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
+import { getConfig } from "@stardust/config";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -24,7 +25,7 @@ const nextConfig: NextConfig = {
 		reactCompiler: true,
 		authInterrupts: true,
 		serverActions: {
-			allowedOrigins: ["localhost:3000", "*.use.devtunnels.ms"],
+			allowedOrigins: getConfig().auth.trustedOrigins,
 		},
 	},
 	webpack(config) {
@@ -34,5 +35,6 @@ const nextConfig: NextConfig = {
 		});
 		return config;
 	},
+	allowedDevOrigins: getConfig().auth.trustedOrigins,
 };
 export default NextBundleAnalyzer({ enabled: process.env.ANALYZE === "true" })(nextConfig);

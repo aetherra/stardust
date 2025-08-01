@@ -19,7 +19,7 @@ const app = next({
 	dev,
 	port,
 	httpServer,
-	hostname: process.env.HOSTNAME,
+	hostname,
 	turbo: true,
 	customServer: true,
 });

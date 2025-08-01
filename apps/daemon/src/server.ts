@@ -2,6 +2,10 @@
 import "./help-message";
 import { getConfig, validateConfig } from "~/lib/config";
 
+if (process.platform === "win32") {
+	console.error("Stardust is not supported on Windows");
+	process.exit(1);
+}
 if (!validateConfig(getConfig())) {
 	console.error("Invalid configuration");
 	process.exit(1);
@@ -27,7 +31,7 @@ const srv = Bun.serve<{ socket: Socket; path: string }, {}>({
 			vnc: 5901,
 			audio: 4713,
 		};
-		if (path.startsWith("/sessions") && ["vnc", "audio"].includes(path.split("/")[3])) {
+		if (path.startsWith("/sessions") && Object.keys(portMap).includes(path.split("/")[3])) {
 			const containerInfo = await docker.getContainer(path.split("/")[2]).inspect();
 			const socket = connect(
 				portMap[path.split("/")[3]],

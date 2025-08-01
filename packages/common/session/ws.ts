@@ -14,7 +14,10 @@ export async function stardustdUpgrade(req: IncomingMessage, socket: Duplex, hea
 	const [, connectionType, slug] = req.url?.split("/") || [];
 	const config = getConfig();
 	const proto = req.headers["x-forwarded-proto"] || "http";
-	const host = req.headers["x-forwarded-host"] || req.headers.host;
+	const host = req.headers["x-forwarded-host"] || req.headers.host || config.hostname || "0.0.0.0";
+	if (!config.auth.trustedOrigins?.includes(`${proto}://${host}`) && host !== "localhost") {
+		return socket.end();
+	}
 	const res = await fetch(`${proto}://${host}/api/auth/get-session`, {
 		headers: {
 			cookie: req.headers.cookie || "",
