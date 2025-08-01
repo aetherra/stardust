@@ -6,7 +6,8 @@
 	"scripts": {
 		"check-types": "tsc --noEmit",
 		"drizzle-kit": "drizzle-kit",
-		"seed": "tsx seed.ts"
+		"seed": "tsx seed.ts",
+		"migrate-name": "tsx migrate-name.ts"
 	},
 	"keywords": [],
 	"author": "",

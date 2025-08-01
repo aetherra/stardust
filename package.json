@@ -8,6 +8,7 @@
 		"check": "biome check . --write",
 		"add-admin": "pnpm --dir apps/web run add-admin",
 		"db:seed": "pnpm --dir packages/db run seed",
+		"db:migrate-workspace-name": "pnpm --dir packages/db run migrate-name",
 		"workspaces:build": "pnpm --dir workspaces run build",
 		"workspaces:format": "prettier --write \"./workspaces/**/*.sh\" \"./workspaces/**/Dockerfile*\"  \"./workspaces/**/xstartup\""
 	},
