@@ -405,10 +405,10 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 																query: { name: file },
 															}}
 														>
-															<Card className="flex justify-start items-center p-4 h-12 w-full gap-2 hover:bg-muted duration-150">
+															<div className="flex justify-start items-center p-4 h-12 w-full gap-2 hover:bg-muted duration-150 rounded-full border">
 																<File className="size-5 flex-shrink-0" />
 																<span className="text-sm truncate overflow-x-scroll">{file}</span>
-															</Card>
+															</div>
 														</Link>
 													))
 												) : (

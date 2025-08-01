@@ -1,5 +1,4 @@
 #!/bin/bash
-sudo chmod +x /home/stardust/.vnc/xstartup
 PASS=$VNCPASSWORD
 echo $VNCPASSWORD | vncpasswd -f > /home/stardust/.vnc/passwd
 if [[ "$WIPEVNCENV" == "true" ]]; then
@@ -7,8 +6,6 @@ if [[ "$WIPEVNCENV" == "true" ]]; then
   unset WIPEVNCENV
 fi
 vncserver -kill :1
-sudo rm -rf /run/dbus
-sudo mkdir -p /run/dbus
 sleep 1
 # files
 echo "while :

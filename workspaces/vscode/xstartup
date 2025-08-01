@@ -3,11 +3,12 @@ xrdb $HOME/.Xresources
 export DISPLAY=":1"
 startxfce4 &
 sleep 1
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVNC-0/workspace0/last-image -s /opt/stardust/shared/wallpaper.png
 sudo service dbus start
 echo "while :
 do
-/home/stardust/.local/share/vscode/bin/code --no-sandbox --verbose --wait
+/home/stardust/.local/share/vscode/bin/code --verbose --wait
+window_ids=$(wmctrl -l | cut -f1 -d " ")
+wmctrl -i -r $window_id -b add,fullscreen
 sleep 2
 done
 " | bash

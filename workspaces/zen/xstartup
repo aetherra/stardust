@@ -6,7 +6,9 @@ sleep 1
 sudo service dbus start
 echo "while :
 do
-/home/stardust/.local/bin/zen --no-sandbox --start-maximized
+/home/stardust/.local/bin/zen --start-maximized
+window_ids=$(wmctrl -l | cut -f1 -d " ")
+wmctrl -i -r $window_id -b add,fullscreen
 sleep 2
 done
 " | bash

@@ -5,7 +5,9 @@ startxfce4 &
 sleep 1
 echo "while :
 do
-firefox --no-sandbox --start-maximized
+firefox --start-maximized
+window_ids=$(wmctrl -l | cut -f1 -d " ")
+wmctrl -i -r $window_id -b add,fullscreen
 sleep 2
 done
 " | bash
