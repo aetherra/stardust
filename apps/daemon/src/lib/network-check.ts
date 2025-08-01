@@ -15,4 +15,15 @@ export default async function checkDockerNetwork() {
 		});
 		console.log("✨ Stardust: Created network %s", config.network);
 	}
+	else if (network && config.enableCTHC) {
+	  const subnet = await docker.getNetwork(config.network).inspect().IPAM.Config[0].Subnet;
+    const process = Bun.spawnSync({
+      cmd: [
+        "bash",
+        "-c",
+        `iptables -L DOCKER-USER -s ${subnet} -d $(hostname -I | awk '{print $1}') -j DROP`
+      ]
+    })
+    console.log("✨ Stardust: Initialized IPTables rules")
+	}
 }
