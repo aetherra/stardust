@@ -1,6 +1,7 @@
 {
 	"name": "stardust",
 	"private": true,
+	"version": "1.0.0",
 	"scripts": {
 		"build": "turbo build",
 		"dev": "turbo dev",
