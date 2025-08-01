@@ -11,7 +11,6 @@ sudo rm -rf /run/dbus
 sudo mkdir -p /run/dbus
 sleep 1
 # files
-# todo: test if unsetting $pass here breaks anything
 echo "while :
 do
 node /opt/stardust/shared/files.mjs --pass $PASS

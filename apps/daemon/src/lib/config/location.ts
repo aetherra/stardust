@@ -26,7 +26,10 @@ export default async function getConfigFile() {
 		strict: true,
 		allowPositionals: true,
 	});
-	const repoRoot = execSync("git rev-parse --show-toplevel", { encoding: "utf-8" }).trim();
+	let repoRoot = "";
+	try {
+		repoRoot = execSync("git rev-parse --show-toplevel", { encoding: "utf-8" }).trim();
+	} catch {}
 	const configLocations = [
 		cmdConfig,
 		`${repoRoot}/daemon-config.yaml`,

@@ -8,8 +8,7 @@
 		"build": "bun build src/server.ts --compile --minify --outfile stardustd",
 		"dev": "bun run --watch src/server.ts",
 		"check-types": "tsc --noEmit",
-		"config-schema": "ts-json-schema-generator --tsconfig ./tsconfig.json --path ./src/lib/config/types.d.ts --type Config > ./schema.json",
-		"postinstall": "pnpm config-schema"
+		"config-schema": "ts-json-schema-generator --tsconfig ./tsconfig.json --path ./src/lib/config/types.d.ts --type Config > ./schema.json"
 	},
 	"imports": {
 		"~/*": "./src/*"
