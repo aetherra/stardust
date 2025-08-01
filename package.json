@@ -10,12 +10,14 @@
 		"db:seed": "pnpm --dir packages/db run seed",
 		"db:migrate-workspace-name": "pnpm --dir packages/db run migrate-name",
 		"workspaces:build": "pnpm --dir workspaces run build",
-		"workspaces:format": "prettier --write \"./workspaces/**/*.sh\" \"./workspaces/**/Dockerfile*\"  \"./workspaces/**/xstartup\""
+		"workspaces:format": "prettier --write \"./workspaces/**/*.sh\" \"./workspaces/**/Dockerfile*\"  \"./workspaces/**/xstartup\"",
+		"prepare": "husky"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.1.3",
 		"@types/bun": "^1.1.15",
 		"@types/node": "^20",
+		"husky": "^9.1.7",
 		"prettier": "^3.4.2",
 		"prettier-plugin-sh": "^0.14.0",
 		"tsx": "^4.19.2",
