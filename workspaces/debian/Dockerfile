@@ -3,7 +3,7 @@ USER root
 RUN apt-get update && apt-get install --no-install-recommends -y \
   neofetch \
   xfce4 xfce4-goodies \
-  firefox-esr chromium gimp \
+  firefox-esr chromium chromium-sandbox gimp \
   remmina remmina-plugin-vnc remmina-plugin-rdp \
   flatpak \
   wmctrl \

@@ -110,6 +110,7 @@
           "type": "string"
         },
         "nodes": {
+          "description": "Configuration for nodes running `stardustd`",
           "items": {
             "$ref": "#/definitions/NodeConfig"
           },
@@ -304,22 +305,19 @@
     "SessionConfig": {
       "additionalProperties": false,
       "properties": {
-        "dnsServers": {
-          "default": "system default",
-          "description": "Dns servers for the container to use",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
         "keepaliveDuration": {
           "default": 1440,
           "description": "The amount of time to keep an inactive session alive for, in minutes.",
           "type": "number"
         },
+        "uploadLimit": {
+          "default": "10mb",
+          "description": "Upload limit. Maximum size of a single file upload, in megabytes. increasing this limit can lead to consumption of excessive server resources in parsing large amounts of data, as well as potential DDoS attacks",
+          "type": "string"
+        },
         "usageLimits": {
           "additionalProperties": false,
-          "description": "Session per user usage limit configuration",
+          "description": "Session usage limit configuration",
           "properties": {
             "instance": {
               "type": "number"

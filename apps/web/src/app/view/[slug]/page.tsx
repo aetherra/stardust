@@ -55,6 +55,7 @@ import type { VncViewerHandle } from "@/components/vnc-screen";
 import useFullScreen from "@/hooks/use-full-screen";
 import useVncClipboard from "@/hooks/use-vnc-clipboard";
 import { deleteSession, manageSession } from "@/lib/session/manage";
+import upload from "@/lib/session/upload-file";
 import { fetcher } from "@/lib/utils";
 import { ConnectionAlert, Loading } from "./components";
 
@@ -96,10 +97,14 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 		},
 	});
 	const {
-		data: filesList,
+		data: filesData,
 		error: filesError,
 		mutate: filesMutate,
-	} = useSWR<string[]>(`/api/session/${params.slug}/files`, fetcher, {
+	} = useSWR<{
+		maxSize: `${number}mb`;
+		success: boolean;
+		list?: string[];
+	}>(`/api/session/${params.slug}/files`, fetcher, {
 		refreshInterval: 10000,
 	});
 	useEffect(() => {
@@ -394,8 +399,8 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 										</CardHeader>
 										<CardContent className="flex flex-col gap-2">
 											{!filesError ? (
-												filesList && filesList?.length > 0 ? (
-													filesList.map((file) => (
+												filesData?.list && filesData.list.length > 0 ? (
+													filesData.list.map((file) => (
 														<Link
 															key={file}
 															download={file}
@@ -429,32 +434,46 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 											)}
 										</CardContent>
 									</Card>
-									<Button className="w-full" asChild>
-										<Label htmlFor="file-input">
-											<HardDriveUpload className="mr-2 h-5 w-5" /> Upload File
-										</Label>
-									</Button>
-									<input
-										type="file"
-										className="hidden"
-										id="file-input"
-										onChange={async (e) => {
-											const [file] = e.target.files || [];
-											const buffer = await file.arrayBuffer();
-											toast.promise(
-												() =>
-													fetch(`/api/session/${params.slug}/files?name=${file.name}`, {
-														method: "PUT",
-														body: buffer,
-													}),
+									<form
+										action={(data) =>
+											void toast.promise(
+												async () => {
+													try {
+														await upload(data, params.slug);
+													} catch {
+														throw new Error(`Server error.`);
+													}
+												},
 												{
 													loading: "Uploading file...",
 													success: "File uploaded",
 													error: (error) => `Failed to upload file: ${error.message}`,
 												},
-											);
-										}}
-									/>
+											)
+										}
+									>
+										<Button className="w-full" asChild>
+											<Label htmlFor="file-input">
+												<HardDriveUpload className="mr-2 h-5 w-5" /> Upload File
+											</Label>
+										</Button>
+										<input
+											type="file"
+											className="hidden"
+											id="file-input"
+											name="file"
+											onChange={(e) => {
+												if (e.currentTarget.files?.length) {
+													const file = e.currentTarget.files[0];
+													if (file.size > Number(filesData?.maxSize.replace(/[a-zA-Z]/g, "") || 10) * 1024 * 1024) {
+														toast.error(`File size exceeds the limit of ${filesData?.maxSize}`);
+														return;
+													}
+													e.currentTarget.form?.requestSubmit();
+												}
+											}}
+										/>
+									</form>
 								</div>
 							</AccordionContent>
 						</AccordionItem>

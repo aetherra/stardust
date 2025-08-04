@@ -10,7 +10,6 @@ export default async function createSession({
 	user,
 	password,
 	environment = {},
-	offline,
 	exposePorts,
 	memory,
 	nodeId,
@@ -20,7 +19,6 @@ export default async function createSession({
 	user: string;
 	password?: string;
 	environment?: Record<string, string>;
-	offline?: boolean;
 	exposePorts?: string[];
 	memory?: number;
 	nodeId: string;
@@ -47,7 +45,6 @@ export default async function createSession({
 			`VNCFLAGS=${vncBaseFlags + vncFlags}`,
 			...envArray,
 		],
-		NetworkDisabled: offline || false,
 		ExposedPorts: exposePorts ? Object.fromEntries(exposePorts.map((e) => [e, {}])) : undefined, // world class types by docker
 	});
 	await container.start().catch((e) => {

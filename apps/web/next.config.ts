@@ -1,9 +1,11 @@
 import "@stardust/config/load-config";
+
 import { execSync } from "node:child_process";
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 import { getConfig } from "@stardust/config";
 import type { NextConfig } from "next";
 
+const config = getConfig();
 const nextConfig: NextConfig = {
 	transpilePackages: ["@stardust/common"],
 	images: {
@@ -25,7 +27,8 @@ const nextConfig: NextConfig = {
 		reactCompiler: true,
 		authInterrupts: true,
 		serverActions: {
-			allowedOrigins: getConfig().auth.trustedOrigins,
+			allowedOrigins: config.auth.trustedOrigins,
+			bodySizeLimit: config.session?.uploadLimit || "10mb",
 		},
 	},
 	webpack(config) {
@@ -35,6 +38,6 @@ const nextConfig: NextConfig = {
 		});
 		return config;
 	},
-	allowedDevOrigins: getConfig().auth.trustedOrigins,
+	allowedDevOrigins: config.auth.trustedOrigins,
 };
 export default NextBundleAnalyzer({ enabled: process.env.ANALYZE === "true" })(nextConfig);

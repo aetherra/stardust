@@ -1,7 +1,7 @@
 {
 	"name": "daemon",
 	"type": "module",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"scripts": {
 		"start": "./stardustd",
 		"build:debug": "bun build src/server.ts --compile --sourcemap --outfile stardustd",

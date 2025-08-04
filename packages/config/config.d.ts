@@ -17,7 +17,11 @@ export interface Config {
 	 * The public URL of your Stardust instance. Use this if you want to display site metadata.
 	 */
 	metadataUrl?: string;
+	/**
+	 * Configuration for nodes running `stardustd`
+	 */
 	nodes: NodeConfig[];
+
 	auth: AuthConfig;
 	session?: SessionConfig;
 }
@@ -140,12 +144,14 @@ export interface SessionConfig {
 	 */
 	keepaliveDuration?: number;
 	/**
-	 * Dns servers for the container to use
-	 * @default system default
+	 * Upload limit. Maximum size of a single file upload, in megabytes.
+	 * increasing this limit can lead to consumption of excessive server resources in parsing large amounts of data, as well as potential DDoS attacks
+	 * @default 10mb
+	 * @example 25mb
 	 */
-	dnsServers?: string[];
+	uploadLimit?: `${number}mb`;
 	/**
-	 * Session per user usage limit configuration
+	 * Session usage limit configuration
 	 */
 	usageLimits?: {
 		instance?: number;

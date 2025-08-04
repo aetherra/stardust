@@ -60,10 +60,9 @@ export default async function AdminPage() {
 									body: {
 										email,
 										name,
-										// @ts-expect-error ???
-										image,
 										password,
 										role: role as "user" | "admin",
+										data: { image },
 									},
 									headers: await headers(),
 								});
