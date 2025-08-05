@@ -21,15 +21,14 @@ export default async function checkDockerNetwork() {
 	if (!config.enableCTHC) {
 		const inspect = await docker.getNetwork(config.network).inspect();
 		const subnet = inspect.IPAM.Config[0].Subnet;
+		const gateway = inspect.IPAM.Config[0].Gateway;
 		if (process.platform === "linux") {
-			// Check if rule exists
 			const check = Bun.spawnSync({
-				cmd: ["bash", "-c", `iptables -C DOCKER-USER -s ${subnet} -d $(hostname -I | awk '{print $1}') -j DROP`],
+				cmd: ["bash", "-c", `iptables -C DOCKER-USER -s ${subnet} -d ${gateway} -j DROP`],
 			});
 			if (check.exitCode !== 0) {
-				// Rule doesn't exist, add it
 				Bun.spawnSync({
-					cmd: ["bash", "-c", `iptables -I DOCKER-USER -s ${subnet} -d $(hostname -I | awk '{print $1}') -j DROP`],
+					cmd: ["bash", "-c", `iptables -I DOCKER-USER -s ${subnet} -d ${gateway} -j DROP`],
 				});
 			}
 
