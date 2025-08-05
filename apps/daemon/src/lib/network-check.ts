@@ -21,17 +21,11 @@ export default async function checkDockerNetwork() {
 	if (!config.enableCTHC) {
 		const inspect = await docker.getNetwork(config.network).inspect();
 		const subnet = inspect.IPAM.Config[0].Subnet;
-		const gateway = inspect.IPAM.Config[0].Gateway;
 		if (process.platform === "linux") {
-			const check = Bun.spawnSync({
-				cmd: ["bash", "-c", `iptables -C DOCKER-USER -s ${subnet} -d ${gateway} -j DROP`],
+			// Linux: Use iptables
+			Bun.spawnSync({
+				cmd: ["bash", "-c", `iptables -L DOCKER-USER -s ${subnet} -d $(hostname -I | awk '{print $1}') -j DROP`],
 			});
-			if (check.exitCode !== 0) {
-				Bun.spawnSync({
-					cmd: ["bash", "-c", `iptables -I DOCKER-USER -s ${subnet} -d ${gateway} -j DROP`],
-				});
-			}
-
 			console.log("✨ Stardust: Initialized IPTables rules");
 		} else if (process.platform === "darwin") {
 			console.warn("Stardust is not natively supported on MacOS. Go forward if you know what you are doing. ");
