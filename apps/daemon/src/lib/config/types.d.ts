@@ -44,12 +44,12 @@ export interface DockerConfig {
 	 * @default false
 	 */
 	enableIcc?: boolean;
-	/**
-	 * Enable connectivity between containers and host.
-	 * Should be left off unless you are accessing an API on the host.
-	 * @default false
-	 */
-	enableCTHC?: boolean;
+	// /**
+	//  * Enable connectivity between containers and host.
+	//  * Should be left off unless you are accessing an API on the host.
+	//  * @default false
+	//  */
+	// enableCTHC?: boolean;
 	/**
 	 * The host to connect to, if using an HTTP connection.
 	 */
