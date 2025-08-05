@@ -47,11 +47,6 @@
     "DockerConfig": {
       "additionalProperties": false,
       "properties": {
-        "enableCTHC": {
-          "default": false,
-          "description": "Enable connectivity between containers and host. Should be left off unless you are accessing an API on the host.",
-          "type": "boolean"
-        },
         "enableIcc": {
           "default": false,
           "description": "Enable interconnectivity between containers. Do not enable unless you know what you're doing.",

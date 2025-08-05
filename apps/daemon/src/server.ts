@@ -79,5 +79,6 @@ const srv = Bun.serve<{ socket: Socket; path: string }, {}>({
 	},
 	hostname: config.host,
 	port: config.port || 4000,
+	idleTimeout: 60,
 });
 console.log(`✨ Stardust daemon is running at ${srv.hostname}:${srv.port}`);
