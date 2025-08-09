@@ -90,6 +90,7 @@ export interface SessionConfig {
 	bitDepth?: number;
 	/**
 	 * Storage limit for containers in GB (in format nG, for example 25G)
+	 * Only works if /var/lib/docker is XFS formatted with pquota enabled
 	 */
 	storageLimit?: string;
 }

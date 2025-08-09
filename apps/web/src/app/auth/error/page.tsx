@@ -9,7 +9,7 @@ export default async function AuthError({
 	const { error } = await searchParams;
 	return (
 		<>
-			<CardHeader>
+			<CardHeader className="text-center">
 				<CardTitle>Authentication Error</CardTitle>
 				<CardDescription>Something went wrong authenticating:</CardDescription>
 			</CardHeader>

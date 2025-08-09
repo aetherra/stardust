@@ -37,6 +37,11 @@ export default async function createSession({
 			NetworkMode: config.docker.network,
 			Dns: config.dnsServers,
 			Memory: memory,
+			StorageOpt: config.session.storageLimit
+				? {
+						size: config.session.storageLimit,
+					}
+				: undefined,
 		},
 		Env: [
 			`STARDUST_USER=${user}`,
