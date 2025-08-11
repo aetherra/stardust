@@ -93,4 +93,10 @@ export interface SessionConfig {
 	 * Only works if /var/lib/docker is XFS formatted with pquota enabled
 	 */
 	storageLimit?: string;
+	/**
+	 * List of processes to block on containers.
+	 * Useful if you want to stop the use of crypto miners or other resource hungry processes.
+	 * Will also kill processes on the host. Will be overhauled later
+	 */
+	blockedProcessNames?: string[];
 }

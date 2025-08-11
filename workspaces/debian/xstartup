@@ -3,10 +3,10 @@ xrdb $HOME/.Xresources
 export DISPLAY=":1"
 startxfce4 &
 for i in {1..30}; do
-    if pgrep -u "$USER" xfsettingsd > /dev/null; then
-        break
-    fi
-    sleep 1
+  if pgrep -u "$USER" xfsettingsd > /dev/null; then
+    break
+  fi
+  sleep 1
 done
 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVNC-0/workspace0/last-image -s /opt/stardust/shared/wallpaper.png --create
 wait

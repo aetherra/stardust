@@ -13,6 +13,7 @@ if (!validateConfig(getConfig())) {
 
 import { connect, type Socket } from "node:net";
 import generateToken from "~/lib/auth-token";
+import { scheduleKillBlockedProcesses } from "~/lib/block-process";
 import { docker } from "~/lib/docker";
 import checkDockerNetwork from "~/lib/network-check";
 import checkSystemService from "~/lib/service-check";
@@ -23,6 +24,8 @@ const config = getConfig();
 if (typeof config.service !== "boolean" || config.service === true) {
 	checkSystemService();
 }
+scheduleKillBlockedProcesses();
+
 // biome-ignore lint: no
 const srv = Bun.serve<{ socket: Socket; path: string }, {}>({
 	async fetch(req, server) {

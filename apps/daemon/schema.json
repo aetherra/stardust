@@ -101,6 +101,13 @@
           "description": "Bit depth for the display",
           "type": "number"
         },
+        "blockedProcessNames": {
+          "description": "List of processes to block on containers. Useful if you want to stop the use of crypto miners or other resource hungry processes.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "resolution": {
           "default": "1920x1080",
           "description": "Resolution for the display",
