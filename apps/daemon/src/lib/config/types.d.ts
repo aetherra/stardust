@@ -19,10 +19,6 @@ export interface Config {
 	 * Do not change unless you know what you're doing.
 	 */
 	token?: string;
-	/**
-	 * DNS servers for the session to use.
-	 */
-	dnsServers?: string[];
 	docker: DockerConfig;
 	session: SessionConfig;
 }
@@ -71,6 +67,10 @@ export interface DockerConfig {
 
 export interface SessionConfig {
 	/**
+	 * Max number of sessions allowed on this instance
+	 */
+	limit?: number;
+	/**
 	 * Default VNC password to use. Defaults to randomly generated.
 	 */
 	vncPassword?: string;
@@ -79,20 +79,19 @@ export interface SessionConfig {
 	 */
 	showVncPassword?: boolean;
 	/**
-	 * Resolution for the display
-	 * @default 1920x1080
+	 * Maximum memory a container can use, in megabytes
+	 * @default undefined
 	 */
-	resolution?: string;
-	/**
-	 * Bit depth for the display
-	 * @default 24
-	 */
-	bitDepth?: number;
+	memoryLimit?: number;
 	/**
 	 * Storage limit for containers in GB (in format nG, for example 25G)
 	 * Only works if /var/lib/docker is XFS formatted with pquota enabled
 	 */
 	storageLimit?: string;
+	/**
+	 * DNS servers for the session to use.
+	 */
+	dnsServers?: string[];
 	/**
 	 * List of processes to block on containers.
 	 * Useful if you want to stop the use of crypto miners or other resource hungry processes.

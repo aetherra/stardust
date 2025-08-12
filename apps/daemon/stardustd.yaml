@@ -1,4 +1,0 @@
-docker:
-  network: stardust
-  socket: /var/run/docker.sock
-session: {}

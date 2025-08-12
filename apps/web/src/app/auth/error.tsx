@@ -6,11 +6,11 @@ import { CardContent, CardDescription, CardHeader, CardTitle } from "@/component
 export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
 	return (
 		<>
-			<CardHeader>
+			<CardHeader className="justify-center w-full">
 				<CardTitle className="text-destructive">Server Error</CardTitle>
 				<CardDescription>Something went wrong processing your request</CardDescription>
 			</CardHeader>
-			<CardContent className="text-center">
+			<CardContent className="justify-center">
 				<div className="flex flex-col items-center justify-center gap-4">
 					<p className="text-center">Digest: {error.digest ?? "none"}</p>
 					{error.message ? (

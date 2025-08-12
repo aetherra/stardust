@@ -13,8 +13,17 @@ export async function createSession(workspace: string, nodeId?: string) {
 		const config = getConfig();
 		const userSession = await auth.api.getSession({ headers: await headers() });
 		if (!userSession?.user) throw new Error("User not found");
-		// todo: move these limits to each node instead
-		if (config.session?.usageLimits) {
+		const sessionNode = config.nodes.find(({ id }) => id === nodeId) || config.nodes[await getBestNode(workspace)];
+		const node = stardustConnector(sessionNode);
+		if (nodeId !== "autoselect" || !nodeId) {
+			const { data, error } = await node.healthcheck.get();
+			if (error) {
+				console.error(error);
+				throw new Error("Failed to connect to node, contact server admin");
+			}
+			if (data?.limit && data.limit <= data.sessions) throw new Error("Instance limit exceeded");
+		}
+		if (config.session?.usageLimits?.user) {
 			const { role, allSessions } = await db.transaction(async (tx) => ({
 				role: (
 					await tx.query.user.findFirst({
@@ -26,21 +35,17 @@ export async function createSession(workspace: string, nodeId?: string) {
 				)?.role,
 				allSessions: await tx.select().from(session),
 			}));
-			if (config.session?.usageLimits.instance && config.session?.usageLimits.instance <= allSessions.length)
-				throw new Error("Instance limit exceeded");
 			if (config.session.usageLimits.user && role !== "admin") {
 				const userSessions = allSessions.filter((v) => v.userId === userSession.user.id);
 				if (config.session?.usageLimits.user <= userSessions.length) throw new Error("User session limit exceeded");
 			}
 		}
-		const sessionNode = config.nodes.find(({ id }) => id === nodeId) || config.nodes[await getBestNode(workspace)];
-		const node = stardustConnector(sessionNode);
 		const { data: container, error } = await node.sessions.create.put({
 			workspace,
 			user: userSession.user.id,
 			nodeId: sessionNode.id,
 		});
-		if (error) throw error;
+		if (error) throw new Error("Failed to create session, contact server admin");
 		const expiry = new Date();
 		expiry.setMinutes(expiry.getMinutes() + (config.session?.keepaliveDuration || 1440));
 		const dbEntry = await db

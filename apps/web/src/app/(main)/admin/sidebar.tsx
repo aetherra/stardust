@@ -19,7 +19,7 @@ export function AdminSidebar() {
 		{ href: "/admin/nodes", label: "Nodes", Icon: Boxes },
 		{ href: "/admin/workspaces", label: "Workspaces", Icon: Layers },
 		{ href: "/admin/sessions", label: "Sessions", Icon: Container },
-		{ href: "/admin/config", label: "Config Viewer", Icon: Cog },
+		{ href: "/admin/config", label: "Config", Icon: Cog },
 	];
 	return (
 		<nav className="grid gap-x-4 text-sm text-muted-foreground justify-between h-full w-64">

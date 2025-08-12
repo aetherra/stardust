@@ -27,7 +27,7 @@ export async function getBestNode(workspace: string) {
 			.filter(({ id }) => availableNodes.includes(id))
 			.map(async (n: NodeConfig, i) => {
 				const { data } = await stardustConnector(n).healthcheck.get();
-				nodes[i] = Number(data?.cpu);
+				if (!data?.limit || data.limit > data.sessions) nodes[i] = Number(data?.cpu);
 			}),
 	);
 	return Object.keys(nodes)

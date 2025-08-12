@@ -26,6 +26,7 @@ for (const loc of configLocations) {
 	if (existsSync(loc)) {
 		console.log("✨ Stardust: Loaded config from %s", loc);
 		process.env.CONFIG = readFileSync(loc, "utf-8");
+		process.env.CONFIG_PATH = loc;
 		break;
 	}
 }

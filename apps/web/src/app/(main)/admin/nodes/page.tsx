@@ -1,6 +1,7 @@
 import { stardustConnector } from "@stardust/common/daemon/client";
 import { getConfig } from "@stardust/config";
 import type { Metadata } from "next";
+import DataRefresh from "@/components/data-refresh";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default async function Page() {
 			<section className="-ml-8">
 				<DataTable data={data} columns={columns} />
 			</section>
+			<DataRefresh />
 		</div>
 	);
 }

@@ -17,7 +17,7 @@ import {
 import { deleteSession, manageSession } from "@/lib/session/manage";
 import { massDelete, massManage } from "./actions";
 
-export const columns: ColumnDef<SelectSessionRelation & { status: string }>[] = [
+export const columns: ColumnDef<SelectSessionRelation & { status: string; cpu: number; memory: number }>[] = [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -49,6 +49,16 @@ export const columns: ColumnDef<SelectSessionRelation & { status: string }>[] = 
 	},
 	{ accessorKey: "dockerImage", header: ({ column }) => <DataTableColumnHeader column={column} title="Image" /> },
 	{ accessorKey: "node", header: ({ column }) => <DataTableColumnHeader column={column} title="Node" /> },
+	{
+		accessorKey: "cpu",
+		header: ({ column }) => <DataTableColumnHeader column={column} title="CPU" />,
+		cell: ({ row }) => `${(row.original.cpu * 100).toFixed(2)}%`,
+	},
+	{
+		accessorKey: "memory",
+		header: ({ column }) => <DataTableColumnHeader column={column} title="Memory" />,
+		cell: ({ row }) => `${(row.original.memory * 100).toFixed(2)}%`,
+	},
 	{
 		accessorKey: "createdAt",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Created at" />,

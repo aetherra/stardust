@@ -4,6 +4,7 @@ import { getConfig } from "@stardust/config";
 import db, { user, workspace } from "@stardust/db";
 import { Boxes, Container, Layers, Users } from "lucide-react";
 import { headers } from "next/headers";
+import DataRefresh from "@/components/data-refresh";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function mode<T>(arr: Array<T>) {
@@ -39,30 +40,6 @@ export default async function AdminPage() {
 			<section className="flex justify-start items-start h-full gap-4">
 				<Card className="w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Sessions</CardTitle>
-						<Container className="size-4 text-muted-foreground" />
-					</CardHeader>
-					<CardContent>
-						<div className="text-2xl font-bold">{sessions.length}</div>
-						<p className="text-xs text-muted-foreground">
-							{activeUsers.length} user{activeUsers.length === 1 ? "" : "s"} active
-						</p>
-					</CardContent>
-				</Card>
-				<Card className="w-64">
-					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Workspaces</CardTitle>
-						<Layers className="size-4 text-muted-foreground" />
-					</CardHeader>
-					<CardContent>
-						<div className="text-2xl font-bold">{workspaces.length}</div>
-						<p className="text-xs text-muted-foreground">
-							Most used workspace is {mode(sessions.map((s) => s.workspace.friendlyName)) || "N/A"}
-						</p>
-					</CardContent>
-				</Card>
-				<Card className="w-64">
-					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Users</CardTitle>
 						<Users className="size-4 text-muted-foreground" />
 					</CardHeader>
@@ -83,7 +60,32 @@ export default async function AdminPage() {
 						<p className="text-xs text-muted-foreground">Average CPU usage is {averageCpuUsage.toFixed(2)}%</p>
 					</CardContent>
 				</Card>
+				<Card className="w-64">
+					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+						<CardTitle className="text-sm font-medium">Workspaces</CardTitle>
+						<Layers className="size-4 text-muted-foreground" />
+					</CardHeader>
+					<CardContent>
+						<div className="text-2xl font-bold">{workspaces.length}</div>
+						<p className="text-xs text-muted-foreground">
+							Most used workspace is {mode(sessions.map((s) => s.workspace.friendlyName)) || "N/A"}
+						</p>
+					</CardContent>
+				</Card>
+				<Card className="w-64">
+					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+						<CardTitle className="text-sm font-medium">Sessions</CardTitle>
+						<Container className="size-4 text-muted-foreground" />
+					</CardHeader>
+					<CardContent>
+						<div className="text-2xl font-bold">{sessions.length}</div>
+						<p className="text-xs text-muted-foreground">
+							{activeUsers.length} user{activeUsers.length === 1 ? "" : "s"} active
+						</p>
+					</CardContent>
+				</Card>
 			</section>
+			<DataRefresh />
 		</div>
 	);
 }

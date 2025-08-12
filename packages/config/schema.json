@@ -319,9 +319,6 @@
           "additionalProperties": false,
           "description": "Session usage limit configuration",
           "properties": {
-            "instance": {
-              "type": "number"
-            },
             "user": {
               "type": "number"
             }

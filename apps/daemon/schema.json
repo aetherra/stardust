@@ -5,13 +5,6 @@
     "Config": {
       "additionalProperties": false,
       "properties": {
-        "dnsServers": {
-          "description": "DNS servers for the session to use.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
         "docker": {
           "$ref": "#/definitions/DockerConfig"
         },
@@ -96,22 +89,28 @@
     "SessionConfig": {
       "additionalProperties": false,
       "properties": {
-        "bitDepth": {
-          "default": 24,
-          "description": "Bit depth for the display",
-          "type": "number"
-        },
         "blockedProcessNames": {
-          "description": "List of processes to block on containers. Useful if you want to stop the use of crypto miners or other resource hungry processes.",
+          "description": "List of processes to block on containers. Useful if you want to stop the use of crypto miners or other resource hungry processes. Will also kill processes on the host. Will be overhauled later",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
-        "resolution": {
-          "default": "1920x1080",
-          "description": "Resolution for the display",
-          "type": "string"
+        "dnsServers": {
+          "description": "DNS servers for the session to use.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "limit": {
+          "description": "Max number of sessions allowed on this instance",
+          "type": "number"
+        },
+        "memoryLimit": {
+          "default": "undefined",
+          "description": "Maximum memory a container can use, in megabytes",
+          "type": "number"
         },
         "showVncPassword": {
           "description": "Doesn't unset $VNCPASSWORD in containers",

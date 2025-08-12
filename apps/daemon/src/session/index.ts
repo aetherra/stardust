@@ -11,6 +11,13 @@ export default new Elysia({ prefix: "/sessions" })
 	.put(
 		"/create",
 		async ({ body }) => {
+			const config = getConfig();
+			const containers = (await docker.listContainers()).filter(
+				(s) => s.HostConfig.NetworkMode === config.docker.network,
+			);
+			if (config.session.limit && config.session.limit <= containers.length) {
+				throw new Error("Session limit reached");
+			}
 			const session = await createSession(body);
 			return {
 				success: true,
@@ -28,7 +35,6 @@ export default new Elysia({ prefix: "/sessions" })
 				exposePorts: t.Optional(t.Array(t.String())),
 				memory: t.Optional(t.Number()),
 				nodeId: t.String(),
-				vncFlags: t.Optional(t.String()),
 			}),
 		},
 	)
@@ -43,14 +49,31 @@ export default new Elysia({ prefix: "/sessions" })
 		};
 	})
 	.get("/:id", async ({ params: { id } }) => {
-		const container = await docker.getContainer(id).inspect();
-		if (!container) {
+		const info = docker.getContainer(id);
+		const container = await info.inspect();
+		const stats = await info.stats({ stream: false });
+		if (!stats || !container) {
 			throw new Error(`No such container with id ${id}`);
+		}
+		const memUsage = stats.memory_stats.usage;
+		const memLimit = stats.memory_stats.limit;
+		const memPercent = memUsage / memLimit;
+		const cpuDelta = stats.cpu_stats.cpu_usage.total_usage - stats.precpu_stats.cpu_usage.total_usage;
+
+		const systemDelta = stats.cpu_stats.system_cpu_usage - stats.precpu_stats.system_cpu_usage;
+		let cpuPercent = 0;
+		if (systemDelta > 0 && cpuDelta > 0) {
+			const numCpus = stats.cpu_stats.online_cpus || stats.cpu_stats.cpu_usage.percpu_usage.length;
+			cpuPercent = (cpuDelta / systemDelta) * numCpus * 100;
 		}
 		// world class code
 		const password = container.Config.Env.find((e) => e.startsWith("VNCPASSWORD="))?.split("=")[1];
 		return {
 			password,
+			cpuPercent,
+			memPercent,
+			memUsage,
+			memLimit,
 			success: true,
 			...container,
 		};

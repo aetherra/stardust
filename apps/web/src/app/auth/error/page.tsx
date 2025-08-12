@@ -9,11 +9,11 @@ export default async function AuthError({
 	const { error } = await searchParams;
 	return (
 		<>
-			<CardHeader className="text-center">
+			<CardHeader className="justify-center w-full">
 				<CardTitle>Authentication Error</CardTitle>
 				<CardDescription>Something went wrong authenticating:</CardDescription>
 			</CardHeader>
-			<CardContent className="text-center">
+			<CardContent className="justify-center">
 				<div className="flex flex-col items-center justify-center gap-4">
 					{error ? <span className="font-bold font-mono text-destructive">{error}</span> : null}
 					<BackButton />

@@ -4,18 +4,19 @@ import scalarCss from "@stardust/theme/scalar-css";
 import { Elysia } from "elysia";
 import pkgJson from "~/../package.json";
 import { authCheck } from "~/auth-middleware";
+import generateToken from "~/lib/auth-token";
 import { getConfig } from "~/lib/config";
+import { getCpuUsage } from "~/lib/cpu";
 import { docker } from "~/lib/docker";
 import sessionHandler from "~/session";
 import workspaceHandler from "~/workspace";
-import generateToken from "./lib/auth-token";
 
 const config = getConfig();
 export const app = new Elysia()
 	.get("/", async (c) => {
 		return {
 			message:
-				"✨ Stardust daemon by aetherra. \nSource tree: https://github.com/aetherra/stardust/tree/rewrite/apps/daemon",
+				"✨ Stardust daemon by aetherra. Source tree: https://github.com/aetherra/stardust/tree/rewrite/apps/daemon",
 			success: true,
 			authenticated: (await authCheck(c))?.success !== false,
 		};
@@ -30,11 +31,12 @@ export const app = new Elysia()
 	})
 	.get("/healthcheck", async () => ({
 		success: true,
-		cpu: ((os.loadavg()[0] / os.cpus().length) * 100).toFixed(2),
+		cpu: getCpuUsage().toFixed(2),
 		mem: (((os.totalmem() - os.freemem()) / os.totalmem()) * 100).toFixed(2),
 		os: `${os.type()} ${os.release()}`,
 		version: pkgJson.version,
 		sessions: (await docker.listContainers()).filter((s) => s.HostConfig.NetworkMode === config.docker.network).length,
+		limit: config.session.limit,
 	}))
 	.use(sessionHandler)
 	.use(workspaceHandler)

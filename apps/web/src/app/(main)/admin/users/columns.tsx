@@ -27,7 +27,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import authClient from "@/lib/auth-client";
-import { deleteUserSessions, revalidateHandler, safeDeleteUser } from "./actions";
+import { deleteUserSessions, revalidateHandler, safeBanUser, safeDeleteUser } from "./actions";
 import { ResetPasswordDialog, UpdateUserDialog } from "./components";
 
 const clientOptions = {
@@ -93,13 +93,21 @@ export const columns: ColumnDef<SelectUserRelation>[] = [
 							<AlertDialogFooter>
 								<AlertDialogCancel>Nevermind</AlertDialogCancel>
 								<AlertDialogAction
-									onClick={() =>
-										toast.promise(() => safeDeleteUser(user.id), {
-											loading: "Deleting user...",
-											success: "User deleted",
-											error: (error) => `Failed to delete user: ${error.message}`,
-										})
-									}
+									onClick={() => {
+										toast.promise(
+											async () => {
+												const res = await safeDeleteUser(user.id);
+												if (res?.error) {
+													throw new Error(res.error as string);
+												}
+											},
+											{
+												loading: "Deleting user...",
+												success: "User deleted",
+												error: (error) => `Failed to delete user: ${error.message}`,
+											},
+										);
+									}}
 								>
 									Yes, delete
 								</AlertDialogAction>
@@ -146,14 +154,21 @@ export const columns: ColumnDef<SelectUserRelation>[] = [
 							<DropdownMenuItem
 								onClick={() =>
 									toast.promise(
-										() =>
-											(user.banned ? authClient.admin.unbanUser : authClient.admin.banUser)(
-												{ userId: user.id },
-												clientOptions,
-											),
+										async () => {
+											let data: { user?: { banned: boolean }; error?: unknown };
+											if (user.banned) {
+												data = await authClient.admin.unbanUser({ userId: user.id }, clientOptions);
+											} else {
+												data = await safeBanUser({ userId: user.id });
+												if (data.error) {
+													throw new Error(data?.error as string);
+												}
+											}
+											return data;
+										},
 										{
 											loading: "Banning user...",
-											success: ({ data }) => `User ${data?.user.banned ? "banned" : "unbanned"}`,
+											success: ({ user }) => `User ${user?.banned ? "banned" : "unbanned"}`,
 											error: (error) => `Failed to ban user: ${error.message}`,
 										},
 									)

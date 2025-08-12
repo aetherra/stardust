@@ -25,27 +25,45 @@ export async function deleteUserSessions(id: string) {
 }
 // todo: move this to better auth callback
 export async function safeDeleteUser(id: string) {
-	await db.transaction(async (tx) => {
-		const sessions = await tx.select().from(session).where(eq(session.userId, id));
-		await Promise.all(
-			sessions.map((s) =>
-				deleteSession({
-					id: s.id,
-					admin: true,
-					dbClient: tx,
-				}),
-			),
-		);
-	});
-	const res = await auth.api.removeUser({
-		body: {
-			userId: id,
-		},
-		headers: await getHeaders(),
-	});
-	if (res.success) {
-		revalidateHandler();
-		return res;
+	try {
+		const currentUser = await auth.api.getSession({
+			headers: await getHeaders(),
+		});
+		if (id === currentUser?.user.id) throw new Error("Cannot delete own account");
+		await deleteUserSessions(id);
+		const res = await auth.api.removeUser({
+			body: {
+				userId: id,
+			},
+			headers: await getHeaders(),
+		});
+		if (res.success) {
+			revalidateHandler();
+			return { success: true };
+		}
+	} catch (e) {
+		console.error(e);
+		return { error: e, success: false };
+	}
+}
+export async function safeBanUser({ userId }: { userId: string }) {
+	try {
+		const currentUser = await auth.api.getSession({
+			headers: await getHeaders(),
+		});
+		if (userId === currentUser?.user.id) throw new Error("Cannot ban own account");
+		await deleteUserSessions(userId);
+		const res = await auth.api.banUser({
+			body: {
+				userId: userId,
+			},
+			headers: await getHeaders(),
+		});
+		revalidatePath("/admin/users");
+		return { data: res };
+	} catch (e) {
+		console.error(e);
+		return { error: e };
 	}
 }
 export async function resetPassword(id: string, data: FormData) {

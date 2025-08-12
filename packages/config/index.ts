@@ -7,6 +7,6 @@ export function getConfig<T = Config>(): T {
 }
 export function validateConfig(config: unknown, sch?: unknown) {
 	const validate = new Ajv().compile(sch || defaultSchema);
-	const res = validate(config);
+	const res = validate(typeof config === "string" ? load(config) : config);
 	return res;
 }

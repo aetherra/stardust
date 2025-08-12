@@ -1,85 +1,8 @@
-"use client";
 import { getConfig } from "@stardust/config";
-import { redirect, useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { SubmitButton } from "@/components/submit-button";
-import { CardContent, CardDescription } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import authClient from "@/lib/auth-client";
+import { redirect } from "next/navigation";
+import ClientPage from "./page.client";
 
 export default function Page() {
 	if (!getConfig().auth.credentials?.enabled) redirect("/");
-	const router = useRouter();
-	return (
-		<CardContent className="m-1 w-full flex-col flex justify-center items-center">
-			<CardDescription>Reset your password</CardDescription>
-			<form
-				className="mx-auto my-4 flex w-full flex-col items-start justify-center gap-2"
-				action={(data) => {
-					const oldPassword = data.get("old-password")?.toString();
-					const newPassword = data.get("new-password")?.toString();
-					const confirmPassword = data.get("confirm-password")?.toString();
-					const revokeOtherSessions = Boolean(data.get("revoke-others"));
-					if (!oldPassword || !newPassword || !confirmPassword) throw new Error("All fields are required");
-					if (newPassword !== confirmPassword) throw new Error("Passwords do not match");
-					authClient.changePassword(
-						{
-							revokeOtherSessions,
-							newPassword,
-							currentPassword: oldPassword,
-						},
-						{
-							onSuccess() {
-								router.push("/");
-								toast.success("Password changed successfully");
-							},
-							onError({ error }) {
-								toast.error(error.message);
-							},
-						},
-					);
-				}}
-			>
-				<Label htmlFor="old-password">Old Password</Label>
-				<Input
-					required
-					id="old-password"
-					type="password"
-					name="old-password"
-					placeholder="Old Password"
-					autoComplete="current-password"
-					className="w-full"
-				/>
-				<Label htmlFor="new-password">New Password</Label>
-				<Input
-					required
-					minLength={8}
-					id="new-password"
-					type="password"
-					name="new-password"
-					placeholder="New Password"
-					autoComplete="new-password"
-					className="w-full"
-				/>
-				<Label htmlFor="confirm-password">Confirm Password</Label>
-				<Input
-					required
-					minLength={8}
-					id="confirm-password"
-					type="password"
-					name="confirm-password"
-					placeholder="Confirm Password"
-					autoComplete="new-password"
-					className="w-full"
-				/>
-				<div className="flex items-center gap-2">
-					<Checkbox id="revoke-others" name="revoke-others" defaultChecked />
-					<Label htmlFor="revoke-others">Sign out of all other devices</Label>
-				</div>
-				<SubmitButton className="w-full">Reset</SubmitButton>
-			</form>
-		</CardContent>
-	);
+	return <ClientPage />;
 }

@@ -3,10 +3,23 @@ xrdb $HOME/.Xresources
 export DISPLAY=":1"
 startxfce4 &
 for i in {1..30}; do
-  if pgrep -u "$USER" xfsettingsd > /dev/null; then
-    break
-  fi
-  sleep 1
+    if pgrep -u "$USER" xfdesktop > /dev/null; then
+        break
+    fi
+    sleep 1
 done
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVNC-0/workspace0/last-image -s /opt/stardust/shared/wallpaper.png --create
+WALLPAPER="/opt/stardust/shared/wallpaper.png"
+BASE_PROP="/backdrop/screen0/monitorVNC-0"
+for attempt in {1..5}; do
+    local ws
+    for ws in 0 1 2 3; do
+        xfconf-query -c xfce4-desktop -p "$BASE_PROP/workspace${ws}/last-image" -n -t string -s "$WALLPAPER" 2>/dev/null || \
+        xfconf-query -c xfce4-desktop -p "$BASE_PROP/workspace${ws}/last-image" -s "$WALLPAPER"
+    done
+    current=$(xfconf-query -c xfce4-desktop -p "$BASE_PROP/workspace0/last-image" 2>/dev/null || echo "")
+    if echo "$current" | grep -q "$WALLPAPER"; then
+        break
+    fi
+    sleep 2
+done
 wait

@@ -2,25 +2,19 @@ import { randomBytes } from "node:crypto";
 import { getConfig } from "~/lib/config";
 import { docker } from "~/lib/docker";
 
-const config = getConfig();
-export const vncBaseFlags = `-screen 0 ${config.session.resolution || "1920x950"}x${config.session.bitDepth?.toString() || "24"}`;
-
 export default async function createSession({
 	workspace,
 	user,
 	password,
 	environment = {},
 	exposePorts,
-	memory,
 	nodeId,
-	vncFlags,
 }: {
 	workspace: string;
 	user: string;
 	password?: string;
 	environment?: Record<string, string>;
 	exposePorts?: string[];
-	memory?: number;
 	nodeId: string;
 	vncFlags?: string;
 }) {
@@ -35,8 +29,8 @@ export default async function createSession({
 		HostConfig: {
 			ShmSize: 1024,
 			NetworkMode: config.docker.network,
-			Dns: config.dnsServers,
-			Memory: memory,
+			Dns: config.session.dnsServers,
+			Memory: config.session.memoryLimit ? config.session.memoryLimit * 1024 * 1024 : undefined,
 			StorageOpt: config.session.storageLimit
 				? {
 						size: config.session.storageLimit,
@@ -47,7 +41,6 @@ export default async function createSession({
 			`STARDUST_USER=${user}`,
 			`VNCPASSWORD=${pass}`,
 			`WIPEVNCENV=${config.session.showVncPassword ? "false" : "true"}`,
-			`VNCFLAGS=${vncBaseFlags + vncFlags}`,
 			...envArray,
 		],
 		ExposedPorts: exposePorts ? Object.fromEntries(exposePorts.map((e) => [e, {}])) : undefined, // world class types by docker

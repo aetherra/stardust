@@ -154,7 +154,6 @@ export interface SessionConfig {
 	 * Session usage limit configuration
 	 */
 	usageLimits?: {
-		instance?: number;
 		user?: number;
 	};
 }

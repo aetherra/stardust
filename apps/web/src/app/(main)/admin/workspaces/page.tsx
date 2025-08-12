@@ -1,6 +1,7 @@
 import db, { workspace } from "@stardust/db";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import DataRefresh from "@/components/data-refresh";
 import { SubmitButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
@@ -83,6 +84,7 @@ export default async function AdminPage() {
 					</DialogContent>
 				</Dialog>
 			</div>
+			<DataRefresh />
 		</div>
 	);
 }

@@ -1,5 +1,6 @@
 import db from "@stardust/db";
 import type { Metadata } from "next";
+import DataRefresh from "@/components/data-refresh";
 import { DataTable } from "@/components/ui/data-table";
 import { getNode } from "@/lib/session/client";
 import { columns } from "./columns";
@@ -13,10 +14,15 @@ export default async function AdminPage() {
 		},
 	});
 	const data = await Promise.all(
-		dbData.map(async (session) => ({
-			...session,
-			status: (await getNode(session).sessions({ id: session.id }).get()).data?.State.Status || "Unknown",
-		})),
+		dbData.map(async (session) => {
+			const data = (await getNode(session).sessions({ id: session.id }).get()).data;
+			return {
+				...session,
+				status: data?.State.Status || "Unknown",
+				cpu: data?.cpuPercent as number,
+				memory: data?.memPercent as number,
+			};
+		}),
 	);
 	return (
 		<div className="flex h-full flex-col">
@@ -24,6 +30,7 @@ export default async function AdminPage() {
 			<section className="-ml-8">
 				<DataTable data={data} columns={columns} />
 			</section>
+			<DataRefresh />
 		</div>
 	);
 }
