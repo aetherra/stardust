@@ -36,6 +36,7 @@ export default async function createSession({
 						size: config.session.storageLimit,
 					}
 				: undefined,
+			CpuQuota: config.session.cpuLimit ? config.session.cpuLimit * 100000 : undefined,
 		},
 		Env: [
 			`STARDUST_USER=${user}`,

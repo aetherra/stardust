@@ -79,8 +79,14 @@ export interface SessionConfig {
 	 */
 	showVncPassword?: boolean;
 	/**
+	 * Percentage of the host's CPU a container can use.
+	 * @see https://docs.docker.com/engine/containers/resource_constraints/#cpu:~:text=Specify%20how
+	 * @default unlimited
+	 * @example 0.5
+	 */
+	cpuLimit?: number;
+	/**
 	 * Maximum memory a container can use, in megabytes
-	 * @default undefined
 	 */
 	memoryLimit?: number;
 	/**

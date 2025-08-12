@@ -96,6 +96,14 @@
           },
           "type": "array"
         },
+        "cpuLimit": {
+          "default": "unlimited",
+          "description": "Percentage of the host's CPU a container can use.",
+          "examples": [
+            0.5
+          ],
+          "type": "number"
+        },
         "dnsServers": {
           "description": "DNS servers for the session to use.",
           "items": {
@@ -108,7 +116,6 @@
           "type": "number"
         },
         "memoryLimit": {
-          "default": "undefined",
           "description": "Maximum memory a container can use, in megabytes",
           "type": "number"
         },
