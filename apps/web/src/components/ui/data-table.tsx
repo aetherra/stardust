@@ -51,7 +51,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 	});
 
 	return (
-		<div className="w-full px-8 flex gap-4 flex-col -mt-16">
+		<div className="w-full px-4 sm:px-8 flex gap-4 flex-col -mt-16">
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button variant="outline" className="ml-auto">

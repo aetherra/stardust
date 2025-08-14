@@ -35,10 +35,10 @@ export default async function AdminPage() {
 	const activeUsers = [...new Set(sessions.map((s) => s.userId))];
 	const admins = users.filter((u) => u.role === "admin");
 	return (
-		<div className="flex h-full flex-col">
+		<>
 			<h1 className="py-6 text-3xl font-bold">Welcome, {userSession?.user?.name}</h1>
-			<section className="flex justify-start items-start h-full gap-4">
-				<Card className="w-64">
+			<section className="flex flex-wrap gap-4">
+				<Card className="w-full min-w-64 sm:w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Users</CardTitle>
 						<Users className="size-4 text-muted-foreground" />
@@ -50,7 +50,7 @@ export default async function AdminPage() {
 						</p>
 					</CardContent>
 				</Card>
-				<Card className="w-64">
+				<Card className="w-full min-w-64 sm:w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Nodes</CardTitle>
 						<Boxes className="size-4 text-muted-foreground" />
@@ -60,7 +60,7 @@ export default async function AdminPage() {
 						<p className="text-xs text-muted-foreground">Average CPU usage is {averageCpuUsage.toFixed(2)}%</p>
 					</CardContent>
 				</Card>
-				<Card className="w-64">
+				<Card className="w-full min-w-64 sm:w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Workspaces</CardTitle>
 						<Layers className="size-4 text-muted-foreground" />
@@ -72,7 +72,7 @@ export default async function AdminPage() {
 						</p>
 					</CardContent>
 				</Card>
-				<Card className="w-64">
+				<Card className="w-full min-w-64 sm:w-64">
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Sessions</CardTitle>
 						<Container className="size-4 text-muted-foreground" />
@@ -86,6 +86,6 @@ export default async function AdminPage() {
 				</Card>
 			</section>
 			<DataRefresh />
-		</div>
+		</>
 	);
 }

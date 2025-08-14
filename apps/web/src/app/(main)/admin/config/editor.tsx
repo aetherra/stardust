@@ -17,9 +17,9 @@ export default function ConfigEditor({ current, path }: { current: string; path:
 	const [value, setValue] = useState<string | undefined>(current);
 
 	return (
-		<div className="flex h-[90vh] w-full flex-col justify-center items-left">
+		<div className="flex w-full flex-col justify-center items-left -ml-2">
 			<form
-				className="mb-2 flex flex-row items-center"
+				className="my-2 flex flex-row items-center"
 				action={() =>
 					void toast.promise(
 						async () => {
@@ -52,7 +52,7 @@ export default function ConfigEditor({ current, path }: { current: string; path:
 			</form>
 			<Editor
 				defaultLanguage="yaml"
-				className="w-full border rounded-sm p-2"
+				className="w-fit h-[90vh] border rounded-sm p-2"
 				value={value}
 				onChange={setValue}
 				defaultPath={path}
