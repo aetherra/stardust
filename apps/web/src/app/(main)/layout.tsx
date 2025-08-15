@@ -11,9 +11,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
 	const credentials = getConfig().auth.credentials?.enabled;
 	return (
 		<SidebarProvider>
-			<SidebarTrigger className="bottom-4 left-4 m-4" />
 			<AppSidebar session={userSession} credentials={credentials} />
-			<div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+			<div className="flex flex-1 flex-col gap-4 pt-0 px-4">
+				<SidebarTrigger className="fixed bottom-2" />
+				{children}
+			</div>
 		</SidebarProvider>
 	);
 }

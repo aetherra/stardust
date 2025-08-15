@@ -2,6 +2,7 @@
 import type { SelectSessionRelation } from "@stardust/db/relational-types";
 import type { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
 import { DataTableColumnHeader } from "@/components/data-table/column-header";
 import { Button } from "@/components/ui/button";
@@ -136,8 +137,17 @@ export const columns: ColumnDef<SelectSessionRelation & { status: string; cpu: n
 				<DropdownMenuContent align="end">
 					<DropdownMenuLabel>Actions</DropdownMenuLabel>
 					<DropdownMenuItem onClick={() => navigator.clipboard.writeText(session.id)}>Copy session ID</DropdownMenuItem>
+					<DropdownMenuItem asChild>
+						<Link
+							href={{
+								pathname: "/admin/users",
+								query: { email: session.user.email },
+							}}
+						>
+							View user
+						</Link>
+					</DropdownMenuItem>
 					<DropdownMenuSeparator />
-
 					<DropdownMenuItem
 						onClick={() =>
 							toast.promise(

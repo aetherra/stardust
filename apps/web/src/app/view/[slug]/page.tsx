@@ -137,7 +137,11 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 	const toggleAudio = () => {
 		if (audioEnabled) {
 			audioRef.current?.stop();
+			audioRef.current = null;
 		} else {
+			audioRef.current = new VncAudio(
+				`${window.location.protocol.replace("http", "ws")}//${window.location.host}/audio/${params.slug}`,
+			);
 			audioRef.current?.start();
 		}
 		setAudioEnabled(!audioEnabled);
@@ -163,7 +167,8 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 								variant="ghost"
 								size="icon"
 								onClick={() => {
-									setSidebarOpen(false);
+									vncRef.current?.rfb?.disconnect();
+									setAudioEnabled(false);
 									router.push("/");
 								}}
 							>
@@ -202,7 +207,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 								)}
 							</Button>
 						</TooltipTrigger>
-						<TooltipContent>Turn audio {audioEnabled ? "off" : "on (press a key after to activate)"}</TooltipContent>
+						<TooltipContent>Turn audio {audioEnabled ? "off" : "on"}</TooltipContent>
 					</Tooltip>
 					<Tooltip>
 						<TooltipTrigger asChild>

@@ -23,7 +23,14 @@ export default async function Page() {
 		<>
 			<h1 className="py-6 text-3xl font-bold">Nodes</h1>
 			<section className="-ml-4 sm:-ml-8">
-				<DataTable data={data} columns={columns} />
+				<DataTable
+					data={data}
+					columns={columns}
+					filter={{
+						key: "id",
+						placeholder: "Filter by ID",
+					}}
+				/>
 			</section>
 			<DataRefresh />
 		</>

@@ -4,7 +4,7 @@ import type { SessionSchema } from "@stardust/common/auth";
 import {
 	Book,
 	Boxes,
-	ChevronUp,
+	ChevronRight,
 	Cog,
 	ComputerIcon,
 	Container,
@@ -25,6 +25,7 @@ import { useTheme } from "next-themes";
 import { useState } from "react";
 import packageJson from "@/../package.json";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
@@ -48,10 +49,10 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
+	useSidebar,
 } from "@/components/ui/sidebar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { GitHubIcon, StardustIcon } from "./icons";
-import { Badge } from "./ui/badge";
 
 interface AppSidebarProps {
 	session: SessionSchema | null;
@@ -64,7 +65,7 @@ export function AppSidebar({ session, credentials }: AppSidebarProps) {
 	const [open, setDialogOpen] = useState(false);
 	const { themes, setTheme, theme: currentTheme } = useTheme();
 	const pathname = usePathname();
-
+	const sidebar = useSidebar();
 	const mainNavItems = [
 		{
 			icon: ComputerIcon,
@@ -113,12 +114,10 @@ export function AppSidebar({ session, credentials }: AppSidebarProps) {
 
 	return (
 		<>
-			<Sidebar>
-				<SidebarHeader className="border-b border-sidebar-border">
-					<div className="flex items-center gap-2 px-2 py-2">
-						<StardustIcon className="size-8" />
-						<span className="text-xl font-bold">Stardust</span>
-					</div>
+			<Sidebar collapsible="icon">
+				<SidebarHeader className="border-b  flex flex-row items-center gap-2 pr-2 py-2">
+					<StardustIcon className="size-10" />
+					{sidebar.open || sidebar.isMobile ? <span className="text-3xl font-bold ml-2">Stardust</span> : null}
 				</SidebarHeader>
 				<SidebarContent>
 					<SidebarGroup>
@@ -180,8 +179,12 @@ export function AppSidebar({ session, credentials }: AppSidebarProps) {
 										<span>Theme</span>
 									</SidebarMenuButton>
 								</DropdownMenuTrigger>
-								<DropdownMenuContent className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg">
-									<DropdownMenuRadioGroup value={currentTheme} onValueChange={setTheme}>
+								<DropdownMenuContent side="right" className="w-[--radix-dropdown-menu-trigger-width]">
+									<DropdownMenuRadioGroup
+										value={currentTheme}
+										onValueChange={setTheme}
+										className="!w-[--radix-dropdown-menu-trigger-width]"
+									>
 										{themes.map((theme) => (
 											<DropdownMenuRadioItem key={theme} value={theme}>
 												{theme.charAt(0).toUpperCase() + theme.slice(1)}
@@ -210,14 +213,10 @@ export function AppSidebar({ session, credentials }: AppSidebarProps) {
 										<div className="grid flex-1 text-left text-sm leading-tight">
 											<span className="truncate font-semibold">{name || email?.split("@")[0]}</span>
 										</div>
-										<ChevronUp className="ml-auto size-4" />
+										<ChevronRight className="ml-auto size-4" />
 									</SidebarMenuButton>
 								</DropdownMenuTrigger>
-								<DropdownMenuContent
-									className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-									align="end"
-									sideOffset={4}
-								>
+								<DropdownMenuContent className="w-[--radix-dropdown-menu-trigger-width]" side="right">
 									<DropdownMenuLabel className="p-0 font-normal">
 										<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 											<Avatar className="h-8 w-8 rounded-lg">

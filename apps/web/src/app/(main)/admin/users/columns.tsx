@@ -4,6 +4,7 @@ import type { SelectUserRelation } from "@stardust/db/relational-types";
 import type { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { DataTableColumnHeader } from "@/components/data-table/column-header";
@@ -124,6 +125,16 @@ export const columns: ColumnDef<SelectUserRelation>[] = [
 						<DropdownMenuContent align="end">
 							<DropdownMenuLabel>Actions</DropdownMenuLabel>
 							<DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id)}>Copy user ID</DropdownMenuItem>
+							<DropdownMenuItem asChild>
+								<Link
+									href={{
+										pathname: "/admin/sessions",
+										query: { user: user.email },
+									}}
+								>
+									View sessions
+								</Link>
+							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => setUpdateDialogOpen(true)}>Edit user</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem onClick={() => setResetDialogOpen(true)}>Reset password</DropdownMenuItem>

@@ -33,7 +33,7 @@ export default async function AdminPage() {
 		<>
 			<h1 className="py-6 text-3xl font-bold">Users</h1>
 			<section className="-ml-4 sm:-ml-8">
-				<DataTable data={data} columns={columns} />
+				<DataTable data={data} columns={columns} filter={{ key: "email", placeholder: "Filter by email" }} />
 			</section>
 			<div className="flex justify-start items-center">
 				<Dialog>

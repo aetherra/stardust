@@ -9,6 +9,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import * as React from "react";
 import { DataTablePagination } from "@/components/data-table/pagination";
 import {
@@ -19,18 +20,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "./button";
+import { Input } from "./input";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
+	filter?: {
+		key: string;
+		placeholder?: string;
+	};
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, filter }: DataTableProps<TData, TValue>) {
 	"use no memo";
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
 	const [rowSelection, setRowSelection] = React.useState({});
+	const searchParams = useSearchParams();
+	const searchValue = searchParams.get(filter?.key || "");
 	const table = useReactTable({
 		data,
 		columns,
@@ -49,33 +57,49 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 			columnVisibility,
 		},
 	});
-
+	React.useEffect(() => {
+		if (filter?.key) {
+			if (searchValue && !table.getColumn(filter.key)?.getFilterValue()) {
+				table.getColumn(filter.key)?.setFilterValue(searchValue);
+			}
+		}
+	}, [searchValue, table, filter]);
 	return (
-		<div className="w-full px-4 sm:px-8 flex gap-4 flex-col -mt-16">
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
-					<Button variant="outline" className="ml-auto">
-						Columns <ChevronDown className="ml-2 h-4 w-4" />
-					</Button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent align="end">
-					{table
-						.getAllColumns()
-						.filter((column) => column.getCanHide())
-						.map((column) => {
-							return (
-								<DropdownMenuCheckboxItem
-									key={column.id}
-									className="capitalize"
-									checked={column.getIsVisible()}
-									onCheckedChange={(value) => column.toggleVisibility(!!value)}
-								>
-									{column.id}
-								</DropdownMenuCheckboxItem>
-							);
-						})}
-				</DropdownMenuContent>
-			</DropdownMenu>
+		<div className="w-full px-4 sm:px-8 flex gap-4 flex-col">
+			<div className="flex flex-row">
+				{filter ? (
+					<Input
+						placeholder={filter.placeholder || filter.key}
+						value={(table.getColumn(filter.key)?.getFilterValue() as string) ?? ""}
+						onChange={(event) => table.getColumn(filter.key)?.setFilterValue(event.target.value)}
+						className="max-w-sm"
+					/>
+				) : null}
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button variant="outline" className="ml-auto">
+							Columns <ChevronDown className="ml-2 h-4 w-4" />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align="end">
+						{table
+							.getAllColumns()
+							.filter((column) => column.getCanHide())
+							.map((column) => {
+								return (
+									<DropdownMenuCheckboxItem
+										key={column.id}
+										className="capitalize"
+										checked={column.getIsVisible()}
+										onCheckedChange={(value) => column.toggleVisibility(!!value)}
+									>
+										{column.id}
+									</DropdownMenuCheckboxItem>
+								);
+							})}
+					</DropdownMenuContent>
+				</DropdownMenu>
+			</div>
 			<div className="rounded-md border w-full">
 				<Table>
 					<TableHeader>
