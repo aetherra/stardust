@@ -131,6 +131,7 @@ export interface AuthConfig {
 				 * The OAuth provider's issuer, if applicable.
 				 **/
 				issuer?: string;
+				[key: string]: string;
 			};
 		};
 		customProviders?: CustomAuthConfig[];

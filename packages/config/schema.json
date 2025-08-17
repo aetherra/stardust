@@ -34,7 +34,9 @@
             },
             "providers": {
               "additionalProperties": {
-                "additionalProperties": false,
+                "additionalProperties": {
+                  "type": "string"
+                },
                 "description": "the provider name. Compatible providers: Apple Discord Facebook GitHub Google Hugging Face Kick Microsoft Slack Notion Tiktok Twitch Twitter (X) Dropbox Linear LinkedIn GitLab Reddit Roblox Spotify VK Zoom",
                 "properties": {
                   "clientId": {
