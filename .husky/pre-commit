@@ -2,3 +2,4 @@ pnpm check
 pnpm check-types
 pnpm -C packages/config run config-schema
 pnpm -C apps/daemon run config-schema
+git add .
