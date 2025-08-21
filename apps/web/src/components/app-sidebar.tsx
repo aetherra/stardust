@@ -289,7 +289,7 @@ export function AppSidebar({ session, credentials }: AppSidebarProps) {
 							>
 								GNU Affero General Public License v3.0 (AGPL-3.0)
 							</a>
-							. Copyleft 2024 aetherra.
+							. Copyleft {new Date().getFullYear()} aetherra.
 						</section>
 						<DialogFooter>
 							<Tooltip>
