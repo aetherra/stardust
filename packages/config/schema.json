@@ -96,7 +96,8 @@
       "additionalProperties": false,
       "properties": {
         "auth": {
-          "$ref": "#/definitions/AuthConfig"
+          "$ref": "#/definitions/AuthConfig",
+          "description": "Configuration for authentication"
         },
         "databaseUrl": {
           "description": "The URL of the database to connect to.",
@@ -123,8 +124,13 @@
           "description": "Port to run stardust on",
           "type": "number"
         },
+        "restartCommand": {
+          "description": "Command to restart the server (config file updates)",
+          "type": "string"
+        },
         "session": {
-          "$ref": "#/definitions/SessionConfig"
+          "$ref": "#/definitions/SessionConfig",
+          "description": "Configuration for workspace sessions"
         }
       },
       "required": [

@@ -10,3 +10,4 @@ export function validateConfig(config: unknown, sch?: unknown) {
 	const res = validate(typeof config === "string" ? load(config) : config);
 	return res;
 }
+export { load as loadYaml } from "js-yaml";

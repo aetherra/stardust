@@ -7,39 +7,62 @@ import { useTheme } from "next-themes";
 import { useState } from "react";
 import { toast } from "sonner";
 import { SubmitButton } from "@/components/submit-button";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import saveConfig from "./actions";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { saveConfig } from "./actions";
 
 type MonacoTheme = Parameters<Monaco["editor"]["defineTheme"]>[1];
 
-export default function ConfigEditor({ current, path }: { current: string; path: string }) {
+export default function ConfigEditor({
+	current,
+	path,
+	saved,
+	restartEnabled,
+}: {
+	current: string;
+	path: string;
+	saved: boolean;
+	restartEnabled: boolean;
+}) {
 	const { resolvedTheme } = useTheme();
 	const [value, setValue] = useState<string | undefined>(current);
-
 	return (
 		<div className="flex w-full flex-col justify-center items-left -ml-2">
 			<form
-				className="my-2 flex flex-row items-center"
-				action={() =>
+				className="my-2 flex flex-row items-center gap-2"
+				action={(data) =>
 					void toast.promise(
 						async () => {
 							if (!value) throw new Error("No value provided");
-							const res = await saveConfig(value);
+							const res = await saveConfig(value, Boolean(data.get("restart")));
 							if (res.error) throw new Error(res.error);
 							return res;
 						},
 						{
 							loading: "Saving...",
-							success: "Saved! Rebuild and restart Stardust to apply changes.",
+							success: (data) =>
+								data.restart
+									? "Saved! Stardust will automatically restart."
+									: "Saved! Rebuild and restart Stardust to apply changes.",
 							error: (error) => `Failed to save: ${error}`,
 						},
 					)
 				}
 			>
 				<SubmitButton>
-					<Save className="size-6 mr-2" />
-					Save (manual restart and rebuild required)
+					<Save />
+					Save
 				</SubmitButton>
+				<div className="flex flex-row gap-2">
+					{restartEnabled ? (
+						<>
+							<Checkbox name="restart" defaultChecked={false} />
+							<Label htmlFor="restart">Restart server</Label>
+						</>
+					) : null}
+				</div>
 				<Button asChild variant="link">
 					<Link
 						href="https://stardust.aetherra.org/docs/install/web#configure"
@@ -49,6 +72,7 @@ export default function ConfigEditor({ current, path }: { current: string; path:
 						Docs
 					</Link>
 				</Button>
+				{saved ? <Badge>Loaded</Badge> : <Badge variant="destructive">Not loaded</Badge>}
 			</form>
 			<Editor
 				defaultLanguage="yaml"

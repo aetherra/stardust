@@ -18,11 +18,20 @@ export interface Config {
 	 */
 	metadataUrl?: string;
 	/**
+	 * Command to restart the server (config file updates)
+	 */
+	restartCommand?: string;
+	/**
 	 * Configuration for nodes running `stardustd`
 	 */
 	nodes: NodeConfig[];
-
+	/**
+	 * Configuration for authentication
+	 */
 	auth: AuthConfig;
+	/**
+	 * Configuration for workspace sessions
+	 */
 	session?: SessionConfig;
 }
 
