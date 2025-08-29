@@ -1,5 +1,3 @@
-// todo: overhaul with sha256, kill processes on containers only, add admin exemption
-
 import { execSync } from "node:child_process";
 import { platform } from "node:os";
 import { getConfig } from "~/lib/config";
