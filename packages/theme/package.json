@@ -1,6 +1,6 @@
 {
 	"name": "@stardust/theme",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"type": "module",
 	"dependencies": {
 		"@catppuccin/palette": "^1.7.1"

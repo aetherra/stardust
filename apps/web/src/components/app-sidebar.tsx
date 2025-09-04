@@ -143,7 +143,7 @@ export function AppSidebar({ session, credentials }: AppSidebarProps) {
 							</SidebarMenu>
 						</SidebarGroupContent>
 					</SidebarGroup>
-					{isAdmin && (
+					{isAdmin ? (
 						<SidebarGroup>
 							<SidebarGroupLabel>
 								<Settings className="size-4 mr-2" />
@@ -167,7 +167,7 @@ export function AppSidebar({ session, credentials }: AppSidebarProps) {
 								</SidebarMenu>
 							</SidebarGroupContent>
 						</SidebarGroup>
-					)}
+					) : null}
 				</SidebarContent>
 				<SidebarFooter>
 					<SidebarMenu>
