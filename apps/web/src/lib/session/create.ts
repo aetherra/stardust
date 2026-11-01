@@ -21,7 +21,8 @@ export async function createSession(workspace: string, nodeId?: string) {
 				console.error(error);
 				throw new Error("Failed to connect to node, contact server admin");
 			}
-			if (data?.limit && data.limit <= data.sessions) throw new Error("Instance limit exceeded");
+			if (data && "sessions" in data && data?.limit && data.limit <= data.sessions)
+				throw new Error("Instance limit exceeded");
 		}
 		if (config.session?.usageLimits?.user) {
 			const { role, allSessions } = await db.transaction(async (tx) => ({

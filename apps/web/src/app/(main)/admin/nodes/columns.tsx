@@ -21,7 +21,7 @@ export const columns: ColumnDef<
 			Awaited<ReturnType<ReturnType<typeof stardustConnector>["sessions"]["list"]["get"]>>["data"]
 		>["containers"];
 		workspaces?: NonNullable<
-			Awaited<ReturnType<ReturnType<typeof stardustConnector>["workspaces"]["index"]["get"]>>["data"]
+			Awaited<ReturnType<ReturnType<typeof stardustConnector>["workspaces"]["get"]>>["data"]
 		>["workspaces"];
 	}
 >[] = [
@@ -36,12 +36,12 @@ export const columns: ColumnDef<
 	{
 		accessorKey: "health.cpu",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="CPU" />,
-		cell: ({ row }) => `${row.original.health?.cpu}%`,
+		cell: ({ row }) => `${row.original.health && "sessions" in row.original.health && row.original.health?.cpu}%`,
 	},
 	{
 		accessorKey: "health.mem",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Memory" />,
-		cell: ({ row }) => `${row.original.health?.mem}%`,
+		cell: ({ row }) => `${row.original.health && "sessions" in row.original.health && row.original.health?.mem}%`,
 	},
 	{
 		accessorKey: "health.os",
