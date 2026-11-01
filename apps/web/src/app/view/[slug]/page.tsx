@@ -167,7 +167,7 @@ export default function Page(props: { params: Promise<{ slug: string }> }) {
 								variant="ghost"
 								size="icon"
 								onClick={() => {
-									vncRef.current?.rfb?.disconnect();
+									vncRef.current?.disconnect();
 									setAudioEnabled(false);
 									router.push("/");
 								}}
