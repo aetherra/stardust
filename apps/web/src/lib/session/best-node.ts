@@ -10,7 +10,7 @@ export async function getBestNode(workspace: string) {
 	const availableNodes = (
 		await Promise.all(
 			configNodes.map(async (n) => {
-				const { data } = await stardustConnector(n).workspaces.index.get();
+				const { data } = await stardustConnector(n).workspaces.get();
 				if (!data) throw new Error("No node data");
 				return {
 					id: n.id,
@@ -25,9 +25,10 @@ export async function getBestNode(workspace: string) {
 	await Promise.all(
 		configNodes
 			.filter(({ id }) => availableNodes.includes(id))
-			.map(async (n: NodeConfig, i) => {
+			.map(async (n: NodeConfig) => {
 				const { data } = await stardustConnector(n).healthcheck.get();
-				if (!data?.limit || data.limit > data.sessions) nodes[i] = Number(data?.cpu);
+				if (data && "sessions" in data && (!data.limit || data.limit > data.sessions))
+					nodes[configNodes.indexOf(n)] = Number(data.cpu);
 			}),
 	);
 	return Object.keys(nodes)

@@ -15,7 +15,7 @@ export default async function Page() {
 				...n,
 				health: (await node.healthcheck.get()).data,
 				sessions: (await node.sessions.list.get()).data?.containers,
-				workspaces: (await node.workspaces.index.get()).data?.workspaces,
+				workspaces: (await node.workspaces.get()).data?.workspaces,
 			};
 		}),
 	);

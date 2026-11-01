@@ -7,7 +7,7 @@ export async function filesFetch(id: string, path: `/${string}`, method = "GET",
 	const ip = container.NetworkSettings.Networks[getConfig().docker.network || "stardust"].IPAddress;
 	return fetch(`http://${ip}:6080${path}`, {
 		method,
-		body,
+		body: body as unknown as BodyInit,
 		headers: {
 			authorization,
 		},

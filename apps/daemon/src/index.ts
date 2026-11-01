@@ -25,12 +25,12 @@ export const app = new Elysia()
 	.onError(({ error, path }) => {
 		console.error(`✨ Stardust: [${path}] ${error}`);
 		return {
-			success: false,
+			success: false as const,
 			error: error.toString(),
 		};
 	})
 	.get("/healthcheck", async () => ({
-		success: true,
+		success: true as const,
 		cpu: getCpuUsage().toFixed(2),
 		mem: (((os.totalmem() - os.freemem()) / os.totalmem()) * 100).toFixed(2),
 		os: `${os.type()} ${os.release()}`,

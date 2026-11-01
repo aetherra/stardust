@@ -31,7 +31,8 @@ export default async function AdminPage() {
 			};
 		}),
 	);
-	const averageCpuUsage = nodes.reduce((acc, node) => acc + Number(node.health?.cpu), 0) / nodes.length;
+	const reporting = nodes.flatMap((node) => (node.health && "cpu" in node.health ? [Number(node.health.cpu)] : []));
+	const averageCpuUsage = reporting.length > 0 ? reporting.reduce((acc, cpu) => acc + cpu, 0) / reporting.length : 0;
 	const activeUsers = [...new Set(sessions.map((s) => s.userId))];
 	const admins = users.filter((u) => u.role === "admin");
 	return (

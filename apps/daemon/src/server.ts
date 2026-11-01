@@ -28,8 +28,7 @@ if (typeof config.service !== "boolean" || config.service === true) {
 scheduleKillBlockedProcesses();
 startCpuMonitoring();
 
-// biome-ignore lint: no
-const srv = Bun.serve<{ socket: Socket; path: string }, {}>({
+const srv = Bun.serve<{ socket: Socket; path: string }, string>({
 	async fetch(req, server) {
 		const path = new URL(req.url).pathname;
 		const portMap: Record<string, number> = {

@@ -8,7 +8,7 @@ export async function getWorkspaces() {
 		(await db.select().from(workspace)).map(async (w) => {
 			const nodeMetadata = await Promise.all(
 				nodes.map(async (n) => {
-					const { data } = await stardustConnector(n).workspaces.index.get();
+					const { data } = await stardustConnector(n).workspaces.get();
 					if (!data) throw new Error("No node data");
 					return {
 						id: n.id,
