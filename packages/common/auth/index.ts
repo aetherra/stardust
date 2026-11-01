@@ -3,8 +3,9 @@ import db from "@stardust/db";
 import * as authSchema from "@stardust/db/schema/auth";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { createAuthMiddleware } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
-import { admin, /*captcha,*/ createAuthMiddleware, genericOAuth } from "better-auth/plugins";
+import { admin, /*captcha,*/ genericOAuth } from "better-auth/plugins";
 import { APIError } from "better-call";
 
 const { auth: config } = getConfig();
