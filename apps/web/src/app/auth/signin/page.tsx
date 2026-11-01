@@ -143,9 +143,10 @@ export default async function Login(props: {
 							key={providerId}
 							action={async () => {
 								try {
-									const res = await auth.api.signInWithOAuth2({
+									const res = await auth.api.signInSocial({
 										body: {
-											providerId,
+											provider: providerId as keyof BetterAuthOptions["socialProviders"],
+											callbackURL: "/",
 										},
 									});
 									if (!res.url) throw new Error("No URL returned");
