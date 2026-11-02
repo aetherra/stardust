@@ -1,16 +1,17 @@
 "use client";
-import Editor, { type Monaco } from "@monaco-editor/react";
-import { github_dark, latte, mocha } from "@stardust/theme/monaco";
-import { Book, Check, Save } from "lucide-react";
-import Link from "next/link";
-import { useTheme } from "next-themes";
-import { useState } from "react";
-import { toast } from "sonner";
 import { SubmitButton } from "@/components/submit-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Kbd } from "@/components/ui/kbd";
 import { Label } from "@/components/ui/label";
+import Editor, { type Monaco } from "@monaco-editor/react";
+import { github_dark, latte, mocha } from "@stardust/theme/monaco";
+import { Book, Check, Save } from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { saveConfig } from "./actions";
 
 type MonacoTheme = Parameters<Monaco["editor"]["defineTheme"]>[1];
@@ -26,11 +27,32 @@ export default function ConfigEditor({
   saved: boolean;
   restartEnabled: boolean;
 }) {
+  const configFormRef = useRef<HTMLFormElement>(null);
   const { resolvedTheme } = useTheme();
   const [value, setValue] = useState<string | undefined>(current);
+
+  useEffect(() => {
+    const keybindHandler = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
+        event.preventDefault();
+        configFormRef.current?.requestSubmit();
+      }
+
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "d") {
+        event.preventDefault();
+        window.open("https://stardust.aetherra.org/docs/install/web#configure");
+      }
+    }
+
+    window.addEventListener("keydown", keybindHandler)
+
+    return () => { window.removeEventListener("keydown", keybindHandler) }
+  }, [])
+
   return (
     <div className="flex w-full flex-col justify-center items-left -ml-2">
       <form
+        ref={configFormRef}
         className="my-2 flex flex-row items-center gap-1"
         action={(data) =>
           void toast.promise(
@@ -55,7 +77,7 @@ export default function ConfigEditor({
           <div className="flex items-center gap-1">
             <SubmitButton>
               <Save />
-              Save
+              Save <Kbd className="bg-transparent text-primary-foreground/75">Ctrl + S</Kbd>
             </SubmitButton>
             <div className="flex flex-row gap-2">
               {restartEnabled ? (
@@ -72,7 +94,7 @@ export default function ConfigEditor({
                 rel="noopener noreferrer"
               >
                 <Book />
-                Docs
+                Docs <Kbd className="bg-transparent text-secondary-foreground/75">Ctrl + D</Kbd>
               </Link>
             </Button>
           </div>
