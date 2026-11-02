@@ -33,21 +33,23 @@ export default function ConfigEditor({
 
   useEffect(() => {
     const keybindHandler = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
+      if ((event.metaKey || event.ctrlKey) && !event.shiftKey && event.key.toLowerCase() === "s") {
         event.preventDefault();
         configFormRef.current?.requestSubmit();
       }
 
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "d") {
+      if ((event.metaKey || event.ctrlKey) && !event.shiftKey && event.key.toLowerCase() === "d") {
         event.preventDefault();
         window.open("https://stardust.aetherra.org/docs/install/web#configure");
       }
-    }
+    };
 
-    window.addEventListener("keydown", keybindHandler)
+    window.addEventListener("keydown", keybindHandler);
 
-    return () => { window.removeEventListener("keydown", keybindHandler) }
-  }, [])
+    return () => {
+      window.removeEventListener("keydown", keybindHandler);
+    };
+  }, []);
 
   return (
     <div className="flex w-full flex-col justify-center items-left -ml-2">
