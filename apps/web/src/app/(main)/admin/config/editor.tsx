@@ -1,17 +1,17 @@
 "use client";
+import Editor, { type Monaco } from "@monaco-editor/react";
+import { github_dark, latte, mocha } from "@stardust/theme/monaco";
+import { Book, Check, Save } from "lucide-react";
+import Link from "next/link";
+import { useTheme } from "next-themes";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import { SubmitButton } from "@/components/submit-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Kbd } from "@/components/ui/kbd";
 import { Label } from "@/components/ui/label";
-import Editor, { type Monaco } from "@monaco-editor/react";
-import { github_dark, latte, mocha } from "@stardust/theme/monaco";
-import { Book, Check, Save } from "lucide-react";
-import { useTheme } from "next-themes";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
 import { saveConfig } from "./actions";
 
 type MonacoTheme = Parameters<Monaco["editor"]["defineTheme"]>[1];
