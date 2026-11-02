@@ -31,7 +31,10 @@
           "type": "string"
         }
       },
-      "required": ["docker", "session"],
+      "required": [
+        "docker",
+        "session"
+      ],
       "type": "object"
     },
     "DockerConfig": {
@@ -57,7 +60,10 @@
         },
         "protocol": {
           "description": "Protocol, if using an HTTP connection",
-          "enum": ["http", "https"],
+          "enum": [
+            "http",
+            "https"
+          ],
           "type": "string"
         },
         "socket": {
@@ -68,11 +74,16 @@
         "type": {
           "default": "`socket`",
           "description": "The type of connection to use to connect to the Docker daemon.",
-          "enum": ["http", "socket"],
+          "enum": [
+            "http",
+            "socket"
+          ],
           "type": "string"
         }
       },
-      "required": ["network"],
+      "required": [
+        "network"
+      ],
       "type": "object"
     },
     "SessionConfig": {
@@ -88,7 +99,9 @@
         "cpuLimit": {
           "default": "unlimited",
           "description": "Percentage of the host's CPU a container can use.",
-          "examples": [0.5],
+          "examples": [
+            0.5
+          ],
           "type": "number"
         },
         "dnsServers": {
@@ -123,3 +136,4 @@
     }
   }
 }
+

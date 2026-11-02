@@ -1,6 +1,6 @@
 import { docker } from "~/lib/docker";
 
 export default async function deleteSession(id: string) {
-  await docker.getContainer(id).remove({ force: true });
-  return true;
+	await docker.getContainer(id).remove({ force: true });
+	return true;
 }

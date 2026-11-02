@@ -1,28 +1,28 @@
 {
-  "name": "@stardust/db",
-  "version": "1.0.3",
-  "description": "",
-  "type": "module",
-  "scripts": {
-    "check-types": "tsc --noEmit",
-    "drizzle-kit": "drizzle-kit",
-    "seed": "tsx seed.ts",
-    "migrate-name": "tsx migrate-name.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
-  "dependencies": {
-    "@stardust/config": "workspace:*",
-    "drizzle-orm": "^0.45.2",
-    "postgres": "^3.4.9"
-  },
-  "devDependencies": {
-    "@stardust/tsconfig": "workspace:*",
-    "drizzle-kit": "^0.30.6"
-  }
+	"name": "@stardust/db",
+	"version": "1.0.3",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"check-types": "tsc --noEmit",
+		"drizzle-kit": "drizzle-kit",
+		"seed": "tsx seed.ts",
+		"migrate-name": "tsx migrate-name.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"workspaces": [
+		"packages/*",
+		"apps/*"
+	],
+	"dependencies": {
+		"@stardust/config": "workspace:*",
+		"drizzle-orm": "^0.45.2",
+		"postgres": "^3.4.9"
+	},
+	"devDependencies": {
+		"@stardust/tsconfig": "workspace:*",
+		"drizzle-kit": "^0.30.6"
+	}
 }

@@ -3,7 +3,7 @@ const css = String.raw;
 import { type CatppuccinColors, flavors } from "@catppuccin/palette";
 
 function generate(flavor: CatppuccinColors, className: "dark" | "light") {
-  return css`
+	return css`
     .${className}-mode {
       --scalar-color-1: ${flavor.text.hex};
       --scalar-color-2: ${flavor.subtext0.hex};

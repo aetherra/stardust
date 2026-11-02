@@ -4,19 +4,19 @@ import type { DrizzleClient, SelectSession } from "@stardust/db";
 import db from "@stardust/db";
 import { headers } from "next/headers";
 export default async function getSession(
-  id: string,
-  admin?: boolean,
-  dbClient: DrizzleClient = db,
+	id: string,
+	admin?: boolean,
+	dbClient: DrizzleClient = db,
 ): Promise<SelectSession | undefined> {
-  const userSession = await auth.api.getSession({ headers: await headers() });
-  const res = await dbClient.query.session.findFirst({
-    where: (session, { and, eq }) => {
-      const base = eq(session.id, id);
-      if (admin && userSession?.user.role === "admin") {
-        return base;
-      }
-      return and(base, eq(session.userId, userSession?.user.id || ""));
-    },
-  });
-  return res;
+	const userSession = await auth.api.getSession({ headers: await headers() });
+	const res = await dbClient.query.session.findFirst({
+		where: (session, { and, eq }) => {
+			const base = eq(session.id, id);
+			if (admin && userSession?.user.role === "admin") {
+				return base;
+			}
+			return and(base, eq(session.userId, userSession?.user.id || ""));
+		},
+	});
+	return res;
 }

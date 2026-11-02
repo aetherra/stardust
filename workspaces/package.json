@@ -1,8 +1,8 @@
 {
-  "name": "workspaces",
-  "version": "1.0.3",
-  "type": "module",
-  "scripts": {
-    "build": "node build.js"
-  }
+	"name": "workspaces",
+	"version": "1.0.3",
+	"type": "module",
+	"scripts": {
+		"build": "node build.js"
+	}
 }
