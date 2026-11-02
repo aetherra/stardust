@@ -8,13 +8,7 @@
     "lineEnding": "lf",
     "lineWidth": 120,
     "attributePosition": "auto",
-    "includes": [
-      "**",
-      "!**/pnpm-lock.yaml",
-      "!**/.next/**",
-      "!**/node_modules/**",
-      "!**/schema.json"
-    ]
+    "includes": ["**", "!**/pnpm-lock.yaml", "!**/.next/**", "!**/node_modules/**", "!**/schema.json"]
   },
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
@@ -22,12 +16,7 @@
     "rules": {
       "recommended": true
     },
-    "includes": [
-      "**",
-      "!**/pnpm-lock.yaml",
-      "!**/.next/**",
-      "!**/node_modules/**"
-    ]
+    "includes": ["**", "!**/pnpm-lock.yaml", "!**/.next/**", "!**/node_modules/**"]
   },
   "javascript": {
     "formatter": {

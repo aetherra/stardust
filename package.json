@@ -1,34 +1,34 @@
 {
-	"name": "stardust",
-	"private": true,
-	"version": "1.0.3",
-	"scripts": {
-		"build": "turbo build",
-		"dev": "turbo dev",
-		"check-types": "turbo check-types",
-		"check": "biome check . --write",
-		"add-admin": "pnpm --dir apps/web run add-admin",
-		"db:seed": "pnpm --dir packages/db run seed",
-		"db:migrate-workspace-name": "pnpm --dir packages/db run migrate-name",
-		"db:push": "pnpm --dir packages/db run drizzle-kit push",
-		"workspaces:build": "pnpm --dir workspaces run build",
-		"workspaces:build-dev": "docker image rmi $(docker images --format \"{{.Repository}}:{{.Tag}}\" | grep '^ghcr.io/aetherra/.*:latest$'); PUSH_LATEST=true IMAGE_TAG=$(date +\"%m%d%y%H%M%S\") pnpm workspaces:build --build-base",
-		"workspaces:format": "prettier --write \"./workspaces/**/*.sh\" \"./workspaces/**/Dockerfile*\"  \"./workspaces/**/xstartup\"",
-		"prepare": "husky"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.1.3",
-		"@types/bun": "^1.4.4",
-		"@types/node": "^20.19.43",
-		"husky": "^9.1.7",
-		"prettier": "^3.9.10",
-		"prettier-plugin-sh": "^0.14.0",
-		"tsx": "^4.23.15",
-		"turbo": "^2.11.10",
-		"typescript": "5.5.4"
-	},
-	"packageManager": "pnpm@9.0.0",
-	"engines": {
-		"node": ">=18"
-	}
+  "name": "stardust",
+  "private": true,
+  "version": "1.0.3",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "check-types": "turbo check-types",
+    "check": "biome check . --write",
+    "add-admin": "pnpm --dir apps/web run add-admin",
+    "db:seed": "pnpm --dir packages/db run seed",
+    "db:migrate-workspace-name": "pnpm --dir packages/db run migrate-name",
+    "db:push": "pnpm --dir packages/db run drizzle-kit push",
+    "workspaces:build": "pnpm --dir workspaces run build",
+    "workspaces:build-dev": "docker image rmi $(docker images --format \"{{.Repository}}:{{.Tag}}\" | grep '^ghcr.io/aetherra/.*:latest$'); PUSH_LATEST=true IMAGE_TAG=$(date +\"%m%d%y%H%M%S\") pnpm workspaces:build --build-base",
+    "workspaces:format": "prettier --write \"./workspaces/**/*.sh\" \"./workspaces/**/Dockerfile*\"  \"./workspaces/**/xstartup\"",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.3",
+    "@types/bun": "^1.4.4",
+    "@types/node": "^20.19.43",
+    "husky": "^9.1.7",
+    "prettier": "^3.9.10",
+    "prettier-plugin-sh": "^0.14.0",
+    "tsx": "^4.23.15",
+    "turbo": "^2.11.10",
+    "typescript": "5.5.4"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18"
+  }
 }

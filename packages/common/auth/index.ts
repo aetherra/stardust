@@ -14,38 +14,38 @@ if (typeof process.env.NEXT_RUNTIME !== "undefined") conditionalPlugins.push(nex
 // broken??
 // if (config.turnstile) conditionalPlugins.push(captcha({ provider: "cloudflare-turnstile", secretKey: config.turnstile.secret }));
 const auth = betterAuth({
-	appName: "Stardust",
-	secret: config.secret,
-	trustedOrigins: config.trustedOrigins,
-	database: drizzleAdapter(db, {
-		provider: "pg",
-		schema: {
-			...authSchema,
-			session: authSchema.authSession,
-		},
-	}),
-	plugins: [
-		admin(),
-		genericOAuth({
-			config: config.oauth?.customProviders || [],
-		}),
-		...conditionalPlugins,
-	],
-	emailAndPassword: {
-		enabled: config.credentials?.enabled || false,
-		autoSignIn: false,
-	},
-	socialProviders: config.oauth?.providers,
-	hooks: {
-		before: createAuthMiddleware(async (ctx) => {
-			if (ctx.path.startsWith("/sign-up") && !config.credentials?.signups) {
-				throw new APIError("BAD_REQUEST", {
-					message: "Signups are disabled",
-				});
-			}
-			return;
-		}),
-	},
+  appName: "Stardust",
+  secret: config.secret,
+  trustedOrigins: config.trustedOrigins,
+  database: drizzleAdapter(db, {
+    provider: "pg",
+    schema: {
+      ...authSchema,
+      session: authSchema.authSession,
+    },
+  }),
+  plugins: [
+    admin(),
+    genericOAuth({
+      config: config.oauth?.customProviders || [],
+    }),
+    ...conditionalPlugins,
+  ],
+  emailAndPassword: {
+    enabled: config.credentials?.enabled || false,
+    autoSignIn: false,
+  },
+  socialProviders: config.oauth?.providers,
+  hooks: {
+    before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path.startsWith("/sign-up") && !config.credentials?.signups) {
+        throw new APIError("BAD_REQUEST", {
+          message: "Signups are disabled",
+        });
+      }
+      return;
+    }),
+  },
 });
 export type SessionSchema = typeof auth.$Infer.Session;
 export default auth;
