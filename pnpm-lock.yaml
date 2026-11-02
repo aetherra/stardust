@@ -40,7 +40,7 @@ importers:
     dependencies:
       '@elysiajs/swagger':
         specifier: ^1.3.1
-        version: 1.3.1(elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.9.3))
+        version: 1.3.1(elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.5.4))
       ajv:
         specifier: ^8.20.0
         version: 8.20.0
@@ -49,7 +49,7 @@ importers:
         version: 4.0.12
       elysia:
         specifier: latest
-        version: 1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.9.3)
+        version: 1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.5.4)
       js-yaml:
         specifier: ^4.3.2
         version: 4.3.2
@@ -134,7 +134,7 @@ importers:
         version: 1.4.1(@types/react-dom@19.1.0(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@scalar/nextjs-api-reference':
         specifier: ^0.5.15
-        version: 0.5.15(next@15.4.2-canary.40(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
+        version: 0.5.15(next@15.5.28(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
       '@stardust/common':
         specifier: workspace:*
         version: link:../../packages/common
@@ -164,7 +164,7 @@ importers:
         version: 2.1.1
       geist:
         specifier: ^1.9.0
-        version: 1.9.0(next@15.4.2-canary.40(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))
+        version: 1.9.0(next@15.5.28(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))
       lodash:
         specifier: ^4.18.1
         version: 4.18.1
@@ -175,8 +175,8 @@ importers:
         specifier: ^5.5.1
         version: 5.5.1(monaco-editor@0.52.2)
       next:
-        specifier: 15.4.2-canary.40
-        version: 15.4.2-canary.40(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+        specifier: 15.5.28
+        version: 15.5.28(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -249,7 +249,7 @@ importers:
     dependencies:
       '@elysiajs/eden':
         specifier: ^1.4.9
-        version: 1.4.9(elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.9.3))
+        version: 1.4.9(elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.5.4))
       '@stardust/config':
         specifier: workspace:*
         version: link:../config
@@ -258,7 +258,7 @@ importers:
         version: link:../db
       better-auth:
         specifier: ^1.7.14
-        version: 1.7.14(drizzle-kit@0.30.6)(drizzle-orm@0.38.4(@types/react@19.1.0)(bun-types@1.4.4)(kysely@0.29.8)(postgres@3.4.9)(react@19.1.1))(next@15.4.2-canary.40(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+        version: 1.7.14(drizzle-kit@0.30.6)(drizzle-orm@0.38.4(@types/react@19.1.0)(bun-types@1.4.4)(kysely@0.29.8)(postgres@3.4.9)(react@19.1.1))(next@15.5.28(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       better-call:
         specifier: ^1.4.4
         version: 1.4.4(zod@4.6.7)
@@ -280,7 +280,7 @@ importers:
         version: link:../../apps/daemon
       elysia:
         specifier: latest
-        version: 1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.9.3)
+        version: 1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.5.4)
 
   packages/config:
     dependencies:
@@ -1306,53 +1306,53 @@ packages:
   '@next/bundle-analyzer@15.4.2-canary.40':
     resolution: {integrity: sha512-GSapu7v3S8I/4Txu5LRdjEXgQWndTQDIW2Kza+8famaowzz540ARS7HdsX/rWd/e3cQs5uYlS5ZnBSRj7W9ecg==}
 
-  '@next/env@15.4.2-canary.40':
-    resolution: {integrity: sha512-ZaHpOXY35faLREgO+NmhVceSolzDjiiNzkVmRan/aOSK2d54QKhXfyKf3f3IiKLZDOc8rpi/VvwvDvVanMn/6w==}
+  '@next/env@15.5.28':
+    resolution: {integrity: sha512-xxW5EBI8fMPuVTPBW7LL980IRbuDXlbkUAwp9DDhtb4Lnich3nJ13uYpvrX4VE74hWPf6AvHHAMmGCidcHjbfg==}
 
-  '@next/swc-darwin-arm64@15.4.2-canary.40':
-    resolution: {integrity: sha512-FPoFg6HtHzihJXm1zyYqfDd+egwbalS/YiEKTfP/FKOTud5MDNmpnvoUdCoWttAc5nmFJcNmSoOfCzNKYzu8sg==}
+  '@next/swc-darwin-arm64@15.5.28':
+    resolution: {integrity: sha512-dPoQYXcfSIqx5o+TOXVXO7kONK5qbtNRDeiTfII0bT3puGIT6VF5e0QwmxNZfEZ5Zety5f3m9P/p4xqwfiLlPg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@15.4.2-canary.40':
-    resolution: {integrity: sha512-/RZKKXajizvNSgrStWOO2s4xEsD4HPGO2NsqOOlUcbFHXgoeN0gg4uOFNktTcxGizZy4UXDCYvgNDaXA80ZMRA==}
+  '@next/swc-darwin-x64@15.5.28':
+    resolution: {integrity: sha512-RgCJ7buBivTH+6sddqaVm+/v8kwMHlFkobvdt3DfETutws5HrxnToMIWSN9X3MZ3aAi7BbKrGZZWUDQLEycXqw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@next/swc-linux-arm64-gnu@15.4.2-canary.40':
-    resolution: {integrity: sha512-F6O/+zAiyzzI4ga/Rxz6T2E9vsM9Lk+aOJ0Def2B3KIssxw+JoU0QsyVkP/WVGdHnKDPnYFYfmb4FQ+W9FH7uw==}
+  '@next/swc-linux-arm64-gnu@15.5.28':
+    resolution: {integrity: sha512-OHXQe13olE59aKe++zHavGcJPh5SLHXi6Anret3BBeq1+qhSuOJDNAli/EDDfxs6UTqA4Qddo4uyYry2slyjiQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-arm64-musl@15.4.2-canary.40':
-    resolution: {integrity: sha512-far9sHxB6aIZ73R7lN0fkp0XxP1ilUJUZ90i2WNAWGOgkPcDKawFTJi28JKnay/pz8xD6crHaYX4OsN6JSitnA==}
+  '@next/swc-linux-arm64-musl@15.5.28':
+    resolution: {integrity: sha512-nTB7bB6vfn4ezCJNYP43ukt2o8L3+WxKF/sTcTxepdXsJh3SM9RhlU7wrZYbH7L4HO5M87dqDTwm8587vAkCiw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-x64-gnu@15.4.2-canary.40':
-    resolution: {integrity: sha512-tliHeFvbrt/G8REAtYBh9oQNpNU/buEqnaRkCv515kRZv9QTuiMKzOAkVKT8HcaBYvdPWOR0JjaMNIiuFl7J9w==}
+  '@next/swc-linux-x64-gnu@15.5.28':
+    resolution: {integrity: sha512-WXCfVI32rW3xCusoUX1RpZKtyChWU2Zwe27JUDmM3KrXwcDNc9vV4zEq0GKFAURnuQ/Ouo/XqPvB0yh445XZCg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-linux-x64-musl@15.4.2-canary.40':
-    resolution: {integrity: sha512-TR8smJg2evkK+qGsqLiEZonEuC17+9ZMrqyowZ4Xvk6h3GZ2dRs5Gb37l5lqxpq3AFFGnYFIREqbvcJaSR6eRQ==}
+  '@next/swc-linux-x64-musl@15.5.28':
+    resolution: {integrity: sha512-Miq+NDb/HWsXuxseYxMM6fuEOQXgTziarkKIRpVKCn8W69cEfhQaQr+90pO+u4q2CbJR2wzXmUuCFyZaJs/Nng==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-win32-arm64-msvc@15.4.2-canary.40':
-    resolution: {integrity: sha512-JcgkEpLXG2CSn4rnzGk0mbReKoqkZPpPwpvyc4NskhVEFiJVzCzBsWGll3TRd2xe3uCLB8ltVqmySQMqeKsHtw==}
+  '@next/swc-win32-arm64-msvc@15.5.28':
+    resolution: {integrity: sha512-5LR79lemgDlgxvG7MQJ+zHCkVcrUoQuO7CiIvq3I58vNW4goSOE2b+19Z6FujRWMouvni4gvudYFuFuNxolGWA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@15.4.2-canary.40':
-    resolution: {integrity: sha512-BzHvNhZAfwRHKj/xUa5TtzXufkpUBmc8hveAeSKNcf4oP3MM1eX5ZqCGl0ALk6lW4n0cgsTTEc3O5rtu+e7eGA==}
+  '@next/swc-win32-x64-msvc@15.5.28':
+    resolution: {integrity: sha512-GNipvXUYROSTf4PXEyH95FrWImIB5zdaK6uEOg0RP1/X2drnvoMwiBkJ0VWdzX7w3iiBm3y5g2TxkKDGVTOQcg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -3444,8 +3444,8 @@ packages:
       react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
       react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
 
-  next@15.4.2-canary.40:
-    resolution: {integrity: sha512-cKUcOpWD0+bsvMin3/qor+vFH3eOrXA2fSSdNG2oWruoKb2MTimFBa45KngCvst2jskApgh29MW0pSrzEfWVLA==}
+  next@15.5.28:
+    resolution: {integrity: sha512-JjhLBBY1PNnuwPtcZ7t8yxVeJVYvD2Jyp633J+gRCNbzSt7N0E+xqCf6uQiff3+3qmUkwcF/ksfSsK1xsZ76Tw==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
     hasBin: true
     peerDependencies:
@@ -3890,8 +3890,8 @@ packages:
     resolution: {integrity: sha512-dOESqjYr96iWYylGObzd39EuNTa5VJxyvVAEm5Jnh7KGo75V43Hk1odPQkNDyXNmUR6k+gEiDVXnjB8HJ3crXw==}
     engines: {node: '>=12'}
 
-  strtok3@10.6.3:
-    resolution: {integrity: sha512-MD8mENgyXMr2mDaDfzP3RWYDSyYQxIIou7HhCiCJiBekrsoDtUG0id3vYnjDfY9ndOEbazFXe13Qw6u/1AB8ew==}
+  strtok3@10.7.0:
+    resolution: {integrity: sha512-iAqrCpp7UXD2FZiHWhLXqdJ6CmNeVzRkkHAyyhhKMVtbVm2KtPX3D/bJNonvtcyLTHS4rwqP2pz9fsjK1K4z0Q==}
     engines: {node: '>=18'}
 
   styled-jsx@5.1.6:
@@ -4003,8 +4003,8 @@ packages:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
     engines: {node: '>=0.6'}
 
-  token-types@6.1.2:
-    resolution: {integrity: sha512-dRXchy+C0IgK8WPC6xvCHFRIWYUbqqdEIKPaKo/AcTUNzwLTK6AH7RjdLWsEZcAN/TBdtfUw3PYEgPr5VPr6ww==}
+  token-types@6.2.0:
+    resolution: {integrity: sha512-s9euYHM//T3loJtbNUYdbAzsMlvKBeRS+XCLFy+UGosMQH19Hwjap5k19i4PPAEJJBsVIpMpVTxl4fIqCuNfUg==}
     engines: {node: '>=14.16'}
 
   totalist@3.0.1:
@@ -4516,15 +4516,15 @@ snapshots:
 
   '@drizzle-team/brocli@0.10.2': {}
 
-  '@elysiajs/eden@1.4.9(elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.9.3))':
+  '@elysiajs/eden@1.4.9(elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.5.4))':
     dependencies:
-      elysia: 1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      elysia: 1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.5.4)
 
-  '@elysiajs/swagger@1.3.1(elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.9.3))':
+  '@elysiajs/swagger@1.3.1(elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.5.4))':
     dependencies:
       '@scalar/themes': 0.9.86
       '@scalar/types': 0.0.12
-      elysia: 1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.9.3)
+      elysia: 1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.5.4)
       openapi-types: 12.1.3
       pathe: 1.1.2
 
@@ -4999,30 +4999,30 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@next/env@15.4.2-canary.40': {}
+  '@next/env@15.5.28': {}
 
-  '@next/swc-darwin-arm64@15.4.2-canary.40':
+  '@next/swc-darwin-arm64@15.5.28':
     optional: true
 
-  '@next/swc-darwin-x64@15.4.2-canary.40':
+  '@next/swc-darwin-x64@15.5.28':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@15.4.2-canary.40':
+  '@next/swc-linux-arm64-gnu@15.5.28':
     optional: true
 
-  '@next/swc-linux-arm64-musl@15.4.2-canary.40':
+  '@next/swc-linux-arm64-musl@15.5.28':
     optional: true
 
-  '@next/swc-linux-x64-gnu@15.4.2-canary.40':
+  '@next/swc-linux-x64-gnu@15.5.28':
     optional: true
 
-  '@next/swc-linux-x64-musl@15.4.2-canary.40':
+  '@next/swc-linux-x64-musl@15.5.28':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@15.4.2-canary.40':
+  '@next/swc-win32-arm64-msvc@15.5.28':
     optional: true
 
-  '@next/swc-win32-x64-msvc@15.4.2-canary.40':
+  '@next/swc-win32-x64-msvc@15.5.28':
     optional: true
 
   '@noble/ciphers@2.4.0': {}
@@ -5593,10 +5593,10 @@ snapshots:
 
   '@radix-ui/rect@1.1.3': {}
 
-  '@scalar/nextjs-api-reference@0.5.15(next@15.4.2-canary.40(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)':
+  '@scalar/nextjs-api-reference@0.5.15(next@15.5.28(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)':
     dependencies:
       '@scalar/types': 0.0.39
-      next: 15.4.2-canary.40(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      next: 15.5.28(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react: 19.1.1
 
   '@scalar/openapi-types@0.1.1': {}
@@ -5718,8 +5718,8 @@ snapshots:
   '@tokenizer/inflate@0.6.0':
     dependencies:
       debug: 4.4.3
-      strtok3: 10.6.3
-      token-types: 6.1.2
+      strtok3: 10.7.0
+      token-types: 6.2.0
     transitivePeerDependencies:
       - supports-color
 
@@ -5982,7 +5982,7 @@ snapshots:
     dependencies:
       tweetnacl: 0.14.5
 
-  better-auth@1.7.14(drizzle-kit@0.30.6)(drizzle-orm@0.38.4(@types/react@19.1.0)(bun-types@1.4.4)(kysely@0.29.8)(postgres@3.4.9)(react@19.1.1))(next@15.4.2-canary.40(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+  better-auth@1.7.14(drizzle-kit@0.30.6)(drizzle-orm@0.38.4(@types/react@19.1.0)(bun-types@1.4.4)(kysely@0.29.8)(postgres@3.4.9)(react@19.1.1))(next@15.5.28(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
     dependencies:
       '@better-auth/core': 1.7.14(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.4(zod@4.6.7))(jose@6.2.14)(kysely@0.29.8)(nanostores@1.5.5)
       '@better-auth/drizzle-adapter': 1.7.14(@better-auth/core@1.7.14(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.4(zod@4.6.7))(jose@6.2.14)(kysely@0.29.8)(nanostores@1.5.5))(@better-auth/utils@0.5.1)(drizzle-orm@0.38.4(@types/react@19.1.0)(bun-types@1.4.4)(kysely@0.29.8)(postgres@3.4.9)(react@19.1.1))
@@ -6004,7 +6004,7 @@ snapshots:
     optionalDependencies:
       drizzle-kit: 0.30.6
       drizzle-orm: 0.38.4(@types/react@19.1.0)(bun-types@1.4.4)(kysely@0.29.8)(postgres@3.4.9)(react@19.1.1)
-      next: 15.4.2-canary.40(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      next: 15.5.28(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
     transitivePeerDependencies:
@@ -6268,7 +6268,7 @@ snapshots:
 
   electron-to-chromium@1.5.472: {}
 
-  elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.9.3):
+  elysia@1.4.30(@sinclair/typebox@0.34.33)(@types/bun@1.4.4)(exact-mirror@1.2.6)(file-type@22.3.0)(openapi-types@12.1.3)(typescript@5.5.4):
     dependencies:
       '@sinclair/typebox': 0.34.33
       cookie: 1.1.1
@@ -6279,7 +6279,7 @@ snapshots:
       openapi-types: 12.1.3
     optionalDependencies:
       '@types/bun': 1.4.4
-      typescript: 5.9.3
+      typescript: 5.5.4
 
   emoji-regex@8.0.0: {}
 
@@ -6523,8 +6523,8 @@ snapshots:
   file-type@22.3.0:
     dependencies:
       '@tokenizer/inflate': 0.6.0
-      strtok3: 10.6.3
-      token-types: 6.1.2
+      strtok3: 10.7.0
+      token-types: 6.2.0
       uint8array-extras: 1.6.0
     transitivePeerDependencies:
       - supports-color
@@ -6571,9 +6571,9 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  geist@1.9.0(next@15.4.2-canary.40(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)):
+  geist@1.9.0(next@15.5.28(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)):
     dependencies:
-      next: 15.4.2-canary.40(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      next: 15.5.28(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
 
   gel@2.2.1:
     dependencies:
@@ -7007,9 +7007,9 @@ snapshots:
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
 
-  next@15.4.2-canary.40(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+  next@15.5.28(@babel/core@7.29.7)(babel-plugin-react-compiler@19.0.0-beta-e993439-20250405)(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
     dependencies:
-      '@next/env': 15.4.2-canary.40
+      '@next/env': 15.5.28
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001820
       postcss: 8.4.31
@@ -7017,14 +7017,14 @@ snapshots:
       react-dom: 19.1.1(react@19.1.1)
       styled-jsx: 5.1.6(@babel/core@7.29.7)(react@19.1.1)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 15.4.2-canary.40
-      '@next/swc-darwin-x64': 15.4.2-canary.40
-      '@next/swc-linux-arm64-gnu': 15.4.2-canary.40
-      '@next/swc-linux-arm64-musl': 15.4.2-canary.40
-      '@next/swc-linux-x64-gnu': 15.4.2-canary.40
-      '@next/swc-linux-x64-musl': 15.4.2-canary.40
-      '@next/swc-win32-arm64-msvc': 15.4.2-canary.40
-      '@next/swc-win32-x64-msvc': 15.4.2-canary.40
+      '@next/swc-darwin-arm64': 15.5.28
+      '@next/swc-darwin-x64': 15.5.28
+      '@next/swc-linux-arm64-gnu': 15.5.28
+      '@next/swc-linux-arm64-musl': 15.5.28
+      '@next/swc-linux-x64-gnu': 15.5.28
+      '@next/swc-linux-x64-musl': 15.5.28
+      '@next/swc-win32-arm64-msvc': 15.5.28
+      '@next/swc-win32-x64-msvc': 15.5.28
       babel-plugin-react-compiler: 19.0.0-beta-e993439-20250405
       sharp: 0.34.5
     transitivePeerDependencies:
@@ -7510,7 +7510,7 @@ snapshots:
 
   strip-final-newline@3.0.0: {}
 
-  strtok3@10.6.3:
+  strtok3@10.7.0:
     dependencies:
       '@tokenizer/token': 0.3.0
 
@@ -7585,7 +7585,7 @@ snapshots:
 
   toidentifier@1.0.1: {}
 
-  token-types@6.1.2:
+  token-types@6.2.0:
     dependencies:
       '@borewit/text-codec': 0.2.3
       '@tokenizer/token': 0.3.0
