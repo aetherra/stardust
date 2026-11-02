@@ -56,19 +56,14 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "clientId",
-                  "clientSecret"
-                ],
+                "required": ["clientId", "clientSecret"],
                 "type": "object"
               },
               "description": "The OAuth providers to enable.",
               "type": "object"
             }
           },
-          "required": [
-            "providers"
-          ],
+          "required": ["providers"],
           "type": "object"
         },
         "secret": {
@@ -87,9 +82,7 @@
           "description": "Cloudflare turnstile configuration. Leave `undefined` to disable turnstile."
         }
       },
-      "required": [
-        "secret"
-      ],
+      "required": ["secret"],
       "type": "object"
     },
     "Config": {
@@ -133,11 +126,7 @@
           "description": "Configuration for workspace sessions"
         }
       },
-      "required": [
-        "databaseUrl",
-        "nodes",
-        "auth"
-      ],
+      "required": ["databaseUrl", "nodes", "auth"],
       "type": "object"
     },
     "CustomAuthConfig": {
@@ -150,10 +139,7 @@
         "authentication": {
           "default": "post",
           "description": "Authentication method for token requests.",
-          "enum": [
-            "basic",
-            "post"
-          ],
+          "enum": ["basic", "post"],
           "type": "string"
         },
         "authorizationHeaders": {
@@ -213,12 +199,7 @@
         },
         "prompt": {
           "description": "Prompt parameter for the authorization request. Controls the authentication experience for the user.",
-          "enum": [
-            "none",
-            "login",
-            "consent",
-            "select_account"
-          ],
+          "enum": ["none", "login", "consent", "select_account"],
           "type": "string"
         },
         "providerId": {
@@ -231,10 +212,7 @@
         },
         "responseMode": {
           "description": "The response mode to use for the authorization code request.",
-          "enum": [
-            "query",
-            "form_post"
-          ],
+          "enum": ["query", "form_post"],
           "type": "string"
         },
         "responseType": {
@@ -266,11 +244,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "providerId",
-        "clientId",
-        "clientSecret"
-      ],
+      "required": ["providerId", "clientId", "clientSecret"],
       "type": "object"
     },
     "NodeConfig": {
@@ -293,10 +267,7 @@
         "proto": {
           "default": "http",
           "description": "Protocol to use for the node",
-          "enum": [
-            "http",
-            "https"
-          ],
+          "enum": ["http", "https"],
           "type": "string"
         },
         "token": {
@@ -304,10 +275,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "id",
-        "token"
-      ],
+      "required": ["id", "token"],
       "type": "object"
     },
     "SessionConfig": {
@@ -348,12 +316,8 @@
           "type": "string"
         }
       },
-      "required": [
-        "secret",
-        "siteKey"
-      ],
+      "required": ["secret", "siteKey"],
       "type": "object"
     }
   }
 }
-

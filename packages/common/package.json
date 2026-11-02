@@ -1,27 +1,27 @@
 {
-	"name": "@stardust/common",
-	"type": "module",
-	"version": "1.0.3",
-	"description": "",
-	"scripts": {
-		"check-types": "tsc --noEmit"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"@elysiajs/eden": "^1.4.9",
-		"@stardust/config": "workspace:*",
-		"@stardust/db": "workspace:*",
-		"better-auth": "^1.7.14",
-		"better-call": "^1.4.4",
-		"dockerode": "^4.0.12",
-		"http-proxy-middleware": "^3.0.10"
-	},
-	"devDependencies": {
-		"@stardust/tsconfig": "workspace:*",
-		"@types/dockerode": "^3.3.47",
-		"daemon": "workspace:*",
-		"elysia": "latest"
-	}
+  "name": "@stardust/common",
+  "type": "module",
+  "version": "1.0.3",
+  "description": "",
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@elysiajs/eden": "^1.4.9",
+    "@stardust/config": "workspace:*",
+    "@stardust/db": "workspace:*",
+    "better-auth": "^1.7.14",
+    "better-call": "^1.4.4",
+    "dockerode": "^4.0.12",
+    "http-proxy-middleware": "^3.0.10"
+  },
+  "devDependencies": {
+    "@stardust/tsconfig": "workspace:*",
+    "@types/dockerode": "^3.3.47",
+    "daemon": "workspace:*",
+    "elysia": "latest"
+  }
 }

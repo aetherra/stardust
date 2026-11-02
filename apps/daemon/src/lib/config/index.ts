@@ -6,16 +6,16 @@ import type { Config } from "./types";
 
 let loadedConfig: unknown;
 try {
-	loadedConfig = load(await (await getConfigFile()).text());
+  loadedConfig = load(await (await getConfigFile()).text());
 } catch (e) {
-	console.error("✨ Stardust: Invalid or no config", e);
-	process.exit(1);
+  console.error("✨ Stardust: Invalid or no config", e);
+  process.exit(1);
 }
 export function getConfig<T = Config>(): T {
-	return loadedConfig as T;
+  return loadedConfig as T;
 }
 export function validateConfig(config: unknown) {
-	const validate = new Ajv().compile(defaultSchema);
-	const res = validate(config);
-	return res;
+  const validate = new Ajv().compile(defaultSchema);
+  const res = validate(config);
+  return res;
 }

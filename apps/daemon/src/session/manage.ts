@@ -1,7 +1,10 @@
 import type Dockerode from "dockerode";
 import { docker } from "~/lib/docker";
-export default async function manageSession(id: string, action: keyof Dockerode.Container) {
-	const container = docker.getContainer(id);
-	await container[action]();
-	return container.inspect();
+export default async function manageSession(
+  id: string,
+  action: keyof Dockerode.Container,
+) {
+  const container = docker.getContainer(id);
+  await container[action]();
+  return container.inspect();
 }
