@@ -1,7 +1,7 @@
 "use client";
 import Editor, { type Monaco } from "@monaco-editor/react";
 import { github_dark, latte, mocha } from "@stardust/theme/monaco";
-import { Save } from "lucide-react";
+import { Book, Check, Save } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useState } from "react";
@@ -31,7 +31,7 @@ export default function ConfigEditor({
   return (
     <div className="flex w-full flex-col justify-center items-left -ml-2">
       <form
-        className="my-2 flex flex-row items-center gap-2"
+        className="my-2 flex flex-row items-center gap-1"
         action={(data) =>
           void toast.promise(
             async () => {
@@ -51,28 +51,42 @@ export default function ConfigEditor({
           )
         }
       >
-        <SubmitButton>
-          <Save />
-          Save
-        </SubmitButton>
-        <div className="flex flex-row gap-2">
-          {restartEnabled ? (
-            <>
-              <Checkbox name="restart" defaultChecked={false} />
-              <Label htmlFor="restart">Restart server</Label>
-            </>
-          ) : null}
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-1">
+            <SubmitButton>
+              <Save />
+              Save
+            </SubmitButton>
+            <div className="flex flex-row gap-2">
+              {restartEnabled ? (
+                <>
+                  <Checkbox name="restart" defaultChecked={false} />
+                  <Label htmlFor="restart">Restart server</Label>
+                </>
+              ) : null}
+            </div>
+            <Button asChild variant="secondary">
+              <Link
+                href="https://stardust.aetherra.org/docs/install/web#configure"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Book />
+                Docs
+              </Link>
+            </Button>
+          </div>
+
+          <div>
+            {saved ? (
+              <Badge>
+                <Check /> Loaded
+              </Badge>
+            ) : (
+              <Badge variant="destructive">Not loaded</Badge>
+            )}
+          </div>
         </div>
-        <Button asChild variant="link">
-          <Link
-            href="https://stardust.aetherra.org/docs/install/web#configure"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Docs
-          </Link>
-        </Button>
-        {saved ? <Badge>Loaded</Badge> : <Badge variant="destructive">Not loaded</Badge>}
       </form>
       <Editor
         defaultLanguage="yaml"
