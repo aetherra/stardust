@@ -24,7 +24,7 @@ export default async function Dashboard() {
                       fill
                       className="object-scale-down group-hover:scale-105 duration-200"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-accent/90 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-accent/90 to-transparent" />
                     <div className="absolute bottom-2 left-3 text-foreground flex flex-col items-start">
                       <h3 className="text-lg font-bold">{workspace.friendlyName}</h3>
                       <p className="text-left text-sm text-muted-foreground">{workspace.category}</p>
